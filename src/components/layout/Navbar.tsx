@@ -194,6 +194,14 @@ export function Navbar() {
           .mobile-menu {
             display: block;
           }
+          
+          .nav-links {
+            display: none !important;
+          }
+          
+          .nav-cta {
+            display: none !important;
+          }
         }
       `}</style>
     </header>
