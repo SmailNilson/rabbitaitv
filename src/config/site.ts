@@ -2,7 +2,7 @@
 export const siteConfig = {
     name: "RabbitAI TV",
     description: "Best 4K IPTV Service for Streaming - 20K+ Live TV Channels, 120K+ Movies & Series",
-    url: "https://rabbitaitv.com",
+    url: "https://www.rabbitaitv.com",
 
     // Contact Information
     contact: {

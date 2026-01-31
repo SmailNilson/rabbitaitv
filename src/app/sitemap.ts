@@ -5,7 +5,7 @@ import articlesData from '@/data/articles.json';
 // Sync with robots.txt
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://rabbitaitv.com';
+    const baseUrl = 'https://www.rabbitaitv.com';
     const currentDate = new Date().toISOString();
 
     // Blog = highest priority (safe content)
