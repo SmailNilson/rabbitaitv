@@ -85,6 +85,17 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                 </div>
             </section>
 
+            {/* Article Image */}
+            {article.image && (
+                <div className="container image-container">
+                    <img
+                        src={article.image}
+                        alt={article.title}
+                        className="main-article-image"
+                    />
+                </div>
+            )}
+
             {/* Article Content */}
             <section className="content-section">
                 <div className="container">
@@ -223,6 +234,23 @@ export default function BlogArticleClient({ article }: { article: Article }) {
 
                 .meta-separator {
                     color: rgba(255, 255, 255, 0.3);
+                }
+
+                /* Image Section */
+                .image-container {
+                    margin-top: -30px;
+                    margin-bottom: 40px;
+                    position: relative;
+                    z-index: 5;
+                }
+
+                .main-article-image {
+                    width: 100%;
+                    max-height: 500px;
+                    object-fit: cover;
+                    border-radius: 20px;
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
                 }
 
                 /* Content Section */
