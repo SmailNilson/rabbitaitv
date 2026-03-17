@@ -42,7 +42,14 @@ function renderContent(content: string): string {
         return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
     });
 
+    // Images (must be before links to avoid conflict with ![alt](src) vs [text](url))
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="content-image" loading="lazy" />');
+
+    // Links
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="content-link">$1</a>');
+
     // Headers
+    html = html.replace(/^# (.*$)/gim, '<h2>$1</h2>');
     html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
     html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
 
@@ -336,6 +343,28 @@ export default function BlogArticlePage() {
 
                 .article-content :global(tr:last-child td) {
                     border-bottom: none;
+                }
+
+                .article-content :global(.content-image) {
+                    width: 100%;
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 16px;
+                    margin: 1.5rem 0;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    display: block;
+                }
+
+                .article-content :global(.content-link) {
+                    color: #F20732;
+                    text-decoration: underline;
+                    text-underline-offset: 3px;
+                    transition: color 0.3s ease;
+                }
+
+                .article-content :global(.content-link:hover) {
+                    color: #ff4d6d;
                 }
 
                 /* Author Box */
