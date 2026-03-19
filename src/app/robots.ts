@@ -23,6 +23,10 @@ export default function robots(): MetadataRoute.Robots {
                 ],
             },
             {
+                userAgent: 'Mediapartners-Google',
+                allow: '/',
+            },
+            {
                 userAgent: ['AhrefsBot', 'SemrushBot', 'MJ12bot', 'DotBot', 'BLEXBot', 'DataForSeoBot'],
                 disallow: '/',
             }

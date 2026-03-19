@@ -164,6 +164,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
+        {/* AdSense Verification (Must be at the very top for crawler detection) */}
+        <meta name="google-adsense-account" content="ca-pub-3235102292758932" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3235102292758932"
+          crossOrigin="anonymous"
+        ></script>
+
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
@@ -201,15 +209,6 @@ export default function RootLayout({
             gtag('config', '${siteConfig.seo.googleAds}');
           `}
         </Script>
-
-        {/* Google AdSense */}
-        <meta name="google-adsense-account" content="ca-pub-3235102292758932" />
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3235102292758932"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
 
         {/* Favicon & Icons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
