@@ -11,12 +11,14 @@ import Script from "next/script";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: 'swap',
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -210,6 +212,14 @@ export default function RootLayout({
             gtag('config', '${siteConfig.seo.googleAds}');
           `}
         </Script>
+
+        {/* Preload critical assets for LCP */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/blog/iptv-trends-2026.jpg"
+          fetchPriority="high"
+        />
 
         {/* Favicon & Icons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
