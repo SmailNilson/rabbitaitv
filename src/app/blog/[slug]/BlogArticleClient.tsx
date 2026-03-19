@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import CTASection from "@/components/sections/CTASection";
+import AdUnit from "@/components/ui/AdUnit";
 
 interface Article {
     id: number;
@@ -109,10 +110,12 @@ export default function BlogArticleClient({ article }: { article: Article }) {
             {/* Article Content */}
             <section className="content-section">
                 <div className="container">
+                    <AdUnit slot="" style={{ marginBottom: '2rem' }} />
                     <article
                         className="article-content"
                         dangerouslySetInnerHTML={{ __html: renderContent(article.content) }}
                     />
+                    <AdUnit slot="" style={{ marginTop: '2rem' }} />
 
                     {/* Author Box */}
                     <div className="author-box">

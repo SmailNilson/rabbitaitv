@@ -202,6 +202,15 @@ export default function RootLayout({
           `}
         </Script>
 
+        {/* Google AdSense */}
+        <meta name="google-adsense-account" content="ca-pub-3235102292758932" />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3235102292758932"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+
         {/* Favicon & Icons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import articlesData from "@/data/articles.json";
 import CTASection from "@/components/sections/CTASection";
@@ -17,6 +18,8 @@ interface Article {
     category: string;
 }
 
+const POSTS_PER_PAGE = 6;
+
 function formatDate(dateString: string): string {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -27,7 +30,25 @@ function formatDate(dateString: string): string {
 }
 
 export default function BlogPage() {
-    const articles: Article[] = articlesData;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const articles: Article[] = useMemo(() => {
+        return [...articlesData].sort((a, b) =>
+            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+        );
+    }, []);
+
+    const totalPages = Math.ceil(articles.length / POSTS_PER_PAGE);
+
+    const paginatedArticles = useMemo(() => {
+        const start = (currentPage - 1) * POSTS_PER_PAGE;
+        return articles.slice(start, start + POSTS_PER_PAGE);
+    }, [currentPage, articles]);
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+        window.scrollTo({ top: 300, behavior: 'smooth' });
+    };
 
     return (
         <div className="blog-wrapper">
@@ -49,16 +70,24 @@ export default function BlogPage() {
             <section className="articles-section">
                 <div className="container">
                     <div className="articles-grid">
-                        {articles.map((article) => (
+                        {paginatedArticles.map((article) => (
                             <Link
                                 key={article.id}
                                 href={`/blog/${article.slug}`}
                                 className="article-card"
                             >
                                 <div className="article-image">
-                                    <div className="image-placeholder">
-                                        <span>📄</span>
-                                    </div>
+                                    {article.image ? (
+                                        <img
+                                            src={article.image}
+                                            alt={article.title}
+                                            className="card-main-image"
+                                        />
+                                    ) : (
+                                        <div className="image-placeholder">
+                                            <span>📄</span>
+                                        </div>
+                                    )}
                                     <span className="category-badge">{article.category}</span>
                                 </div>
                                 <div className="article-content">
@@ -74,6 +103,39 @@ export default function BlogPage() {
                             </Link>
                         ))}
                     </div>
+
+                    {/* Pagination Controls */}
+                    {totalPages > 1 && (
+                        <div className="pagination">
+                            <button
+                                className="page-btn prev"
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                ← Prev
+                            </button>
+
+                            <div className="page-numbers">
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                    <button
+                                        key={page}
+                                        className={`page-number ${currentPage === page ? 'active' : ''}`}
+                                        onClick={() => handlePageChange(page)}
+                                    >
+                                        {page}
+                                    </button>
+                                ))}
+                            </div>
+
+                            <button
+                                className="page-btn next"
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                Next →
+                            </button>
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -173,6 +235,17 @@ export default function BlogPage() {
                     font-size: 4rem;
                 }
 
+                .card-main-image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease;
+                }
+
+                .article-card:hover .card-main-image {
+                    transform: scale(1.05);
+                }
+
                 .category-badge {
                     position: absolute;
                     top: 1rem;
@@ -218,12 +291,67 @@ export default function BlogPage() {
                     font-size: 0.95rem;
                 }
 
+                /* Pagination */
+                .pagination {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 1.5rem;
+                    margin-top: 4rem;
+                }
+
+                .page-numbers {
+                    display: flex;
+                    gap: 0.5rem;
+                }
+
+                .page-btn, .page-number {
+                    background: rgba(255, 255, 255, 0.05);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    color: white;
+                    padding: 0.75rem 1.25rem;
+                    border-radius: 12px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                .page-number {
+                    padding: 0.75rem 1rem;
+                    min-width: 45px;
+                }
+
+                .page-btn:hover:not(:disabled), .page-number:hover {
+                    background: rgba(242, 7, 50, 0.1);
+                    border-color: #F20732;
+                    color: #F20732;
+                }
+
+                .page-number.active {
+                    background: #F20732;
+                    border-color: #F20732;
+                    color: white;
+                    box-shadow: 0 10px 20px rgba(242, 7, 50, 0.3);
+                }
+
+                .page-btn:disabled {
+                    opacity: 0.3;
+                    cursor: not-allowed;
+                }
+
                 @media (max-width: 768px) {
                     .articles-grid {
                         grid-template-columns: 1fr;
                     }
                     .hero-section {
                         padding: 120px 0 40px;
+                    }
+                    .pagination {
+                        flex-direction: column;
+                        gap: 1rem;
+                    }
+                    .page-numbers {
+                        order: -1;
                     }
                 }
             `}</style>

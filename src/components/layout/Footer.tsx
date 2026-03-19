@@ -28,7 +28,7 @@ export function Footer() {
                     <div className="footer-links">
                         <h4>Quick Links</h4>
                         <ul>
-                            {siteConfig.navigation.map((item) => (
+                            {siteConfig.footerNavigation.map((item) => (
                                 <li key={item.name}>
                                     <Link href={item.href}>{item.name}</Link>
                                 </li>

@@ -103,13 +103,21 @@ export const siteConfig = {
         { name: "12 Months", duration: 12, price: 49.99 },
     ],
 
-    // Navigation
     navigation: [
         { name: "Home", href: "/" },
         { name: "Pricing", href: "/pricing" },
         { name: "Setup Guide", href: "/setup-guide" },
         { name: "Channels List", href: "/channels" },
         { name: "Blog", href: "/blog" },
+        { name: "Reseller", href: "/reseller" },
+    ],
+    footerNavigation: [
+        { name: "Home", href: "/" },
+        { name: "Pricing", href: "/pricing" },
+        { name: "Setup Guide", href: "/setup-guide" },
+        { name: "Channels List", href: "/channels" },
+        { name: "Blog", href: "/blog" },
+        { name: "About Us", href: "/about" },
         { name: "Reseller", href: "/reseller" },
     ],
 
