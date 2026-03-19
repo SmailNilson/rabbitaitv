@@ -25,8 +25,9 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for each article
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const article = articlesData.find((a) => a.slug === params.slug) as Article | undefined;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
+    const article = articlesData.find((a) => a.slug === slug) as Article | undefined;
 
     if (!article) {
         return {
@@ -86,8 +87,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default function BlogArticlePage({ params }: { params: { slug: string } }) {
-    const article = articlesData.find((a) => a.slug === params.slug) as Article | undefined;
+export default async function BlogArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const article = articlesData.find((a) => a.slug === slug) as Article | undefined;
 
     if (!article) {
         notFound();
@@ -146,6 +148,46 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
         ],
     };
 
+    // Generate FAQ Schema for articles with FAQs (TiviMate article)
+    const faqJsonLd = article.slug === "install-tivimate-iptv-player-firestick-android-tv" ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: [
+            {
+                "@type": "Question",
+                name: "Is TiviMate free?",
+                acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "TiviMate is a free IPTV player application, but you need an IPTV subscription from a provider like RabbitAI TV to access live channels and content."
+                }
+            },
+            {
+                "@type": "Question",
+                name: "Can I use TiviMate on Android TV?",
+                acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Yes, TiviMate works perfectly on Android TV, Google TV, Fire TV Stick, and Chromecast with Google TV."
+                }
+            },
+            {
+                "@type": "Question",
+                name: "Do I need a VPN with TiviMate?",
+                acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "While not mandatory, using a VPN is recommended for privacy and security when streaming IPTV content."
+                }
+            },
+            {
+                "@type": "Question",
+                name: "How do I get IPTV credentials for TiviMate?",
+                acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "You can get IPTV credentials by subscribing to RabbitAI TV. We offer a free 24-hour trial so you can test the service before committing to a subscription."
+                }
+            }
+        ]
+    } : null;
+
     return (
         <>
             {/* JSON-LD Structured Data */}
@@ -157,6 +199,12 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
+            {faqJsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+                />
+            )}
 
             <BlogArticleClient article={article} />
         </>

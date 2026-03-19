@@ -3,6 +3,8 @@
 import Link from "next/link";
 import CTASection from "@/components/sections/CTASection";
 import AdUnit from "@/components/ui/AdUnit";
+import RelatedArticles from "@/components/blog/RelatedArticles";
+import TableOfContents from "@/components/blog/TableOfContents";
 
 interface Article {
     id: number;
@@ -112,6 +114,10 @@ export default function BlogArticleClient({ article }: { article: Article }) {
             <section className="content-section">
                 <div className="container">
                     <AdUnit slot="" style={{ marginBottom: '2rem' }} />
+
+                    {/* Table of Contents for long articles */}
+                    <TableOfContents content={article.content} />
+
                     <article
                         className="article-content"
                         dangerouslySetInnerHTML={{ __html: renderContent(article.content) }}
@@ -157,6 +163,9 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                             </a>
                         </div>
                     </div>
+
+                    {/* Related Articles */}
+                    <RelatedArticles currentSlug={article.slug} currentCategory={article.category} />
                 </div>
             </section>
 
