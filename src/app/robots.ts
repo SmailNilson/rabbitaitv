@@ -11,14 +11,14 @@ export default function robots(): MetadataRoute.Robots {
                     '/setup-guide',
                     '/channels',
                     '/privacy-policy',
-                    '/terms'
+                    '/terms',
+                    '/_next/'
                 ],
                 disallow: [
                     '/reseller',
                     '/pricing',
                     '/checkout',
                     '/api/',
-                    '/_next/',
                     '/admin'
                 ],
             },
