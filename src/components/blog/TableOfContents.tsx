@@ -21,7 +21,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
         const headings: TOCItem[] = [];
         const lines = content.split('\n');
 
-        lines.forEach((line, index) => {
+        lines.forEach((line) => {
             const h1Match = line.match(/^#\s+(.+)$/);
             const h2Match = line.match(/^##\s+(.+)$/);
             const h3Match = line.match(/^###\s+(.+)$/);
@@ -95,8 +95,6 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
                     border-radius: 16px;
                     padding: 1.5rem;
                     margin-bottom: 2rem;
-                    position: sticky;
-                    top: 100px;
                 }
 
                 .toc-title {
@@ -125,6 +123,10 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
                     border-radius: 8px;
                     font-size: 0.9rem;
                     line-height: 1.4;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    white-space: normal;
+                    width: 100%;
                 }
 
                 .toc-item:hover {
@@ -173,8 +175,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
 
                 @media (max-width: 768px) {
                     .table-of-contents {
-                        position: relative;
-                        top: auto;
+                        padding: 1.25rem;
                     }
                 }
             `}</style>
