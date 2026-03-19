@@ -28,6 +28,7 @@ export function Navbar() {
             width={120}
             height={32}
             style={{ objectFit: 'contain' }}
+            priority={true}
           />
         </Link>
 
@@ -71,6 +72,7 @@ export function Navbar() {
                 width={120}
                 height={32}
                 style={{ objectFit: 'contain' }}
+                priority={true}
               />
             </Link>
           </div>

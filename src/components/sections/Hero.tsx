@@ -13,6 +13,7 @@ export function Hero() {
           muted
           loop
           playsInline
+          poster="/images/t30.png"
           className="hero-video"
         >
           <source src="/112024-motionwall-corner-extendttttttttttt.mp4" type="video/mp4" />

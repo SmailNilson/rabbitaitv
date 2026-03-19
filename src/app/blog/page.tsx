@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import articlesData from "@/data/articles.json";
 import CTASection from "@/components/sections/CTASection";
 
@@ -78,11 +79,16 @@ export default function BlogPage() {
                             >
                                 <div className="article-image">
                                     {article.image ? (
-                                        <img
-                                            src={article.image}
-                                            alt={article.title}
-                                            className="card-main-image"
-                                        />
+                                        <div className="card-image-container">
+                                            <Image
+                                                src={article.image}
+                                                alt={article.title}
+                                                fill
+                                                className="card-main-image"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                priority={articles.indexOf(article) < 2}
+                                            />
+                                        </div>
                                     ) : (
                                         <div className="image-placeholder">
                                             <span>📄</span>

@@ -164,13 +164,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
-        {/* AdSense Verification (Must be at the very top for crawler detection) */}
+        {/* Google AdSense (Lazy Loaded for improved performance) */}
         <meta name="google-adsense-account" content="ca-pub-3235102292758932" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3235102292758932"
+        <Script
+          id="adsbygoogle-init"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
-        ></script>
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3235102292758932"
+        />
 
         {/* JSON-LD Structured Data */}
         <script
