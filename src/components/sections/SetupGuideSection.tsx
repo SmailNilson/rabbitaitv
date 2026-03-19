@@ -215,7 +215,7 @@ export default function SetupGuideSection() {
                     position: relative;
                     padding: 140px 0 60px;
                     text-align: center;
-                    background: url('/images/Screenshot-2024-12-03-215102.png') center/cover no-repeat;
+                    background: radial-gradient(circle at top center, rgba(242, 7, 50, 0.15) 0%, #0D0D0D 100%);
                     background-color: #0D0D0D;
                 }
 
