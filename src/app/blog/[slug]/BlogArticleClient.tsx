@@ -47,10 +47,11 @@ function renderContent(content: string): string {
     // Links
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="content-link">$1</a>');
 
-    // Headers (# for h1, but skip if inside already-processed HTML)
-    html = html.replace(/^# (.*$)/gim, '<h2>$1</h2>');
-    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+    // Headers - FIX: First # becomes h1, ## becomes h2, ### becomes h3
+    // Process in reverse order to avoid conflicts
     html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+    html = html.replace(/^# (.*$)/gim, '<h1 class="content-h1">$1</h1>');
 
     // Bold
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -275,6 +276,15 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                     font-size: 1.1rem;
                     line-height: 1.9;
                     color: rgba(255, 255, 255, 0.85);
+                }
+
+                .article-content :global(.content-h1) {
+                    font-size: 2rem;
+                    font-weight: 700;
+                    color: white;
+                    margin: 2.5rem 0 1rem;
+                    padding-bottom: 0.75rem;
+                    border-bottom: 3px solid rgba(242, 7, 50, 0.4);
                 }
 
                 .article-content :global(h2) {

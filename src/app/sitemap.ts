@@ -29,6 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Support/info pages (safe content)
     const supportPages = [
         {
+            url: `${baseUrl}/about`,
+            lastModified: currentDate,
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        },
+        {
             url: `${baseUrl}/setup-guide`,
             lastModified: currentDate,
             changeFrequency: 'monthly' as const,
