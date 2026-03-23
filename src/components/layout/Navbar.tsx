@@ -133,7 +133,6 @@ export function Navbar() {
           cursor: pointer;
           width: 44px;
           height: 44px;
-          display: flex;
           align-items: center;
           justify-content: center;
           z-index: 1001;

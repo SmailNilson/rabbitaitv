@@ -3,6 +3,8 @@
 import Link from "next/link";
 import CTASection from "@/components/sections/CTASection";
 import AdUnit from "@/components/ui/AdUnit";
+import RelatedArticles from "@/components/blog/RelatedArticles";
+import TableOfContents from "@/components/blog/TableOfContents";
 
 interface Article {
     id: number;
@@ -26,46 +28,100 @@ function formatDate(dateString: string): string {
     });
 }
 
-// Convert markdown-like content to HTML with better table support
+// Convert markdown-like content to HTML with better formatting
 function renderContent(content: string): string {
     let html = content;
 
     // Handle tables (basic markdown table support)
     const tableRegex = /\|(.+)\|\n\|[-:\s|]+\|\n((?:\|.+\|\n?)+)/g;
-    html = html.replace(tableRegex, (match, header, body) => {
+    html = html.replace(tableRegex, (_match, header, body) => {
         const headers = header.split('|').filter((h: string) => h.trim()).map((h: string) => `<th>${h.trim()}</th>`).join('');
         const rows = body.trim().split('\n').map((row: string) => {
             const cells = row.split('|').filter((c: string) => c.trim()).map((c: string) => `<td>${c.trim()}</td>`).join('');
             return `<tr>${cells}</tr>`;
         }).join('');
-        return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+        return `\n\n<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>\n\n`;
     });
 
-    // Images (must be before links to avoid conflict with ![alt](src) vs [text](url))
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="content-image" loading="lazy" />');
+    // Images (must be before links)
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '\n\n<img src="$2" alt="$1" class="content-image" loading="lazy" />\n\n');
 
     // Links
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="content-link">$1</a>');
 
-    // Headers (# for h1, but skip if inside already-processed HTML)
-    html = html.replace(/^# (.*$)/gim, '<h2>$1</h2>');
-    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+    // Headers (process in reverse order)
+    html = html.replace(/^### (.*$)/gim, '\n\n<h3>$1</h3>\n\n');
+    html = html.replace(/^## (.*$)/gim, '\n\n<h2>$1</h2>\n\n');
+    html = html.replace(/^# (.*$)/gim, '\n\n<h1 class="content-h1">$1</h1>\n\n');
 
     // Bold
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-    // Italic (single asterisks, but not inside bold)
+    // Italic
     html = html.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
 
-    // Lists
-    html = html.replace(/^\d+\. (.*$)/gim, '<li class="numbered">$1</li>');
-    html = html.replace(/^- (.*$)/gim, '<li class="bullet">$1</li>');
+    // Lists - wrap in ul/ol tags
+    const lines = html.split('\n');
+    const processedLines: string[] = [];
+    let inList = false;
+    let listType = '';
 
-    // Paragraphs
-    html = html.replace(/\n\n/g, '</p><p>');
+    lines.forEach((line) => {
+        const numberedMatch = line.match(/^(\d+)\.\s+(.*)$/);
+        const bulletMatch = line.match(/^-\s+(.*)$/);
 
-    return `<p>${html}</p>`;
+        if (numberedMatch) {
+            if (!inList || listType !== 'ol') {
+                if (inList) processedLines.push(`</${listType}>`);
+                processedLines.push('<ol>');
+                inList = true;
+                listType = 'ol';
+            }
+            processedLines.push(`<li>${numberedMatch[2]}</li>`);
+        } else if (bulletMatch) {
+            if (!inList || listType !== 'ul') {
+                if (inList) processedLines.push(`</${listType}>`);
+                processedLines.push('<ul>');
+                inList = true;
+                listType = 'ul';
+            }
+            processedLines.push(`<li>${bulletMatch[1]}</li>`);
+        } else {
+            if (inList && line.trim() === '') {
+                processedLines.push(`</${listType}>`);
+                inList = false;
+                listType = '';
+            }
+            processedLines.push(line);
+        }
+    });
+
+    if (inList) {
+        processedLines.push(`</${listType}>`);
+    }
+
+    html = processedLines.join('\n');
+
+    // Paragraphs - split by double newlines and wrap non-block elements
+    const blocks = html.split(/\n\n+/);
+    const formattedBlocks = blocks.map(block => {
+        const trimmed = block.trim();
+        if (!trimmed) return '';
+
+        // Don't wrap block elements in <p>
+        if (trimmed.startsWith('<h') ||
+            trimmed.startsWith('<table') ||
+            trimmed.startsWith('<img') ||
+            trimmed.startsWith('<ul') ||
+            trimmed.startsWith('<ol')) {
+            return trimmed;
+        }
+
+        // Wrap text content in <p>
+        return `<p>${trimmed}</p>`;
+    });
+
+    return formattedBlocks.join('\n\n');
 }
 
 export default function BlogArticleClient({ article }: { article: Article }) {
@@ -111,6 +167,10 @@ export default function BlogArticleClient({ article }: { article: Article }) {
             <section className="content-section">
                 <div className="container">
                     <AdUnit slot="" style={{ marginBottom: '2rem' }} />
+
+                    {/* Table of Contents for long articles */}
+                    <TableOfContents content={article.content} />
+
                     <article
                         className="article-content"
                         dangerouslySetInnerHTML={{ __html: renderContent(article.content) }}
@@ -156,6 +216,9 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                             </a>
                         </div>
                     </div>
+
+                    {/* Related Articles */}
+                    <RelatedArticles currentSlug={article.slug} currentCategory={article.category} />
                 </div>
             </section>
 
@@ -277,6 +340,15 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                     color: rgba(255, 255, 255, 0.85);
                 }
 
+                .article-content :global(.content-h1) {
+                    font-size: 2rem;
+                    font-weight: 700;
+                    color: white;
+                    margin: 2.5rem 0 1rem;
+                    padding-bottom: 0.75rem;
+                    border-bottom: 3px solid rgba(242, 7, 50, 0.4);
+                }
+
                 .article-content :global(h2) {
                     font-size: 1.75rem;
                     font-weight: 700;
@@ -298,22 +370,38 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                     font-weight: 600;
                 }
 
+                .article-content :global(ul),
+                .article-content :global(ol) {
+                    margin: 1.5rem 0;
+                    padding-left: 2rem;
+                }
+
+                .article-content :global(ul) {
+                    list-style-type: disc;
+                }
+
+                .article-content :global(ol) {
+                    list-style-type: decimal;
+                }
+
                 .article-content :global(li) {
-                    margin-left: 1.5rem;
-                    margin-bottom: 0.5rem;
-                    padding-left: 0.5rem;
+                    margin-bottom: 0.75rem;
+                    line-height: 1.8;
+                    color: rgba(255, 255, 255, 0.85);
                 }
 
-                .article-content :global(li.numbered) {
-                    list-style: decimal;
-                }
-
-                .article-content :global(li.bullet) {
-                    list-style: disc;
+                .article-content :global(li::marker) {
+                    color: #F20732;
+                    font-weight: bold;
                 }
 
                 .article-content :global(p) {
-                    margin-bottom: 1.25rem;
+                    margin-bottom: 1.5rem;
+                    line-height: 1.8;
+                }
+
+                .article-content :global(p:last-child) {
+                    margin-bottom: 0;
                 }
 
                 .article-content :global(table) {
