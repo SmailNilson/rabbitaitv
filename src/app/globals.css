@@ -162,6 +162,16 @@ button {
   text-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
 
+/* Active page indicator */
+.nav-cosmic-link.active {
+  color: #F20732 !important;
+  text-shadow: 0 0 12px rgba(242, 7, 50, 0.4);
+}
+
+.nav-cosmic-link.active .link-glitch-line {
+  width: 100%;
+}
+
 .link-glitch-line {
   position: absolute;
   bottom: 0;

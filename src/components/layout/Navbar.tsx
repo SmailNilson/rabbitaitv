@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site';
 
 export function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -29,7 +31,7 @@ export function Navbar() {
                         <ul className="nav-link-group">
                             {leftNav.map((item) => (
                                 <li key={item.name}>
-                                    <Link href={item.href} className="nav-cosmic-link">
+                                    <Link href={item.href} className={`nav-cosmic-link${pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? ' active' : ''}`}>
                                         {item.name}
                                         <span className="link-glitch-line"></span>
                                     </Link>
@@ -58,7 +60,7 @@ export function Navbar() {
                         <ul className="nav-link-group">
                             {rightNav.map((item) => (
                                 <li key={item.name}>
-                                    <Link href={item.href} className="nav-cosmic-link">
+                                    <Link href={item.href} className={`nav-cosmic-link${pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? ' active' : ''}`}>
                                         {item.name}
                                         <span className="link-glitch-line"></span>
                                     </Link>
