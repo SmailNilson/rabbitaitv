@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import ScrollToHash from "@/components/ScrollToHash";
 import Script from "next/script";
 
@@ -244,11 +245,12 @@ export default function RootLayout({
       <body style={{ backgroundColor: '#0D0D0D', color: 'white', margin: 0 }}>
         <ScrollToHash />
         <Navbar />
-        <main style={{ minHeight: '100vh' }}>
+        <main style={{ minHeight: '100vh', paddingTop: '85px' }}>
           {children}
         </main>
         <Footer />
         <WhatsAppButton />
+        <ScrollToTop />
       </body>
     </html>
   );

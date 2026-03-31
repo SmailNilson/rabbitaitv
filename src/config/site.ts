@@ -110,6 +110,7 @@ export const siteConfig = {
         { name: "Channels List", href: "/channels" },
         { name: "Blog", href: "/blog" },
         { name: "Reseller", href: "/reseller" },
+        { name: "Contact", href: "/contact" },
     ],
     footerNavigation: [
         { name: "Home", href: "/" },
@@ -119,6 +120,7 @@ export const siteConfig = {
         { name: "Blog", href: "/blog" },
         { name: "About Us", href: "/about" },
         { name: "Reseller", href: "/reseller" },
+        { name: "Contact Us", href: "/contact" },
     ],
 
     // Channel logos
