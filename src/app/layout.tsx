@@ -245,7 +245,7 @@ export default function RootLayout({
       <body style={{ backgroundColor: '#0D0D0D', color: 'white', margin: 0 }}>
         <ScrollToHash />
         <Navbar />
-        <main style={{ minHeight: '100vh', paddingTop: '85px' }}>
+        <main style={{ minHeight: '100vh' }}>
           {children}
         </main>
         <Footer />

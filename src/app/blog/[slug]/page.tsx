@@ -15,6 +15,7 @@ interface Article {
     readTime: string;
     publishedAt: string;
     category: string;
+    video?: string;
 }
 
 // Generate static params for all articles

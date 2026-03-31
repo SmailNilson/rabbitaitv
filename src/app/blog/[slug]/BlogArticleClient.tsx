@@ -17,6 +17,7 @@ interface Article {
     readTime: string;
     publishedAt: string;
     category: string;
+    video?: string;
 }
 
 function formatDate(dateString: string): string {
@@ -152,16 +153,29 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                 </div>
             </section>
 
-            {/* Article Image */}
-            {article.image && (
-                <div className="container image-container">
+            {/* Article Image or Video */}
+            <div className="container image-container">
+                {article.video ? (
+                    <div className="video-wrapper">
+                        <video
+                            src={article.video}
+                            poster={article.image}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="main-article-video"
+                        />
+                        <div className="video-overlay"></div>
+                    </div>
+                ) : article.image ? (
                     <img
                         src={article.image}
                         alt={article.title}
                         className="main-article-image"
                     />
-                </div>
-            )}
+                ) : null}
+            </div>
 
             {/* Article Content */}
             <section className="content-section">
@@ -320,13 +334,26 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                     z-index: 5;
                 }
 
-                .main-article-image {
+                .main-article-image, .main-article-video {
                     width: 100%;
                     max-height: 500px;
                     object-fit: cover;
                     border-radius: 20px;
                     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
                     border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .video-wrapper {
+                    position: relative;
+                    border-radius: 20px;
+                    overflow: hidden;
+                }
+
+                .video-overlay {
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.6) 100%);
+                    pointer-events: none;
                 }
 
                 /* Content Section */
