@@ -198,12 +198,12 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                             strategy="afterInteractive"
                         />
                         <div id="container-af6e551fce0ab2dae1c71670a0b0958b"></div>
-
-                        <Script
-                            id="adsterra-banner-options"
-                            strategy="afterInteractive"
-                            dangerouslySetInnerHTML={{
-                                __html: `
+                        <div className="absolute">
+                            <Script
+                                id="adsterra-banner-options"
+                                strategy="afterInteractive"
+                                dangerouslySetInnerHTML={{
+                                    __html: `
                                     atOptions = {
                                         'key': 'a5d42e49ac28595436c5c1b6fbde293f',
                                         'format': 'iframe',
@@ -212,13 +212,14 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                                         'params': {}
                                     };
                                 `
-                            }}
-                        />
-                        <Script
-                            id="adsterra-banner-invoke"
-                            src="https://www.highperformanceformat.com/a5d42e49ac28595436c5c1b6fbde293f/invoke.js"
-                            strategy="afterInteractive"
-                        />
+                                }}
+                            />
+                            <Script
+                                id="adsterra-banner-invoke"
+                                src="https://www.highperformanceformat.com/a5d42e49ac28595436c5c1b6fbde293f/invoke.js"
+                                strategy="afterInteractive"
+                            />
+                        </div>
                     </div>
 
                     {/* Author Box */}
