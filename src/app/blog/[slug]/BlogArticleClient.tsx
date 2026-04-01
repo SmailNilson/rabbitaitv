@@ -214,7 +214,7 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                     />
 
                     {/* Adsterra Native Ad - After Content */}
-                    <div className="adsterra-native-wrap">
+                    {/* <div className="adsterra-native-wrap">
                         <Script
                             id="adsterra-native-invoke"
                             async
@@ -223,7 +223,7 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                             strategy="afterInteractive"
                         />
                         <div id="container-af6e551fce0ab2dae1c71670a0b0958b"></div>
-                    </div>
+                    </div> */}
 
                     {/* Author Box */}
                     <div className="author-box">
