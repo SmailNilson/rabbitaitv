@@ -180,9 +180,25 @@ export default function BlogArticleClient({ article }: { article: Article }) {
             {/* Article Content */}
             <section className="content-section">
                 <div className="container">
+                    {/* Table of Contents for long articles */}
+                    <TableOfContents content={article.content} />
 
-                    {/* Adsterra Banner Ad - Top */}
-                    {/* <div className="adsterra-banner-wrap">
+                    <article
+                        className="article-content"
+                        dangerouslySetInnerHTML={{ __html: renderContent(article.content) }}
+                    />
+
+                    {/* Adsterra Native Ad - After Content */}
+                    <div className="adsterra-native-wrap">
+                        <Script
+                            id="adsterra-native-invoke"
+                            async
+                            data-cfasync="false"
+                            src="https://pl29033267.profitablecpmratenetwork.com/af6e551fce0ab2dae1c71670a0b0958b/invoke.js"
+                            strategy="afterInteractive"
+                        />
+                        <div id="container-af6e551fce0ab2dae1c71670a0b0958b"></div>
+
                         <Script
                             id="adsterra-banner-options"
                             strategy="afterInteractive"
@@ -203,26 +219,6 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                             src="https://www.highperformanceformat.com/a5d42e49ac28595436c5c1b6fbde293f/invoke.js"
                             strategy="afterInteractive"
                         />
-                    </div> */}
-
-                    {/* Table of Contents for long articles */}
-                    <TableOfContents content={article.content} />
-
-                    <article
-                        className="article-content"
-                        dangerouslySetInnerHTML={{ __html: renderContent(article.content) }}
-                    />
-
-                    {/* Adsterra Native Ad - After Content */}
-                    <div className="adsterra-native-wrap">
-                        <Script
-                            id="adsterra-native-invoke"
-                            async
-                            data-cfasync="false"
-                            src="https://pl29033267.profitablecpmratenetwork.com/af6e551fce0ab2dae1c71670a0b0958b/invoke.js"
-                            strategy="afterInteractive"
-                        />
-                        <div id="container-af6e551fce0ab2dae1c71670a0b0958b"></div>
                     </div>
 
                     {/* Author Box */}
