@@ -198,28 +198,12 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                             strategy="afterInteractive"
                         />
                         <div id="container-af6e551fce0ab2dae1c71670a0b0958b"></div>
-                        <div className="absolute">
-                            <Script
-                                id="adsterra-banner-options"
-                                strategy="afterInteractive"
-                                dangerouslySetInnerHTML={{
-                                    __html: `
-                                    atOptions = {
-                                        'key': 'a5d42e49ac28595436c5c1b6fbde293f',
-                                        'format': 'iframe',
-                                        'height': 60,
-                                        'width': 468,
-                                        'params': {}
-                                    };
-                                `
-                                }}
-                            />
-                            <Script
-                                id="adsterra-banner-invoke"
-                                src="https://www.highperformanceformat.com/a5d42e49ac28595436c5c1b6fbde293f/invoke.js"
-                                strategy="afterInteractive"
-                            />
-                        </div>
+                        <p>
+                            Click here to watch:
+                            <a href="https://www.profitablecpmratenetwork.com/ubdnrvrdi?key=9116e0db7d883b585de880b1d77822b4" target="_blank">
+                                Start Streaming
+                            </a>
+                        </p>
                     </div>
 
                     {/* Author Box */}
