@@ -19,7 +19,7 @@ interface Article {
     category: string;
 }
 
-const POSTS_PER_PAGE = 6;
+const POSTS_PER_PAGE = 50;
 
 function formatDate(dateString: string): string {
     const date = new Date(dateString);

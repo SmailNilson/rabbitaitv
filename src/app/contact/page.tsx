@@ -9,6 +9,9 @@ export const metadata: Metadata = {
         description: 'Get in touch with RabbitAI TV support team via WhatsApp or Email.',
         type: 'website',
     },
+    alternates: {
+        canonical: "/contact",
+    },
 };
 
 export default function ContactPage() {

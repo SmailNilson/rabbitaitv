@@ -9,6 +9,9 @@ export const metadata: Metadata = {
         title: "About Us - RabbitAI TV",
         description: "Discover the best IPTV experience with RabbitAI TV.",
     },
+    alternates: {
+        canonical: "/about",
+    },
 };
 
 export default function AboutPage() {

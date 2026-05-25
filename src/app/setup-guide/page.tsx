@@ -9,6 +9,9 @@ export const metadata: Metadata = {
         title: "Setup Guide - RabbitAI TV",
         description: "Easy IPTV setup instructions for all devices",
     },
+    alternates: {
+        canonical: "/setup-guide",
+    },
 };
 
 export default function SetupGuidePage() {

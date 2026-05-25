@@ -9,6 +9,9 @@ export const metadata: Metadata = {
         title: "Channels List - RabbitAI TV",
         description: "20,000+ live TV channels from around the world",
     },
+    alternates: {
+        canonical: "/channels",
+    },
 };
 
 export default function ChannelsPage() {

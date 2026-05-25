@@ -9,6 +9,9 @@ export const metadata: Metadata = {
         title: "Become a Reseller - RabbitAI TV",
         description: "Start your own IPTV business with our reseller program",
     },
+    alternates: {
+        canonical: "/reseller",
+    },
 };
 
 export default function ResellerPage() {

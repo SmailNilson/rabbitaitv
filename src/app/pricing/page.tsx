@@ -13,6 +13,9 @@ export const metadata: Metadata = {
         title: "Pricing - RabbitAI TV",
         description: "Affordable IPTV subscription plans starting at $24.99",
     },
+    alternates: {
+        canonical: "/pricing",
+    },
 };
 
 export default function PricingPage() {

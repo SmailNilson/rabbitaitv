@@ -8,6 +8,9 @@ export const metadata: Metadata = {
         title: "Blog - RabbitAI TV",
         description: "IPTV guides, tutorials, and tips for the best streaming experience",
     },
+    alternates: {
+        canonical: "/blog",
+    },
 };
 
 export default function BlogLayout({
