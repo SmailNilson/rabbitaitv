@@ -1,5 +1,17 @@
 [
     {
+        "id": 24,
+        "slug": "rabbitai-tv-premium-streaming",
+        "title": "RabbitAI TV IPTV Guide",
+        "excerpt": "Explore a premium RabbitAI TV IPTV guide for HD streaming, Firestick setup, sports, movies, and a 24-hour trial.",
+        "content": "<h2>RabbitAI TV Guide</h2><p>RabbitAI TV helps viewers access a premium IPTV experience with reliable streaming.</p>",
+        "image": "/images/blog/rabbitai-tv-premium-streaming.jpg",
+        "author": "RabbitAI Team",
+        "readTime": "7 min",
+        "publishedAt": "2026-05-26",
+        "category": "Guide"
+    },
+    {
         "id": 23,
         "slug": "iptv-firestick-usa-free-paid-options-2026",
         "title": "IPTV for Firestick USA: Free & Paid Options (2026 Guide)",
