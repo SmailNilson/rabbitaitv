@@ -200,7 +200,7 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                         <div id="container-af6e551fce0ab2dae1c71670a0b0958b"></div>
                         <p>
                             Click here to watch:
-                            <a href="https://www.profitablecpmratenetwork.com/ubdnrvrdi?key=9116e0db7d883b585de880b1d77822b4" target="_blank">
+                            <a href="https://www.profitablecpmratenetwork.com/ubdnrvrdi?key=9116e0db7d883b585de880b1d77822b4" target="_blank" rel="sponsored nofollow noopener">
                                 Start Streaming
                             </a>
                         </p>
