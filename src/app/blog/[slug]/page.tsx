@@ -132,7 +132,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
             name: siteConfig.name,
             logo: {
                 "@type": "ImageObject",
-                url: `${siteConfig.url}/logo.png`,
+                url: `${siteConfig.url}/images/logo.png`,
             },
         },
         mainEntityOfPage: {

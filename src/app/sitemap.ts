@@ -1,50 +1,72 @@
 import { MetadataRoute } from 'next';
 import articlesData from '@/data/articles.json';
 
-// INDEXED PAGES ONLY - Safe content strategy
-// Sync with robots.txt
+// All public, indexable pages. Sync with robots.ts
+// (only /checkout, /api and /admin are excluded from indexing).
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://www.rabbitaitv.com';
-    const currentDate = new Date().toISOString();
 
-    // Blog = highest priority (safe content)
-    const blogPages = [
+    // Most recent article date = last meaningful content change for listing pages
+    const latestArticleDate = articlesData
+        .map((a: { publishedAt: string }) => a.publishedAt)
+        .sort()
+        .reverse()[0];
+
+    const mainPages = [
+        {
+            url: `${baseUrl}`,
+            lastModified: latestArticleDate,
+            changeFrequency: 'weekly' as const,
+            priority: 1.0,
+        },
+        {
+            url: `${baseUrl}/pricing`,
+            changeFrequency: 'monthly' as const,
+            priority: 0.9,
+        },
         {
             url: `${baseUrl}/blog`,
-            lastModified: currentDate,
+            lastModified: latestArticleDate,
             changeFrequency: 'daily' as const,
-            priority: 1.0,
+            priority: 0.9,
         },
     ];
 
-    // Blog articles dynamically from JSON
-    const blogArticles = articlesData.map((article: { slug: string }) => ({
+    // Blog articles dynamically from JSON, with their real publication date
+    const blogArticles = articlesData.map((article: { slug: string; publishedAt: string }) => ({
         url: `${baseUrl}/blog/${article.slug}`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly' as const,
+        lastModified: article.publishedAt,
+        changeFrequency: 'monthly' as const,
         priority: 0.8,
     }));
 
-    // Support/info pages (safe content)
+    // Support/info pages
     const supportPages = [
         {
-            url: `${baseUrl}/about`,
-            lastModified: currentDate,
-            changeFrequency: 'monthly' as const,
-            priority: 0.7,
-        },
-        {
             url: `${baseUrl}/setup-guide`,
-            lastModified: currentDate,
             changeFrequency: 'monthly' as const,
             priority: 0.7,
         },
         {
             url: `${baseUrl}/channels`,
-            lastModified: currentDate,
             changeFrequency: 'weekly' as const,
+            priority: 0.7,
+        },
+        {
+            url: `${baseUrl}/about`,
+            changeFrequency: 'monthly' as const,
             priority: 0.6,
+        },
+        {
+            url: `${baseUrl}/reseller`,
+            changeFrequency: 'monthly' as const,
+            priority: 0.6,
+        },
+        {
+            url: `${baseUrl}/contact`,
+            changeFrequency: 'monthly' as const,
+            priority: 0.5,
         },
     ];
 
@@ -52,23 +74,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const legalPages = [
         {
             url: `${baseUrl}/privacy-policy`,
-            lastModified: currentDate,
             changeFrequency: 'yearly' as const,
             priority: 0.2,
         },
         {
             url: `${baseUrl}/terms`,
-            lastModified: currentDate,
             changeFrequency: 'yearly' as const,
             priority: 0.2,
         },
     ];
 
-    // EXCLUDED FROM SITEMAP (sensitive pages):
-    // - / (homepage with pricing)
-    // - /pricing (money page)
+    // EXCLUDED FROM SITEMAP (non-indexable pages):
     // - /checkout
     // - /api/*
+    // - /admin
 
-    return [...blogPages, ...blogArticles, ...supportPages, ...legalPages];
+    return [...mainPages, ...blogArticles, ...supportPages, ...legalPages];
 }

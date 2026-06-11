@@ -7,16 +7,9 @@ export default function robots(): MetadataRoute.Robots {
                 userAgent: '*',
                 allow: [
                     '/',
-                    '/blog',
-                    '/setup-guide',
-                    '/channels',
-                    '/privacy-policy',
-                    '/terms',
                     '/_next/'
                 ],
                 disallow: [
-                    '/reseller',
-                    '/pricing',
                     '/checkout',
                     '/api/',
                     '/admin'

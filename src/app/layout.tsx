@@ -110,7 +110,7 @@ const jsonLd = {
   "@type": "Organization",
   name: siteConfig.name,
   url: siteConfig.url,
-  logo: `${siteConfig.url}/logo.png`,
+  logo: `${siteConfig.url}/images/logo.png`,
   description: "Premium IPTV Service with 20,000+ Live TV Channels and 120,000+ Movies & Series",
   contactPoint: {
     "@type": "ContactPoint",
@@ -133,32 +133,6 @@ const jsonLd = {
   ],
 };
 
-const productJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  name: "RabbitAI TV IPTV Subscription",
-  description: "Premium IPTV subscription with 20,000+ live channels and 120,000+ movies & series in 4K quality",
-  brand: {
-    "@type": "Brand",
-    name: siteConfig.name,
-  },
-  offers: {
-    "@type": "AggregateOffer",
-    priceCurrency: "USD",
-    lowPrice: "8.99",
-    highPrice: "49.99",
-    offerCount: "4",
-    availability: "https://schema.org/InStock",
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "2847",
-    bestRating: "5",
-    worstRating: "1",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -171,10 +145,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
         />
 
         {/* Google Analytics */}
@@ -223,7 +193,8 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/blog/iptv-trends-2026.jpg"
+          type="image/webp"
+          href="/images/blog/iptv-trends-2026.webp"
           fetchPriority="high"
         />
 

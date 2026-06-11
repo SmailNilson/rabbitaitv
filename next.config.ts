@@ -15,6 +15,14 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Canonical host: redirect non-www to www (Vercel serves both otherwise,
+      // creating duplicate pages for every URL)
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'rabbitaitv.com' }],
+        destination: 'https://www.rabbitaitv.com/:path*',
+        permanent: true,
+      },
       {
         source: '/index.php',
         destination: '/',
@@ -55,10 +63,10 @@ const nextConfig: NextConfig = {
         destination: '/blog',
         permanent: true,
       },
-      // Generic catch for any .php if nested
+      // Generic catch for any .php if nested: strip index.php, keep the path
       {
         source: '/:path*/index.php',
-        destination: '/',
+        destination: '/:path*',
         permanent: true,
       },
     ];
