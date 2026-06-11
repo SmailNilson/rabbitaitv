@@ -106,6 +106,7 @@ export const siteConfig = {
     navigation: [
         { name: "Home", href: "/" },
         { name: "Pricing", href: "/pricing" },
+        { name: "Free Trial", href: "/free-trial" },
         { name: "Setup Guide", href: "/setup-guide" },
         { name: "Channels List", href: "/channels" },
         { name: "Blog", href: "/blog" },
@@ -115,6 +116,7 @@ export const siteConfig = {
     footerNavigation: [
         { name: "Home", href: "/" },
         { name: "Pricing", href: "/pricing" },
+        { name: "Free Trial", href: "/free-trial" },
         { name: "Setup Guide", href: "/setup-guide" },
         { name: "Channels List", href: "/channels" },
         { name: "Blog", href: "/blog" },

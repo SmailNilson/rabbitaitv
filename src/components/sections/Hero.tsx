@@ -36,6 +36,9 @@ export function Hero() {
           <Link href="/pricing" className="btn-primary">
             Get Started
           </Link>
+          <Link href="/free-trial" className="btn-trial">
+            🎁 Free Trial
+          </Link>
           <a
             href={`https://api.whatsapp.com/send?phone=${siteConfig.contact.whatsapp}`}
             target="_blank"

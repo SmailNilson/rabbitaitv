@@ -578,6 +578,29 @@ main {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.btn-trial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #cb9500 0%, #f20732 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-trial:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(203, 149, 0, 0.35);
+  filter: brightness(1.1);
+}
+
 /* ======================================
    CONTAINER
 ====================================== */

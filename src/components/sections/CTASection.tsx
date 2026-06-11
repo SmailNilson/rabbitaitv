@@ -29,6 +29,9 @@ export default function CTASection() {
           <Link href="/pricing" className="btn-primary">
             Get Started Now →
           </Link>
+          <Link href="/free-trial" className="btn-trial">
+            🎁 Free Trial
+          </Link>
           <a
             href={siteConfig.contact.whatsappLink}
             target="_blank"
