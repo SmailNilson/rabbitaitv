@@ -33,6 +33,12 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      // Ghost article URL once discovered by Google but never published
+      {
+        source: '/blog/rabbitai-tv-premium-streaming',
+        destination: '/blog',
+        permanent: true,
+      },
       {
         source: '/channels-list/:path*',
         destination: '/channels',
