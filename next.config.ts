@@ -29,6 +29,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/index.html',
+        destination: '/',
+        permanent: true,
+      },
+      {
         source: '/channels-list/:path*',
         destination: '/channels',
         permanent: true,
@@ -63,9 +68,14 @@ const nextConfig: NextConfig = {
         destination: '/blog',
         permanent: true,
       },
-      // Generic catch for any .php if nested: strip index.php, keep the path
+      // Generic catch for any .php/.html if nested: strip index file, keep the path
       {
         source: '/:path*/index.php',
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*/index.html',
         destination: '/:path*',
         permanent: true,
       },
