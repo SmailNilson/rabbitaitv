@@ -6,6 +6,7 @@ import { PricingSection } from "@/components/sections/PricingSection";
 import { DevicesSection } from "@/components/sections/DevicesSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
 import CTASection from "@/components/sections/CTASection";
+import LatestArticles from "@/components/sections/LatestArticles";
 import { siteConfig } from "@/config/site";
 
 // Product schema on the homepage only, where the plans are actually displayed
@@ -42,6 +43,7 @@ export default function Home() {
       <SportsSection />
       <PricingSection />
       <DevicesSection />
+      <LatestArticles />
       <CTASection />
     </>
   );
