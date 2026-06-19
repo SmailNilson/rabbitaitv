@@ -147,6 +147,11 @@ export function Footer() {
         .footer-legal a:hover { color: #fff; }
         .footer-legal span { color: var(--text-dim); }
 
+        .footer :global(.footer-links a) { color: var(--text-muted); font-size: 0.9rem; transition: color 0.2s ease; display: inline-flex; align-items: center; gap: 0.55rem; }
+        .footer :global(.footer-links a):hover { color: #fff; }
+        .footer :global(.footer-legal a) { color: var(--text-dim); font-size: 0.85rem; transition: color 0.2s ease; }
+        .footer :global(.footer-legal a):hover { color: #fff; }
+
         @media (max-width: 900px) {
           .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
         }

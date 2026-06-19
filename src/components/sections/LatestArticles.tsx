@@ -241,6 +241,71 @@ export default function LatestArticles() {
           border-color: var(--primary);
           background: var(--surface);
         }
+
+        /* :global corrections: rules whose ancestor class lives on a <Link> */
+        .latest-articles :global(.article-card) .article-image {
+          position: relative;
+          aspect-ratio: 16 / 9;
+          overflow: hidden;
+        }
+
+        .latest-articles :global(.article-card) .article-body {
+          padding: 1.25rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.6rem;
+          flex: 1;
+        }
+
+        .latest-articles :global(.article-card) .article-pill {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          color: var(--text-dim);
+          font-size: 0.75rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+        }
+
+        .latest-articles :global(.article-card) .article-body h3 {
+          font-family: var(--font-heading);
+          color: var(--text);
+          font-size: 1.05rem;
+          font-weight: 600;
+          line-height: 1.4;
+          margin: 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .latest-articles :global(.article-card) .article-body p {
+          color: var(--text-muted);
+          font-size: 0.9rem;
+          line-height: 1.55;
+          margin: 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .latest-articles :global(.article-card) .read-more {
+          margin-top: auto;
+          padding-top: 0.4rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          color: var(--primary);
+          font-size: 0.875rem;
+          font-weight: 600;
+        }
+
+        .latest-articles :global(.article-card) .arrow {
+          transition: transform 0.25s ease;
+        }
       `}</style>
     </section>
   );

@@ -455,6 +455,38 @@ export default function BlogPage() {
                         padding: 1.5rem;
                     }
                 }
+
+                /* styled-jsx does not scope <Link>/<Image> components, so target
+                   those classes via :global() under the scoped .blog-wrapper. */
+                .blog-wrapper :global(.featured-card) {
+                    display: grid;
+                    grid-template-columns: 1.25fr 1fr;
+                    overflow: hidden;
+                    padding: 0;
+                    margin-bottom: 2rem;
+                }
+                .blog-wrapper :global(.article-card) {
+                    display: flex;
+                    flex-direction: column;
+                    overflow: hidden;
+                    padding: 0;
+                }
+                .blog-wrapper :global(.cover-image) {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                }
+                .blog-wrapper :global(.featured-card):hover,
+                .blog-wrapper :global(.article-card):hover {
+                    transform: translateY(-4px);
+                    border-color: rgba(255, 255, 255, 0.17);
+                }
+                @media (max-width: 880px) {
+                    .blog-wrapper :global(.featured-card) {
+                        grid-template-columns: 1fr;
+                    }
+                }
             `}</style>
         </div>
     );
