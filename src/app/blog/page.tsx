@@ -30,6 +30,24 @@ function formatDate(dateString: string): string {
     });
 }
 
+function ArrowIcon() {
+    return (
+        <svg
+            className="arrow-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+        >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+        </svg>
+    );
+}
+
 export default function BlogPage() {
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -51,250 +69,328 @@ export default function BlogPage() {
         window.scrollTo({ top: 300, behavior: 'smooth' });
     };
 
+    // On the first page, the most recent article becomes a wide hero card.
+    const featured = currentPage === 1 ? paginatedArticles[0] : undefined;
+    const gridArticles = featured ? paginatedArticles.slice(1) : paginatedArticles;
+
     return (
         <div className="blog-wrapper">
-            {/* Hero Section */}
-            <section className="hero-section">
-                <div className="container">
-                    <span className="badge">📚 Blog</span>
-                    <h1 className="headline">
-                        IPTV <span className="gradient-text">Guides & Tips</span>
-                    </h1>
-                    <p className="subheadline">
-                        Learn how to get the most out of your IPTV subscription with our
-                        comprehensive guides and tutorials.
+            <main className="container">
+                {/* Header */}
+                <header className="blog-header">
+                    <span className="eyebrow">Blog</span>
+                    <h1 className="blog-title">Guides, news &amp; tips</h1>
+                    <p className="blog-subtitle">
+                        Get the most out of your IPTV subscription with our in-depth guides,
+                        tutorials, and the latest streaming news.
                     </p>
-                </div>
-            </section>
+                </header>
 
-            {/* Articles Grid */}
-            <section className="articles-section">
-                <div className="container">
-                    <div className="articles-grid">
-                        {paginatedArticles.map((article) => (
-                            <Link
-                                key={article.id}
-                                href={`/blog/${article.slug}`}
-                                className="article-card"
-                            >
-                                <div className="article-image">
-                                    {article.image ? (
-                                        <div className="card-image-container">
-                                            <Image
-                                                src={article.image}
-                                                alt={article.title}
-                                                fill
-                                                className="card-main-image"
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                priority={articles.indexOf(article) < 2}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div className="image-placeholder">
-                                            <span>📄</span>
-                                        </div>
-                                    )}
-                                    <span className="category-badge">{article.category}</span>
-                                </div>
-                                <div className="article-content">
-                                    <div className="article-meta">
-                                        <span>{formatDate(article.publishedAt)}</span>
-                                        <span>•</span>
-                                        <span>{article.readTime} read</span>
-                                    </div>
-                                    <h2 className="article-title">{article.title}</h2>
-                                    <p className="article-excerpt">{article.excerpt}</p>
-                                    <span className="read-more">Read article →</span>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-
-                    {/* Pagination Controls */}
-                    {totalPages > 1 && (
-                        <div className="pagination">
-                            <button
-                                className="page-btn prev"
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                ← Prev
-                            </button>
-
-                            <div className="page-numbers">
-                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                                    <button
-                                        key={page}
-                                        className={`page-number ${currentPage === page ? 'active' : ''}`}
-                                        onClick={() => handlePageChange(page)}
-                                    >
-                                        {page}
-                                    </button>
-                                ))}
-                            </div>
-
-                            <button
-                                className="page-btn next"
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                            >
-                                Next →
-                            </button>
+                {/* Featured hero card */}
+                {featured && (
+                    <Link
+                        href={`/blog/${featured.slug}`}
+                        className="card featured-card"
+                    >
+                        <div className="featured-media">
+                            <Image
+                                src={featured.image}
+                                alt={featured.title}
+                                width={760}
+                                height={428}
+                                className="cover-image"
+                                sizes="(max-width: 880px) 100vw, 60vw"
+                                priority
+                            />
                         </div>
-                    )}
+                        <div className="featured-body">
+                            <div className="meta-row">
+                                <span className="pill">{featured.category}</span>
+                                <span className="meta-date">
+                                    {formatDate(featured.publishedAt)} · {featured.readTime} read
+                                </span>
+                            </div>
+                            <h2 className="featured-headline">{featured.title}</h2>
+                            <p className="excerpt featured-excerpt">{featured.excerpt}</p>
+                            <span className="read-more">
+                                Read more <ArrowIcon />
+                            </span>
+                        </div>
+                    </Link>
+                )}
+
+                {/* Articles grid */}
+                <div className="articles-grid">
+                    {gridArticles.map((article) => (
+                        <Link
+                            key={article.id}
+                            href={`/blog/${article.slug}`}
+                            className="card article-card"
+                        >
+                            <div className="card-media">
+                                <Image
+                                    src={article.image}
+                                    alt={article.title}
+                                    width={400}
+                                    height={225}
+                                    className="cover-image"
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                />
+                            </div>
+                            <div className="card-body">
+                                <div className="meta-row">
+                                    <span className="pill">{article.category}</span>
+                                    <span className="meta-date">
+                                        {formatDate(article.publishedAt)}
+                                    </span>
+                                </div>
+                                <h2 className="card-title">{article.title}</h2>
+                                <p className="excerpt">{article.excerpt}</p>
+                                <span className="read-more">
+                                    Read more <ArrowIcon />
+                                </span>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
-            </section>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <div className="pagination">
+                        <button
+                            className="page-btn"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        >
+                            Prev
+                        </button>
+
+                        <div className="page-numbers">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                <button
+                                    key={page}
+                                    className={`page-number ${currentPage === page ? 'active' : ''}`}
+                                    onClick={() => handlePageChange(page)}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+                        </div>
+
+                        <button
+                            className="page-btn"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
+            </main>
 
             <CTASection />
 
             <style jsx>{`
                 .blog-wrapper {
-                    background: #0D0D0D;
-                    color: white;
+                    background: var(--background);
+                    color: var(--text);
                     min-height: 100vh;
                 }
 
-                .container {
-                    max-width: 1200px;
-                    margin: 0 auto;
-                    padding: 0 1.5rem;
-                }
-
-                /* Hero Section */
-                .hero-section {
-                    padding: 140px 0 60px;
+                /* Header */
+                .blog-header {
                     text-align: center;
-                    background: radial-gradient(circle at top center, rgba(242, 7, 50, 0.1) 0%, transparent 70%);
-                }
-
-                .badge {
-                    display: inline-block;
-                    background: rgba(242, 7, 50, 0.1);
-                    color: #F20732;
-                    padding: 0.5rem 1.25rem;
-                    border-radius: 50px;
-                    font-size: 0.875rem;
-                    font-weight: 600;
-                    margin-bottom: 1.5rem;
-                    border: 1px solid rgba(242, 7, 50, 0.2);
-                }
-
-                .headline {
-                    font-size: clamp(2.5rem, 8vw, 4rem);
-                    font-weight: 800;
-                    margin-bottom: 1rem;
-                    line-height: 1.1;
-                }
-
-                .gradient-text {
-                    background: linear-gradient(135deg, #CB9500 0%, #F20732 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                }
-
-                .subheadline {
-                    font-size: 1.15rem;
-                    color: rgba(255, 255, 255, 0.6);
-                    max-width: 600px;
+                    max-width: 640px;
                     margin: 0 auto;
+                    padding: 1rem 0 3rem;
+                }
+
+                .blog-header .eyebrow {
+                    margin-bottom: 1rem;
+                }
+
+                .blog-title {
+                    font-family: var(--font-heading);
+                    font-size: clamp(2.25rem, 6vw, 3.5rem);
+                    font-weight: 700;
+                    line-height: 1.08;
+                    margin: 0 0 1rem;
+                }
+
+                .blog-subtitle {
+                    color: var(--text-muted);
+                    font-size: 1.1rem;
                     line-height: 1.6;
+                    margin: 0;
                 }
 
-                /* Articles Grid */
-                .articles-section {
-                    padding: 40px 0 80px;
-                }
-
-                .articles-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-                    gap: 2rem;
-                }
-
-                .article-card {
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 20px;
-                    overflow: hidden;
-                    text-decoration: none;
-                    transition: all 0.3s ease;
-                    display: block;
-                }
-
-                .article-card:hover {
-                    transform: translateY(-5px);
-                    border-color: rgba(242, 7, 50, 0.3);
-                    box-shadow: 0 20px 40px rgba(242, 7, 50, 0.1);
-                }
-
-                .article-image {
-                    height: 200px;
-                    background: linear-gradient(135deg, rgba(203, 149, 0, 0.2), rgba(242, 7, 50, 0.2));
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    position: relative;
-                }
-
-                .image-placeholder {
-                    font-size: 4rem;
-                }
-
-                .card-main-image {
+                /* Shared card media + cover */
+                .cover-image {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                    display: block;
                     transition: transform 0.5s ease;
                 }
 
-                .article-card:hover .card-main-image {
-                    transform: scale(1.05);
-                }
-
-                .category-badge {
-                    position: absolute;
-                    top: 1rem;
-                    left: 1rem;
-                    background: #F20732;
-                    color: white;
-                    padding: 0.35rem 0.75rem;
-                    border-radius: 20px;
-                    font-size: 0.75rem;
-                    font-weight: 600;
-                }
-
-                .article-content {
-                    padding: 1.5rem;
-                }
-
-                .article-meta {
+                .meta-row {
                     display: flex;
-                    gap: 0.5rem;
-                    color: rgba(255, 255, 255, 0.5);
-                    font-size: 0.85rem;
-                    margin-bottom: 0.75rem;
+                    align-items: center;
+                    gap: 0.75rem;
+                    flex-wrap: wrap;
+                    margin-bottom: 0.85rem;
                 }
 
-                .article-title {
-                    font-size: 1.25rem;
-                    font-weight: 700;
-                    color: white;
-                    margin-bottom: 0.75rem;
-                    line-height: 1.4;
+                .pill {
+                    display: inline-block;
+                    background: var(--primary-soft);
+                    color: var(--primary);
+                    padding: 0.3rem 0.7rem;
+                    border-radius: 999px;
+                    font-size: 0.72rem;
+                    font-weight: 600;
+                    letter-spacing: 0.02em;
+                    text-transform: uppercase;
                 }
 
-                .article-excerpt {
-                    color: rgba(255, 255, 255, 0.6);
+                .meta-date {
+                    color: var(--text-dim);
+                    font-size: 0.82rem;
+                }
+
+                .excerpt {
+                    color: var(--text-muted);
                     font-size: 0.95rem;
                     line-height: 1.6;
-                    margin-bottom: 1rem;
+                    margin: 0 0 1.1rem;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
                 }
 
                 .read-more {
-                    color: #F20732;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                    color: var(--primary);
                     font-weight: 600;
-                    font-size: 0.95rem;
+                    font-size: 0.92rem;
+                }
+
+                .arrow-icon {
+                    width: 16px;
+                    height: 16px;
+                    transition: transform 0.25s ease;
+                }
+
+                .card:hover .arrow-icon {
+                    transform: translateX(3px);
+                }
+
+                /* Featured hero card */
+                .featured-card {
+                    display: grid;
+                    grid-template-columns: 1.25fr 1fr;
+                    overflow: hidden;
+                    text-decoration: none;
+                    color: inherit;
+                    margin-bottom: 2rem;
+                    transition: transform 0.3s ease, border-color 0.3s ease;
+                    padding: 0;
+                }
+
+                .featured-card:hover {
+                    transform: translateY(-4px);
+                    border-color: var(--border-strong);
+                }
+
+                .featured-media {
+                    position: relative;
+                    aspect-ratio: 16 / 9;
+                    overflow: hidden;
+                }
+
+                .featured-card:hover .cover-image {
+                    transform: scale(1.04);
+                }
+
+                .featured-body {
+                    padding: 2rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                .featured-headline {
+                    font-family: var(--font-heading);
+                    font-size: clamp(1.5rem, 2.5vw, 2rem);
+                    font-weight: 700;
+                    line-height: 1.2;
+                    margin: 0 0 0.9rem;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+
+                .featured-excerpt {
+                    font-size: 1rem;
+                }
+
+                /* Articles grid */
+                .articles-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 1.5rem;
+                }
+
+                .article-card {
+                    display: flex;
+                    flex-direction: column;
+                    overflow: hidden;
+                    text-decoration: none;
+                    color: inherit;
+                    transition: transform 0.3s ease, border-color 0.3s ease;
+                    padding: 0;
+                }
+
+                .article-card:hover {
+                    transform: translateY(-4px);
+                    border-color: var(--border-strong);
+                }
+
+                .card-media {
+                    position: relative;
+                    aspect-ratio: 16 / 9;
+                    overflow: hidden;
+                }
+
+                .article-card:hover .cover-image {
+                    transform: scale(1.04);
+                }
+
+                .card-body {
+                    padding: 1.35rem;
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                }
+
+                .card-title {
+                    font-family: var(--font-heading);
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    line-height: 1.32;
+                    margin: 0 0 0.7rem;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+
+                .card-body .read-more {
+                    margin-top: auto;
                 }
 
                 /* Pagination */
@@ -302,62 +398,58 @@ export default function BlogPage() {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    gap: 1.5rem;
-                    margin-top: 4rem;
+                    gap: 1rem;
+                    margin: 3.5rem 0 1rem;
+                    flex-wrap: wrap;
                 }
 
                 .page-numbers {
                     display: flex;
-                    gap: 0.5rem;
+                    gap: 0.45rem;
+                    flex-wrap: wrap;
                 }
 
-                .page-btn, .page-number {
-                    background: rgba(255, 255, 255, 0.05);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    color: white;
-                    padding: 0.75rem 1.25rem;
-                    border-radius: 12px;
+                .page-btn,
+                .page-number {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    color: var(--text);
+                    padding: 0.65rem 1.1rem;
+                    border-radius: 10px;
                     font-weight: 600;
+                    font-size: 0.9rem;
                     cursor: pointer;
-                    transition: all 0.3s ease;
+                    transition: all 0.25s ease;
                 }
 
                 .page-number {
-                    padding: 0.75rem 1rem;
-                    min-width: 45px;
+                    padding: 0.65rem 0.95rem;
+                    min-width: 44px;
                 }
 
-                .page-btn:hover:not(:disabled), .page-number:hover {
-                    background: rgba(242, 7, 50, 0.1);
-                    border-color: #F20732;
-                    color: #F20732;
+                .page-btn:hover:not(:disabled),
+                .page-number:hover {
+                    border-color: var(--border-strong);
+                    color: var(--primary);
                 }
 
                 .page-number.active {
-                    background: #F20732;
-                    border-color: #F20732;
-                    color: white;
-                    box-shadow: 0 10px 20px rgba(242, 7, 50, 0.3);
+                    background: var(--primary);
+                    border-color: var(--primary);
+                    color: #fff;
                 }
 
                 .page-btn:disabled {
-                    opacity: 0.3;
+                    opacity: 0.35;
                     cursor: not-allowed;
                 }
 
-                @media (max-width: 768px) {
-                    .articles-grid {
+                @media (max-width: 880px) {
+                    .featured-card {
                         grid-template-columns: 1fr;
                     }
-                    .hero-section {
-                        padding: 120px 0 40px;
-                    }
-                    .pagination {
-                        flex-direction: column;
-                        gap: 1rem;
-                    }
-                    .page-numbers {
-                        order: -1;
+                    .featured-body {
+                        padding: 1.5rem;
                     }
                 }
             `}</style>

@@ -1,267 +1,238 @@
 'use client';
 
-import { useState } from 'react';
+import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 
-const features = [
-  '+ 20K Live TV Channel',
-  '+ 120K Movies & Series',
-  'Updated Movies & Series',
-  'SD / HD / FULL HD / 4K',
-  'Netflix / Disney+ / HBO',
-  'NBA, NFL, MLB, ESPN+',
-  'Adults Option',
-];
-
-// Base prices for 1 device
-const basePrices = [
-  { duration: 1, name: '1 MONTH', price: 8.99 },
-  { duration: 3, name: '3 MONTHS', price: 24.99 },
-  { duration: 6, name: '6 MONTHS', price: 39.99 },
-  { duration: 12, name: '12 MONTHS', price: 49.99, popular: true },
-];
-
-// Price multipliers for additional devices
-const deviceMultipliers: { [key: number]: number } = {
-  1: 1,
-  2: 1.8,
-  3: 2.5,
-  4: 3.2,
-  5: 3.8,
-};
-
 export function PricingSection() {
-  const [selectedDevices, setSelectedDevices] = useState(1);
-
-  const getPrice = (basePrice: number) => {
-    const calculated = (basePrice * deviceMultipliers[selectedDevices]).toFixed(2);
-    return parseFloat(calculated) < 10 ? `0${calculated}` : calculated;
-  };
-
   return (
-    <section className="pricing-section">
+    <section className="pricing-section" aria-labelledby="pricing-heading">
       <div className="container">
-        {/* Device Selector Tabs */}
-        <div className="device-tabs">
-          {[1, 2, 3, 4, 5].map((deviceCount) => (
-            <button
-              key={deviceCount}
-              className={`device-tab ${selectedDevices === deviceCount ? 'active' : ''}`}
-              onClick={() => setSelectedDevices(deviceCount)}
-            >
-              {deviceCount} DEVICE{deviceCount > 1 ? 'S' : ''}
-            </button>
-          ))}
-        </div>
+        <header className="pricing-header">
+          <p className="eyebrow">Plans</p>
+          <h2 id="pricing-heading" className="title">Pick your plan</h2>
+          <p className="subtitle">Cancel anytime · 30-day money-back guarantee.</p>
+        </header>
 
-        {/* Pricing Grid */}
         <div className="pricing-grid">
-          {basePrices.map((plan, index) => (
-            <div
-              key={plan.duration}
-              className={`pricing-card ${plan.popular ? 'popular' : ''}`}
-            >
-              {plan.popular && <div className="popular-badge">Le plus populaire</div>}
-
-              <h3 className="plan-duration">{plan.name}</h3>
-              <div className="plan-price">{getPrice(plan.price)} $</div>
-              <p className="plan-tagline">Everything You Get With Premium, Plus :</p>
-
-              <ul className="features-list">
-                {features.map((feature, i) => (
-                  <li key={i}>
-                    <span className="check-icon">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href={`https://api.whatsapp.com/send?phone=${siteConfig.contact.whatsapp}&text=Hi! I'm interested in the ${plan.name} plan for ${selectedDevices} device(s) at $${getPrice(plan.price)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="select-btn"
+          {siteConfig.plans.map((plan) => {
+            const monthly = (plan.price / plan.duration).toFixed(2);
+            return (
+              <div
+                key={plan.id}
+                className={`plan-card ${plan.popular ? 'popular' : ''}`}
               >
-                Select
-              </a>
-            </div>
-          ))}
+                {plan.popular && (
+                  <span className="popular-badge">Most popular</span>
+                )}
+
+                <h3 className="plan-name">{plan.name}</h3>
+
+                <div className="price-block">
+                  <span className="original-price">${plan.originalPrice}</span>
+                  <span className="current-price">${plan.price}</span>
+                  <span className="monthly-price">${monthly} / month</span>
+                </div>
+
+                <span className="save-chip">Save 50%</span>
+
+                <ul className="features">
+                  {plan.features.map((feature, i) => (
+                    <li key={i}>
+                      <svg
+                        className="check"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M20 6L9 17l-5-5"
+                          stroke="var(--primary)"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href="/free-trial"
+                  className={plan.popular ? 'btn-primary' : 'btn-ghost'}
+                >
+                  {plan.popular ? 'Start now' : 'Choose plan'}
+                </Link>
+              </div>
+            );
+          })}
         </div>
+
+        <p className="pricing-note">
+          Prices are per connection. Need more screens at once? Message us on WhatsApp.
+        </p>
       </div>
 
       <style jsx>{`
         .pricing-section {
-          padding: 4rem 1.5rem;
-          background: #0D0D0D;
+          padding: 5rem 1.5rem;
+          background: var(--background);
         }
-        
+
         .container {
-          max-width: 1300px;
+          max-width: var(--container-max, 1200px);
           margin: 0 auto;
         }
-        
-        .device-tabs {
-          display: flex;
-          justify-content: center;
-          gap: 0.5rem;
+
+        .pricing-header {
+          text-align: center;
           margin-bottom: 3rem;
-          flex-wrap: wrap;
         }
-        
-        .device-tab {
-          padding: 0.75rem 1.5rem;
-          border: 2px solid #333;
-          background: transparent;
-          color: white;
-          font-size: 0.9rem;
+
+        .eyebrow {
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          font-size: 0.8rem;
           font-weight: 600;
-          cursor: pointer;
-          border-radius: 8px;
-          transition: all 0.3s ease;
+          color: var(--primary);
+          margin: 0 0 0.75rem;
         }
-        
-        .device-tab:hover {
-          border-color: #F20732;
-          color: #F20732;
+
+        .title {
+          font-family: var(--font-heading);
+          font-size: clamp(1.9rem, 4vw, 2.6rem);
+          font-weight: 800;
+          color: var(--text);
+          margin: 0 0 0.75rem;
         }
-        
-        .device-tab.active {
-          background: #F20732;
-          border-color: #F20732;
-          color: white;
+
+        .subtitle {
+          color: var(--text-muted);
+          font-size: 1rem;
+          margin: 0;
         }
-        
+
         .pricing-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1.5rem;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 1rem;
+          align-items: stretch;
         }
-        
-        .pricing-card {
-          background: #FFFFFF;
-          border-radius: 20px;
-          padding: 2.5rem 2rem;
-          text-align: center;
+
+        .plan-card {
           position: relative;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          display: flex;
+          flex-direction: column;
+          background: var(--card);
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          padding: 1.25rem;
         }
-        
-        .pricing-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+        .plan-card.popular {
+          border: 2px solid var(--primary);
+          background: rgba(242, 7, 50, 0.06);
         }
-        
-        .pricing-card.popular {
-          transform: scale(1.05);
-          z-index: 10;
-        }
-        
-        .pricing-card.popular:hover {
-          transform: scale(1.05) translateY(-5px);
-        }
-        
+
         .popular-badge {
           position: absolute;
-          top: -15px;
+          top: -0.75rem;
           left: 50%;
           transform: translateX(-50%);
-          background: #F20732;
-          color: white;
-          padding: 0.5rem 1.5rem;
-          border-radius: 25px;
+          background: var(--primary);
+          color: #fff;
+          font-size: 0.72rem;
+          font-weight: 700;
+          padding: 0.3rem 0.85rem;
+          border-radius: 999px;
+          white-space: nowrap;
+          letter-spacing: 0.02em;
+        }
+
+        .plan-name {
+          font-family: var(--font-heading);
+          font-size: 1.05rem;
+          font-weight: 700;
+          color: var(--text);
+          margin: 0.25rem 0 1rem;
+        }
+
+        .price-block {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+          margin-bottom: 0.85rem;
+        }
+
+        .original-price {
+          color: var(--text-dim);
+          text-decoration: line-through;
+          font-size: 0.9rem;
+        }
+
+        .current-price {
+          font-family: var(--font-heading);
+          font-weight: 800;
+          font-size: 1.7rem;
+          color: var(--text);
+          line-height: 1.1;
+        }
+
+        .monthly-price {
+          color: var(--gold);
           font-size: 0.85rem;
           font-weight: 600;
-          white-space: nowrap;
-          box-shadow: 0 4px 6px rgba(242, 7, 50, 0.3);
         }
-        
-        .plan-duration {
-          color: #1a1a1a;
-          font-size: 1.5rem;
-          font-weight: 500;
-          margin-bottom: 0.5rem;
-          text-transform: uppercase;
-          letter-spacing: 1px;
+
+        .save-chip {
+          align-self: flex-start;
+          background: var(--gold-soft);
+          color: var(--gold);
+          font-size: 0.72rem;
+          font-weight: 700;
+          padding: 0.25rem 0.6rem;
+          border-radius: 999px;
+          margin-bottom: 1.1rem;
         }
-        
-        .plan-price {
-          color: #1a1a1a;
-          font-size: 2.5rem;
-          font-weight: 500;
-          margin-bottom: 1.5rem;
-        }
-        
-        .plan-tagline {
-          color: #333;
-          font-size: 0.9rem;
-          margin-bottom: 2rem;
-          line-height: 1.5;
-          text-align: left;
-        }
-        
-        .features-list {
+
+        .features {
           list-style: none;
           padding: 0;
-          margin: 0 0 2rem 0;
-          text-align: left;
-        }
-        
-        .features-list li {
-          color: #1a1a1a;
-          padding: 0.4rem 0;
-          font-size: 0.85rem;
+          margin: 0 0 1.5rem;
           display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          font-weight: 600;
+          flex-direction: column;
+          gap: 0.6rem;
         }
-        
-        .check-icon {
-          color: #1a1a1a;
-          font-weight: bold;
-          font-size: 1.1rem;
+
+        .features li {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.55rem;
+          color: var(--text-muted);
+          font-size: 0.88rem;
+          line-height: 1.4;
         }
-        
-        .select-btn {
-          display: block;
+
+        .check {
+          flex-shrink: 0;
+          margin-top: 0.1rem;
+        }
+
+        .plan-card :global(.btn-primary),
+        .plan-card :global(.btn-ghost) {
           width: 100%;
-          padding: 0.875rem 2rem;
-          background: #F20732;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          font-size: 1rem;
-          font-weight: 600;
-          cursor: pointer;
-          text-decoration: none;
+          margin-top: auto;
           text-align: center;
-          transition: all 0.3s ease;
         }
-        
-        .select-btn:hover {
-          background: #d10629;
-          transform: scale(1.02);
-        }
-        
-        @media (max-width: 1024px) {
-          .pricing-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-        
-        @media (max-width: 640px) {
-          .pricing-grid {
-            grid-template-columns: 1fr;
-          }
-          
-          .device-tabs {
-            gap: 0.5rem;
-          }
-          
-          .device-tab {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-          }
+
+        .pricing-note {
+          text-align: center;
+          color: var(--text-dim);
+          font-size: 0.8rem;
+          margin: 2rem auto 0;
+          max-width: 38rem;
         }
       `}</style>
     </section>

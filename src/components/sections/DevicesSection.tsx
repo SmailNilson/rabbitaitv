@@ -1,88 +1,75 @@
 'use client';
 
-import Image from 'next/image';
+import { siteConfig } from '@/config/site';
+import type { JSX } from 'react';
 
-const deviceTypes = [
-    { icon: '/images/devices/Web1-3.png', name: 'Windows & Mac' },
-    { icon: '/images/devices/Mobile1-4.png', name: 'iOS and Android' },
-    { icon: '/images/devices/Roku-2.png', name: 'Roku' },
-    { icon: '/images/devices/Firetv-2.png', name: 'Fire TV\nSelect Models' },
-];
+type IconKind = 'monitor' | 'phone' | 'tv' | 'flame';
 
-const deviceBrands = [
-    { icon: '/images/devices/Samsung-1.png', name: 'SAMSUNG', subtext: 'Select TV Models' },
-    { icon: '/images/devices/Android-2.png', name: 'androidtv', subtext: '' },
-    { icon: '/images/devices/LG-2.png', name: 'LG', subtext: 'Select TV Models' },
-    { icon: '/images/devices/Vizio-2.png', name: 'VIZIO', subtext: 'Select Models' },
-    { icon: '/images/devices/Appletv-1.png', name: 'Apple TV', subtext: 'Select TV Models' },
-];
+// Map each device (by name) to a clean line icon.
+function iconKindFor(name: string): IconKind {
+    const n = name.toLowerCase();
+    if (n.includes('windows') || n.includes('mac')) return 'monitor';
+    if (n.includes('ios') || n.includes('android') && !n.includes('tv')) return 'phone';
+    if (n.includes('fire')) return 'flame';
+    return 'tv';
+}
 
-const deviceBrands2 = [
-    { icon: '/images/devices/Hisense1-2.png', name: 'Hisense', subtext: 'Select Devices' },
-    { icon: '/images/devices/Cox-1.png', name: 'COX', subtext: 'Select Devices' },
-    { icon: '/images/devices/Xfinity-1.png', name: 'Xfinity', subtext: 'Select Devices' },
-    { icon: '/images/devices/Firetv-2.png', name: 'fire tv', subtext: 'Select Models' },
-];
+const icons: Record<IconKind, JSX.Element> = {
+    monitor: (
+        <>
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <path d="M8 21h8M12 17v4" />
+        </>
+    ),
+    phone: (
+        <>
+            <rect x="6" y="2" width="12" height="20" rx="2.5" />
+            <path d="M11 18h2" />
+        </>
+    ),
+    tv: (
+        <>
+            <rect x="2" y="6" width="20" height="13" rx="2" />
+            <path d="M8 3l4 3 4-3" />
+        </>
+    ),
+    flame: (
+        <>
+            <path d="M12 2c1 3-1.5 4-1.5 6.5A2.5 2.5 0 0012 11a2.5 2.5 0 002.5-2.5C14.5 7 14 6 14 6c2 1.5 3 3.8 3 6a5 5 0 11-10 0c0-3 2-5 3-7 .8-1.5 1.5-2 2-3z" />
+        </>
+    ),
+};
 
 export function DevicesSection() {
     return (
         <section className="devices-section">
             <div className="container">
-                <h2 className="section-title">Multi-Device Streaming Made Easy</h2>
-                <p className="section-subtitle">
-                    Enjoy on 5 devices at once and set up 6 user profiles — perfect for families, with built-in parental controls.
-                </p>
+                <div className="header">
+                    <span className="eyebrow">Compatibility</span>
+                    <h2 className="section-title">Works on everything you own</h2>
+                    <p className="section-subtitle">
+                        Set up in minutes on any screen in your home.
+                    </p>
+                </div>
 
-                {/* Primary Devices */}
-                <div className="devices-row primary">
-                    {deviceTypes.map((device, index) => (
-                        <div key={index} className="device-item">
-                            <div className="device-icon">
-                                <Image
-                                    src={device.icon}
-                                    alt={device.name}
-                                    width={40}
-                                    height={40}
-                                    style={{ objectFit: 'contain' }}
-                                />
-                            </div>
+                <div className="device-grid">
+                    {siteConfig.devices.map((device) => (
+                        <div key={device.name} className="device-card">
+                            <svg
+                                className="device-icon"
+                                viewBox="0 0 24 24"
+                                width="28"
+                                height="28"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
+                                {icons[iconKindFor(device.name)]}
+                            </svg>
                             <span className="device-name">{device.name}</span>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Brand Devices Row 1 */}
-                <div className="devices-row brands">
-                    {deviceBrands.map((device, index) => (
-                        <div key={index} className="device-brand">
-                            <div className="brand-icon">
-                                <Image
-                                    src={device.icon}
-                                    alt={device.name}
-                                    width={80}
-                                    height={30}
-                                    style={{ objectFit: 'contain' }}
-                                />
-                            </div>
-                            {device.subtext && <span className="brand-subtext">{device.subtext}</span>}
-                        </div>
-                    ))}
-                </div>
-
-                {/* Brand Devices Row 2 */}
-                <div className="devices-row brands">
-                    {deviceBrands2.map((device, index) => (
-                        <div key={index} className="device-brand">
-                            <div className="brand-icon">
-                                <Image
-                                    src={device.icon}
-                                    alt={device.name}
-                                    width={80}
-                                    height={30}
-                                    style={{ objectFit: 'contain' }}
-                                />
-                            </div>
-                            {device.subtext && <span className="brand-subtext">{device.subtext}</span>}
                         </div>
                     ))}
                 </div>
@@ -90,84 +77,79 @@ export function DevicesSection() {
 
             <style jsx>{`
         .devices-section {
-          padding: 4rem 1.5rem;
-          background: #0D0D0D;
+          padding: 5rem 1.5rem;
+          background: var(--background);
         }
-        
+
         .container {
-          max-width: 1000px;
+          max-width: var(--container-max);
           margin: 0 auto;
-          text-align: center;
         }
-        
+
+        .header {
+          text-align: center;
+          max-width: 640px;
+          margin: 0 auto 3rem;
+        }
+
+        .eyebrow {
+          display: inline-block;
+          color: var(--gold);
+          font-size: 0.8rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          margin-bottom: 0.75rem;
+        }
+
         .section-title {
-          color: white;
-          font-size: clamp(1.5rem, 3vw, 2rem);
-          margin-bottom: 1rem;
+          font-family: var(--font-heading);
+          color: var(--text);
+          font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+          line-height: 1.15;
+          margin: 0 0 0.75rem;
         }
-        
+
         .section-subtitle {
-          color: rgba(255, 255, 255, 0.7);
+          color: var(--text-muted);
           font-size: 1rem;
-          margin-bottom: 3rem;
-          max-width: 700px;
-          margin-left: auto;
-          margin-right: auto;
+          margin: 0;
         }
-        
-        .devices-row {
+
+        .device-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 1rem;
+        }
+
+        .device-card {
           display: flex;
+          flex-direction: column;
+          align-items: center;
           justify-content: center;
-          flex-wrap: wrap;
-          gap: 2rem;
-          margin-bottom: 2rem;
-        }
-        
-        .devices-row.primary {
-          margin-bottom: 3rem;
-        }
-        
-        .device-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        
-        .device-icon {
-          filter: brightness(0) invert(1);
-          opacity: 0.9;
-        }
-        
-        .device-name {
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 0.85rem;
-          white-space: pre-line;
+          gap: 0.75rem;
           text-align: center;
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          padding: 1.25rem 1rem;
+          transition: border-color 0.2s ease, transform 0.2s ease;
         }
-        
-        .device-brand {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.25rem;
-          min-width: 100px;
+
+        .device-card:hover {
+          border-color: var(--border-strong);
+          transform: translateY(-2px);
         }
-        
-        .brand-icon {
-          filter: brightness(0) invert(1);
-          opacity: 0.9;
+
+        .device-icon {
+          color: rgba(255, 255, 255, 0.85);
+          flex-shrink: 0;
         }
-        
-        .brand-subtext {
-          color: rgba(255, 255, 255, 0.5);
-          font-size: 0.75rem;
-        }
-        
-        @media (max-width: 768px) {
-          .devices-row {
-            gap: 1.5rem;
-          }
+
+        .device-name {
+          color: var(--text-muted);
+          font-size: 0.85rem;
+          line-height: 1.3;
         }
       `}</style>
         </section>

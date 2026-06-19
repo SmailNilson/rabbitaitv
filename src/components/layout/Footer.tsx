@@ -5,232 +5,156 @@ import Image from 'next/image';
 import { siteConfig } from '@/config/site';
 
 export function Footer() {
-    return (
-        <footer className="footer">
-            <div className="container">
-                <div className="footer-grid">
-                    {/* Logo & Description */}
-                    <div className="footer-brand">
-                        <Image
-                            src="/images/logo.png"
-                            alt="Rabbit IPTV"
-                            width={140}
-                            height={40}
-                            style={{ objectFit: 'contain' }}
-                        />
-                        <p>
-                            Experience premium IPTV streaming with over 120K+ channels,
-                            movies, and series. The best entertainment at affordable prices.
-                        </p>
-                    </div>
+  return (
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Image src="/images/logo.png" alt="RabbitAI TV" width={140} height={36} style={{ objectFit: 'contain' }} />
+            <p>
+              Premium 4K IPTV — 20,000+ live channels and 120,000+ movies &amp; series,
+              streamed to every screen with zero buffering.
+            </p>
+          </div>
 
-                    {/* Quick Links */}
-                    <div className="footer-links">
-                        <h4>Quick Links</h4>
-                        <ul>
-                            {siteConfig.footerNavigation.map((item) => (
-                                <li key={item.name}>
-                                    <Link href={item.href}>{item.name}</Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+          <div className="footer-links">
+            <h4>Quick links</h4>
+            <ul>
+              {siteConfig.footerNavigation.map((item) => (
+                <li key={item.name}>
+                  <Link href={item.href}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-                    {/* Contact Info */}
-                    <div className="footer-contact">
-                        <h4>Contact Us</h4>
-                        <ul>
-                            <li>
-                                <a
-                                    href={`https://api.whatsapp.com/send?phone=${siteConfig.contact.whatsapp}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    📱 WhatsApp: +1 (757) 535-7760
-                                </a>
-                            </li>
-                            <li>
-                                <a href={`mailto:${siteConfig.contact.email}`}>
-                                    ✉️ {siteConfig.contact.email}
-                                </a>
-                            </li>
-                            <li>
-                                <span>📍 {siteConfig.contact.address}</span>
-                            </li>
-                        </ul>
-                    </div>
+          <div className="footer-contact">
+            <h4>Contact us</h4>
+            <ul>
+              <li>
+                <a href={siteConfig.contact.whatsappLink} target="_blank" rel="noopener noreferrer">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                  </svg>
+                  WhatsApp: +1 (757) 535-7760
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${siteConfig.contact.email}`}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" />
+                  </svg>
+                  {siteConfig.contact.email}
+                </a>
+              </li>
+              <li>
+                <span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+                  </svg>
+                  {siteConfig.contact.address}
+                </span>
+              </li>
+            </ul>
+          </div>
 
-                    {/* Newsletter */}
-                    <div className="footer-newsletter">
-                        <h4>Stay Updated</h4>
-                        <p>Subscribe for the latest updates and exclusive offers.</p>
-                        <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-                            <input type="email" placeholder="Your email address" />
-                            <button type="submit">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
+          <div className="footer-newsletter">
+            <h4>Stay updated</h4>
+            <p>Subscribe for the latest updates and exclusive offers.</p>
+            <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+              <input type="email" placeholder="Your email address" aria-label="Email address" />
+              <button type="submit" className="btn-primary">Subscribe</button>
+            </form>
+          </div>
+        </div>
 
-                <div className="footer-bottom">
-                    <p>© {new Date().getFullYear()} Rabbit AI TV. All rights reserved.</p>
-                    <div className="footer-legal">
-                        <Link href="/privacy-policy">Privacy Policy</Link>
-                        <span>|</span>
-                        <Link href="/terms">Terms of Service</Link>
-                    </div>
-                </div>
-            </div>
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} RabbitAI TV. All rights reserved.</p>
+          <div className="footer-legal">
+            <Link href="/privacy-policy">Privacy Policy</Link>
+            <span>·</span>
+            <Link href="/terms">Terms of Service</Link>
+          </div>
+        </div>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .footer {
-          background: #0a0a0a;
+          background: #0a0a0b;
           padding: 4rem 1.5rem 2rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          border-top: 1px solid var(--border);
         }
-        
-        .container {
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        
+        .container { max-width: var(--container-max); margin: 0 auto; }
         .footer-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          grid-template-columns: 1.4fr 1fr 1.2fr 1.2fr;
           gap: 2.5rem;
           margin-bottom: 3rem;
         }
-        
         .footer-brand p {
-          color: rgba(255, 255, 255, 0.6);
+          color: var(--text-muted);
           font-size: 0.9rem;
           margin-top: 1rem;
-          line-height: 1.6;
+          line-height: 1.65;
+          max-width: 32ch;
         }
-        
-        .footer-links h4,
-        .footer-contact h4,
-        .footer-newsletter h4 {
-          color: white;
-          font-size: 1.1rem;
-          margin-bottom: 1rem;
+        h4 {
+          color: #fff;
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          margin-bottom: 1.1rem;
         }
-        
         .footer-links ul,
-        .footer-contact ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        
-        .footer-links li,
-        .footer-contact li {
-          margin-bottom: 0.75rem;
-        }
-        
+        .footer-contact ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 0.7rem; }
+        .footer-contact li { margin-bottom: 0.85rem; }
         .footer-links a,
         .footer-contact a,
         .footer-contact span {
-          color: rgba(255, 255, 255, 0.6);
+          color: var(--text-muted);
           font-size: 0.9rem;
-          transition: color 0.3s ease;
+          transition: color 0.2s ease;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.55rem;
         }
-        
+        .footer-contact svg { color: var(--primary); flex-shrink: 0; }
         .footer-links a:hover,
-        .footer-contact a:hover {
-          color: white;
-        }
-        
+        .footer-contact a:hover { color: #fff; }
         .footer-newsletter p {
-          color: rgba(255, 255, 255, 0.6);
+          color: var(--text-muted);
           font-size: 0.9rem;
           margin-bottom: 1rem;
+          line-height: 1.6;
         }
-        
-        .newsletter-form {
-          display: flex;
-          gap: 0.5rem;
-        }
-        
-        .newsletter-form input {
-          flex: 1;
-          padding: 0.75rem 1rem;
-          background: #1a1a1a;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 6px;
-          color: white;
-          font-size: 0.9rem;
-        }
-        
-        .newsletter-form input::placeholder {
-          color: rgba(255, 255, 255, 0.4);
-        }
-        
-        .newsletter-form button {
-          padding: 0.75rem 1.25rem;
-          background: #F20732;
-          color: white;
-          border: none;
-          border-radius: 6px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: background 0.3s ease;
-        }
-        
-        .newsletter-form button:hover {
-          background: #d10629;
-        }
-        
+        .newsletter-form { display: flex; gap: 0.5rem; }
+        .newsletter-form input { flex: 1; min-width: 0; }
+        .newsletter-form :global(.btn-primary) { padding: 0.7rem 1.1rem; font-size: 0.85rem; white-space: nowrap; }
         .footer-bottom {
           display: flex;
           justify-content: space-between;
           align-items: center;
           padding-top: 2rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          border-top: 1px solid var(--border);
           flex-wrap: wrap;
           gap: 1rem;
         }
-        
-        .footer-bottom p {
-          color: rgba(255, 255, 255, 0.5);
-          font-size: 0.85rem;
+        .footer-bottom p { color: var(--text-dim); font-size: 0.85rem; }
+        .footer-legal { display: flex; gap: 0.75rem; align-items: center; }
+        .footer-legal a { color: var(--text-dim); font-size: 0.85rem; transition: color 0.2s ease; }
+        .footer-legal a:hover { color: #fff; }
+        .footer-legal span { color: var(--text-dim); }
+
+        @media (max-width: 900px) {
+          .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
         }
-        
-        .footer-legal {
-          display: flex;
-          gap: 1rem;
-          align-items: center;
-        }
-        
-        .footer-legal a {
-          color: rgba(255, 255, 255, 0.5);
-          font-size: 0.85rem;
-          transition: color 0.3s ease;
-        }
-        
-        .footer-legal a:hover {
-          color: white;
-        }
-        
-        .footer-legal span {
-          color: rgba(255, 255, 255, 0.3);
-        }
-        
-        @media (max-width: 768px) {
-          .footer-grid {
-            grid-template-columns: 1fr;
-            text-align: center;
-          }
-          
-          .newsletter-form {
-            flex-direction: column;
-          }
-          
-          .footer-bottom {
-            flex-direction: column;
-            text-align: center;
-          }
+        @media (max-width: 560px) {
+          .footer-grid { grid-template-columns: 1fr; text-align: left; }
+          .footer-bottom { flex-direction: column; align-items: flex-start; }
         }
       `}</style>
-        </footer>
-    );
+    </footer>
+  );
 }

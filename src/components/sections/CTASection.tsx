@@ -4,196 +4,182 @@ import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 
 export default function CTASection() {
+  const whatsappLink =
+    siteConfig.contact.whatsappLink ||
+    `https://api.whatsapp.com/send?phone=${siteConfig.contact.whatsapp.replace(/\D/g, '')}`;
+
   return (
     <section className="cta-section">
-      <div className="container">
-        {/* Badge */}
-        <div className="badge">
-          <span className="pulse-dot"></span>
-          Limited Time Offer
-        </div>
+      <div className="cta-inner">
+        <div className="cta-panel">
+          <h2 className="cta-heading">Start watching in 60 seconds</h2>
+          <p className="cta-subtitle">
+            Free trial · no credit card · instant activation.
+          </p>
 
-        {/* Headline */}
-        <h2 className="headline">
-          Ready to Start <span className="gradient-text">Streaming?</span>
-        </h2>
+          <div className="cta-buttons">
+            <Link href="/free-trial" className="btn-primary cta-btn-primary">
+              <svg
+                className="cta-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M8 5v14l11-7L8 5z" />
+              </svg>
+              Start free trial
+            </Link>
 
-        {/* Subheadline */}
-        <p className="subheadline">
-          Join 10,000+ satisfied customers enjoying premium IPTV service.
-          Get 50% off all plans today!
-        </p>
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-btn-whatsapp"
+            >
+              <svg
+                className="cta-icon"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.25 3.74.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z" />
+              </svg>
+              Chat on WhatsApp
+            </a>
+          </div>
 
-        {/* CTA Buttons */}
-        <div className="cta-buttons">
-          <Link href="/pricing" className="btn-primary">
-            Get Started Now →
-          </Link>
-          <Link href="/free-trial" className="btn-trial">
-            🎁 Free Trial
-          </Link>
-          <a
-            href={siteConfig.contact.whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-whatsapp"
-          >
-            💬 Chat on WhatsApp
-          </a>
-        </div>
-
-        {/* Trust Indicators */}
-        <div className="trust-indicators">
-          <span>✓ No contract required</span>
-          <span>✓ Money-back guarantee</span>
-          <span>✓ Instant activation</span>
+          <ul className="cta-trust">
+            <li>30-day money-back</li>
+            <li>24/7 support</li>
+            <li>cancel anytime</li>
+          </ul>
         </div>
       </div>
 
       <style jsx>{`
         .cta-section {
           padding: 5rem 1.5rem;
-          background: #0D0D0D;
-          text-align: center;
-          position: relative;
-          overflow: hidden;
+          background: var(--background);
         }
-        
-        .cta-section::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 600px;
-          height: 600px;
-          background: radial-gradient(circle, rgba(242, 7, 50, 0.1) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        
-        .container {
-          max-width: 800px;
+
+        .cta-inner {
+          max-width: 900px;
           margin: 0 auto;
-          position: relative;
-          z-index: 10;
         }
-        
-        .badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          background: rgba(242, 7, 50, 0.2);
-          color: #F20732;
-          padding: 0.5rem 1rem;
-          border-radius: 50px;
-          font-size: 0.875rem;
-          font-weight: 600;
-          margin-bottom: 1.5rem;
+
+        .cta-panel {
+          background: #15070b;
+          border: 1px solid rgba(242, 7, 50, 0.3);
+          border-radius: 18px;
+          padding: 2.5rem;
+          text-align: center;
         }
-        
-        .pulse-dot {
-          width: 8px;
-          height: 8px;
-          background: #F20732;
-          border-radius: 50%;
-          animation: pulse 2s infinite;
+
+        .cta-heading {
+          font-family: var(--font-heading);
+          font-weight: 800;
+          font-size: clamp(1.9rem, 4.5vw, 3rem);
+          line-height: 1.1;
+          color: var(--text);
+          margin: 0 0 0.85rem;
         }
-        
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.2); }
+
+        .cta-subtitle {
+          color: var(--text-muted);
+          font-size: 1.05rem;
+          line-height: 1.5;
+          margin: 0 0 2rem;
         }
-        
-        .headline {
-          font-size: clamp(2rem, 5vw, 3.5rem);
-          font-weight: 700;
-          color: white;
-          margin-bottom: 1rem;
-        }
-        
-        .gradient-text {
-          background: linear-gradient(135deg, #CB9500 0%, #F20732 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        
-        .subheadline {
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 1.125rem;
-          margin-bottom: 2.5rem;
-          line-height: 1.6;
-        }
-        
+
         .cta-buttons {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
           gap: 1rem;
-          margin-bottom: 2.5rem;
+          margin-bottom: 1.75rem;
         }
-        
-        .btn-primary {
+
+        .cta-btn-primary {
           display: inline-flex;
           align-items: center;
-          gap: 0.5rem;
-          background: #F20732;
-          color: white;
-          padding: 1rem 2rem;
-          border-radius: 12px;
-          font-size: 1.1rem;
-          font-weight: 600;
-          text-decoration: none;
-          transition: all 0.3s ease;
+          gap: 0.55rem;
         }
-        
-        .btn-primary:hover {
-          background: #d10629;
-          transform: translateY(-2px);
-          box-shadow: 0 10px 30px rgba(242, 7, 50, 0.3);
-        }
-        
-        .btn-whatsapp {
+
+        .cta-btn-whatsapp {
           display: inline-flex;
           align-items: center;
-          gap: 0.5rem;
-          background: #25D366;
-          color: white;
-          padding: 1rem 2rem;
+          gap: 0.55rem;
+          background: rgba(37, 211, 102, 0.14);
+          border: 1px solid rgba(37, 211, 102, 0.4);
+          color: #37d36a;
           border-radius: 12px;
-          font-size: 1.1rem;
+          padding: 0.9rem 1.6rem;
           font-weight: 600;
+          font-size: 1rem;
           text-decoration: none;
-          transition: all 0.3s ease;
+          transition: background 0.25s ease, transform 0.25s ease;
         }
-        
-        .btn-whatsapp:hover {
-          background: #20BD5A;
+
+        .cta-btn-whatsapp:hover {
+          background: rgba(37, 211, 102, 0.24);
           transform: translateY(-2px);
         }
-        
-        .trust-indicators {
+
+        .cta-btn-whatsapp:focus-visible,
+        .cta-btn-primary:focus-visible {
+          outline: 2px solid var(--text);
+          outline-offset: 3px;
+        }
+
+        .cta-icon {
+          flex-shrink: 0;
+        }
+
+        .cta-trust {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 1.5rem;
-          color: rgba(255, 255, 255, 0.5);
-          font-size: 0.9rem;
+          gap: 1.25rem;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          color: var(--text-dim);
+          font-size: 0.8rem;
         }
-        
-        @media (max-width: 640px) {
+
+        .cta-trust li {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+        }
+
+        .cta-trust li::before {
+          content: '✓';
+          color: var(--gold);
+        }
+
+        @media (max-width: 560px) {
+          .cta-panel {
+            padding: 2rem 1.5rem;
+          }
+
           .cta-buttons {
             flex-direction: column;
           }
-          
-          .btn-primary, .btn-whatsapp {
+
+          .cta-btn-primary,
+          .cta-btn-whatsapp {
             width: 100%;
             justify-content: center;
           }
-          
-          .trust-indicators {
+
+          .cta-trust {
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.6rem;
           }
         }
       `}</style>

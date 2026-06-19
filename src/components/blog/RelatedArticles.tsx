@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import articlesData from "@/data/articles.json";
 
 interface Article {
@@ -67,7 +68,7 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
         <section className="related-articles">
             <div className="section-header">
                 <div className="title-area">
-                    <h2 className="section-title">Related Articles</h2>
+                    <h2 className="section-title">Related articles</h2>
                     <p className="section-subtitle">Continue exploring our IPTV guides</p>
                 </div>
                 <div className="carousel-controls">
@@ -76,14 +77,20 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                         className="control-btn prev"
                         aria-label="Previous articles"
                     >
-                        ←
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <line x1="19" y1="12" x2="5" y2="12" />
+                            <polyline points="12 19 5 12 12 5" />
+                        </svg>
                     </button>
                     <button
                         onClick={nextSlide}
                         className="control-btn next"
                         aria-label="Next articles"
                     >
-                        →
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -102,9 +109,11 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                                 className="article-card"
                             >
                                 <div className="image-wrapper">
-                                    <img
+                                    <Image
                                         src={article.image}
                                         alt={article.title}
+                                        width={400}
+                                        height={225}
                                         className="article-image"
                                     />
                                     <span className="category-badge">{article.category}</span>
@@ -113,8 +122,20 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                                     <h3 className="article-title">{article.title}</h3>
                                     <p className="article-excerpt">{article.excerpt}</p>
                                     <div className="article-meta">
-                                        <span className="read-time">📖 {article.readTime} read</span>
-                                        <span className="read-more">Read more →</span>
+                                        <span className="read-time">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                                            </svg>
+                                            {article.readTime} read
+                                        </span>
+                                        <span className="read-more">
+                                            Read more
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                                <line x1="5" y1="12" x2="19" y2="12" />
+                                                <polyline points="12 5 19 12 12 19" />
+                                            </svg>
+                                        </span>
                                     </div>
                                 </div>
                             </Link>
@@ -127,7 +148,7 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                 .related-articles {
                     margin-top: 4rem;
                     padding: 3rem 0;
-                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                    border-top: 1px solid var(--border);
                     position: relative;
                 }
 
@@ -139,14 +160,15 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                 }
 
                 .section-title {
+                    font-family: var(--font-heading);
                     font-size: 2rem;
                     font-weight: 700;
-                    color: white;
+                    color: var(--text);
                     margin-bottom: 0.5rem;
                 }
 
                 .section-subtitle {
-                    color: rgba(255, 255, 255, 0.6);
+                    color: var(--text-muted);
                     font-size: 1rem;
                 }
 
@@ -159,10 +181,9 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                     width: 44px;
                     height: 44px;
                     border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.05);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    color: white;
-                    font-size: 1.25rem;
+                    background: var(--surface);
+                    border: 1px solid var(--border);
+                    color: var(--text);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -170,11 +191,16 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                     transition: all 0.3s ease;
                 }
 
+                .control-btn :global(svg) {
+                    width: 20px;
+                    height: 20px;
+                }
+
                 .control-btn:hover {
-                    background: #F20732;
-                    border-color: #F20732;
+                    background: var(--primary);
+                    border-color: var(--primary);
                     transform: translateY(-2px);
-                    box-shadow: 0 5px 15px rgba(242, 7, 50, 0.3);
+                    box-shadow: 0 5px 15px var(--primary-soft);
                 }
 
                 .carousel-container {
@@ -213,8 +239,8 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
 
                 .article-card {
                     height: 100%;
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    background: var(--card);
+                    border: 1px solid var(--border);
                     border-radius: 16px;
                     overflow: hidden;
                     transition: all 0.3s ease;
@@ -224,25 +250,25 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                 }
 
                 .article-card:hover {
-                    border-color: rgba(242, 7, 50, 0.4);
-                    background: rgba(242, 7, 50, 0.02);
+                    border-color: var(--border-strong);
+                    transform: translateY(-3px);
                 }
 
                 .image-wrapper {
                     position: relative;
                     width: 100%;
-                    height: 180px;
+                    aspect-ratio: 16 / 9;
                     overflow: hidden;
                 }
 
-                .article-image {
+                .image-wrapper :global(.article-image) {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
                     transition: transform 0.5s ease;
                 }
 
-                .article-card:hover .article-image {
+                .article-card:hover :global(.article-image) {
                     transform: scale(1.05);
                 }
 
@@ -250,8 +276,8 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                     position: absolute;
                     top: 1rem;
                     right: 1rem;
-                    background: #F20732;
-                    color: white;
+                    background: var(--primary);
+                    color: var(--text);
                     padding: 0.35rem 0.75rem;
                     border-radius: 20px;
                     font-size: 0.75rem;
@@ -266,9 +292,10 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                 }
 
                 .article-title {
+                    font-family: var(--font-heading);
                     font-size: 1.15rem;
                     font-weight: 700;
-                    color: white;
+                    color: var(--text);
                     margin-bottom: 0.75rem;
                     line-height: 1.4;
                     display: -webkit-box;
@@ -278,7 +305,7 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                 }
 
                 .article-excerpt {
-                    color: rgba(255, 255, 255, 0.6);
+                    color: var(--text-muted);
                     font-size: 0.9rem;
                     line-height: 1.5;
                     margin-bottom: 1.25rem;
@@ -294,18 +321,39 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                     justify-content: space-between;
                     align-items: center;
                     padding-top: 1rem;
-                    border-top: 1px solid rgba(255, 255, 255, 0.08);
+                    border-top: 1px solid var(--border);
                 }
 
                 .read-time {
-                    color: rgba(255, 255, 255, 0.4);
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                    color: var(--text-dim);
                     font-size: 0.8rem;
                 }
 
+                .read-time :global(svg) {
+                    width: 15px;
+                    height: 15px;
+                }
+
                 .read-more {
-                    color: #F20732;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.35rem;
+                    color: var(--primary);
                     font-weight: 600;
                     font-size: 0.85rem;
+                    transition: gap 0.2s ease;
+                }
+
+                .read-more :global(svg) {
+                    width: 15px;
+                    height: 15px;
+                }
+
+                .article-card:hover .read-more {
+                    gap: 0.55rem;
                 }
             `}</style>
         </section>
