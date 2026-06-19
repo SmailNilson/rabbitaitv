@@ -29,7 +29,7 @@ export function Navbar() {
             alt="RabbitAI TV"
             width={120}
             height={30}
-            style={{ objectFit: 'contain' }}
+            style={{ height: '30px', width: 'auto', objectFit: 'contain' }}
             priority
           />
         </Link>
@@ -63,7 +63,7 @@ export function Navbar() {
         <div className="panel-backdrop" onClick={() => setOpen(false)} />
         <div className="panel-card">
           <div className="panel-head">
-            <Image src="/images/logo.png" alt="RabbitAI TV" width={110} height={28} style={{ objectFit: 'contain' }} />
+            <Image src="/images/logo.png" alt="RabbitAI TV" width={110} height={28} style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
             <button className="panel-close" aria-label="Close menu" onClick={() => setOpen(false)}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M18 6 6 18M6 6l12 12" />

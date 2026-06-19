@@ -10,7 +10,7 @@ export function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Image src="/images/logo.png" alt="RabbitAI TV" width={140} height={36} style={{ objectFit: 'contain' }} />
+            <Image src="/images/logo.png" alt="RabbitAI TV" width={140} height={36} style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
             <p>
               Premium 4K IPTV — 20,000+ live channels and 120,000+ movies &amp; series,
               streamed to every screen with zero buffering.
