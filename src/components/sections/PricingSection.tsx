@@ -1,9 +1,23 @@
 'use client';
 
-import Link from 'next/link';
+import { useState } from 'react';
 import { siteConfig } from '@/config/site';
 
+// Price multipliers for additional simultaneous connections (devices)
+const deviceMultipliers: { [key: number]: number } = {
+  1: 1,
+  2: 1.8,
+  3: 2.5,
+  4: 3.2,
+  5: 3.8,
+};
+
+const waPhone = siteConfig.contact.whatsapp.replace(/\D/g, '');
+
 export function PricingSection() {
+  const [devices, setDevices] = useState(1);
+  const mult = deviceMultipliers[devices];
+
   return (
     <section className="pricing-section" aria-labelledby="pricing-heading">
       <div className="container">
@@ -13,9 +27,29 @@ export function PricingSection() {
           <p className="subtitle">Cancel anytime · 30-day money-back guarantee.</p>
         </header>
 
+        {/* Device (connection) selector */}
+        <div className="device-tabs" role="tablist" aria-label="Number of devices">
+          {[1, 2, 3, 4, 5].map((n) => (
+            <button
+              key={n}
+              role="tab"
+              aria-selected={devices === n}
+              className={`device-tab ${devices === n ? 'active' : ''}`}
+              onClick={() => setDevices(n)}
+            >
+              {n} device{n > 1 ? 's' : ''}
+            </button>
+          ))}
+        </div>
+
         <div className="pricing-grid">
           {siteConfig.plans.map((plan) => {
-            const monthly = (plan.price / plan.duration).toFixed(2);
+            const price = (plan.price * mult).toFixed(2);
+            const original = (plan.originalPrice * mult).toFixed(2);
+            const monthly = ((plan.price * mult) / plan.duration).toFixed(2);
+            const waText = encodeURIComponent(
+              `Hi! I'm interested in the ${plan.name} plan for ${devices} device${devices > 1 ? 's' : ''} at $${price}`
+            );
             return (
               <div
                 key={plan.id}
@@ -28,8 +62,8 @@ export function PricingSection() {
                 <h3 className="plan-name">{plan.name}</h3>
 
                 <div className="price-block">
-                  <span className="original-price">${plan.originalPrice}</span>
-                  <span className="current-price">${plan.price}</span>
+                  <span className="original-price">${original}</span>
+                  <span className="current-price">${price}</span>
                   <span className="monthly-price">${monthly} / month</span>
                 </div>
 
@@ -59,19 +93,21 @@ export function PricingSection() {
                   ))}
                 </ul>
 
-                <Link
-                  href="/free-trial"
+                <a
+                  href={`https://api.whatsapp.com/send?phone=${waPhone}&text=${waText}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={plan.popular ? 'btn-primary' : 'btn-ghost'}
                 >
                   {plan.popular ? 'Start now' : 'Choose plan'}
-                </Link>
+                </a>
               </div>
             );
           })}
         </div>
 
         <p className="pricing-note">
-          Prices are per connection. Need more screens at once? Message us on WhatsApp.
+          Prices shown are for {devices} simultaneous device{devices > 1 ? 's' : ''}. Need a custom setup? Message us on WhatsApp.
         </p>
       </div>
 
@@ -88,7 +124,7 @@ export function PricingSection() {
 
         .pricing-header {
           text-align: center;
-          margin-bottom: 3rem;
+          margin-bottom: 2rem;
         }
 
         .eyebrow {
@@ -112,6 +148,38 @@ export function PricingSection() {
           color: var(--text-muted);
           font-size: 1rem;
           margin: 0;
+        }
+
+        .device-tabs {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 2.5rem;
+        }
+
+        .device-tab {
+          background: var(--surface);
+          border: 1px solid var(--border);
+          color: var(--text-muted);
+          padding: 0.6rem 1.1rem;
+          border-radius: 999px;
+          font-family: inherit;
+          font-weight: 600;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .device-tab:hover {
+          border-color: var(--border-strong);
+          color: #fff;
+        }
+
+        .device-tab.active {
+          background: var(--primary);
+          border-color: var(--primary);
+          color: #fff;
         }
 
         .pricing-grid {
