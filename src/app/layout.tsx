@@ -176,7 +176,7 @@ export default function RootLayout({
         </Script>
 
         {/* Hotjar Tracking Code */}
-        <Script id="hotjar-snippet" strategy="afterInteractive">
+        <Script id="hotjar-snippet" strategy="lazyOnload">
           {`
             (function(h,o,t,j,a,r){
                 h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -188,15 +188,6 @@ export default function RootLayout({
             })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
           `}
         </Script>
-
-        {/* Preload critical assets for LCP */}
-        <link
-          rel="preload"
-          as="image"
-          type="image/webp"
-          href="/images/blog/iptv-trends-2026.webp"
-          fetchPriority="high"
-        />
 
         {/* Favicon & Icons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />

@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const stats: { value: string; label: string; gold?: boolean }[] = [
   { value: '20K+', label: 'Live channels' },
@@ -12,6 +14,21 @@ const stats: { value: string; label: string; gold?: boolean }[] = [
 const thumbs = ['#10243B', '#0E3330', '#3A1220', '#2B2410'];
 
 export function Hero() {
+  // Defer the heavy hero video off the critical path: paint the optimized
+  // poster immediately, then mount the autoplay video once the page is idle.
+  const [showVideo, setShowVideo] = useState(false);
+  useEffect(() => {
+    const ric = (window as typeof window & {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+    }).requestIdleCallback;
+    if (ric) {
+      ric(() => setShowVideo(true), { timeout: 2500 });
+    } else {
+      const t = setTimeout(() => setShowVideo(true), 1200);
+      return () => clearTimeout(t);
+    }
+  }, []);
+
   return (
     <section className="hero">
       <div className="inner">
@@ -57,9 +74,20 @@ export function Hero() {
 
           <div className="preview">
             <div className="screen">
-              <video autoPlay muted loop playsInline poster="/images/blog/iptv-trends-2026.webp">
-                <source src="/112024-motionwall-corner-extendttttttttttt.mp4" type="video/mp4" />
-              </video>
+              <Image
+                src="/images/blog/iptv-trends-2026.webp"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 900px) 100vw, 45vw"
+                style={{ objectFit: 'cover' }}
+                aria-hidden="true"
+              />
+              {showVideo && (
+                <video autoPlay muted loop playsInline poster="/images/blog/iptv-trends-2026.webp">
+                  <source src="/112024-motionwall-corner-extendttttttttttt.mp4" type="video/mp4" />
+                </video>
+              )}
               <div className="screen-grad" />
               <div className="badges">
                 <span className="badge-live"><span className="dot" /> live</span>
