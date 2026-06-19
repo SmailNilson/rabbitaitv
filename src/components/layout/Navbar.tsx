@@ -215,6 +215,62 @@ export function Navbar() {
           .links { display: none; }
           .burger { display: flex; }
         }
+
+        /* styled-jsx does not scope <Link>/<Image> components; target them via
+           :global() under the scoped native ancestors (.nav / .panel).
+           NOTE: var() does not resolve inside :global() in this setup — use literals. */
+        .nav :global(.logo) { display: flex; align-items: center; }
+        .nav :global(.link) {
+          font-size: 0.85rem;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.66);
+          position: relative;
+          padding: 0.25rem 0;
+          transition: color 0.2s ease;
+        }
+        .nav :global(.link):hover { color: #fff; }
+        .nav :global(.link.active) { color: #fff; }
+        .nav :global(.link.active)::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -4px;
+          height: 2px;
+          background: #F20732;
+          border-radius: 2px;
+        }
+        .nav :global(.cta) {
+          background: #F20732;
+          color: #fff;
+          font-weight: 700;
+          font-size: 0.85rem;
+          padding: 0.6rem 1.15rem;
+          border-radius: 11px;
+          transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .nav :global(.cta):hover { background: #d10629; transform: translateY(-1px); }
+        .panel :global(.panel-link) {
+          display: block;
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.66);
+          padding: 0.85rem 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+          transition: color 0.2s ease;
+        }
+        .panel :global(.panel-link):hover { color: #fff; }
+        .panel :global(.panel-link.active) { color: #F20732; }
+        .panel :global(.panel-cta) {
+          display: block;
+          margin-top: auto;
+          background: #F20732;
+          color: #fff;
+          text-align: center;
+          font-weight: 700;
+          padding: 1rem;
+          border-radius: 12px;
+        }
       `}</style>
     </header>
   );

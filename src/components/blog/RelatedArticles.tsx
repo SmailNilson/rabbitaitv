@@ -355,6 +355,39 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                 .article-card:hover .read-more {
                     gap: 0.55rem;
                 }
+
+                /* Corrected :global versions — styled-jsx does not scope React components (Link/Image) */
+                .related-articles :global(.article-card) {
+                    height: 100%;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                    text-decoration: none;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .related-articles :global(.article-card):hover {
+                    border-color: var(--border-strong);
+                    transform: translateY(-3px);
+                }
+
+                .related-articles :global(.article-image) {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease;
+                }
+
+                .related-articles :global(.article-card):hover :global(.article-image) {
+                    transform: scale(1.05);
+                }
+
+                .related-articles :global(.article-card):hover :global(.read-more) {
+                    gap: 0.55rem;
+                }
             `}</style>
         </section>
     );
