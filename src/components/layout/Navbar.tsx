@@ -8,134 +8,214 @@ import { siteConfig } from '@/config/site';
 
 export function Navbar() {
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const leftNav = siteConfig.navigation.slice(0, Math.ceil(siteConfig.navigation.length / 2));
-  const rightNav = siteConfig.navigation.slice(Math.ceil(siteConfig.navigation.length / 2));
+  const isActive = (href: string): boolean =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-        <header className={`nav-cosmic ${isScrolled ? 'scrolled' : ''}`}>
-            <div className="nav-cosmic-container">
-                <nav className="nav-cosmic-dock">
-                    {/* Left Intelligence Side */}
-                    <div className="nav-side left">
-                        <ul className="nav-link-group">
-                            {leftNav.map((item) => (
-                                <li key={item.name}>
-                                    <Link href={item.href} className={`nav-cosmic-link${pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? ' active' : ''}`}>
-                                        {item.name}
-                                        <span className="link-glitch-line"></span>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+    <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
+      <div className="inner">
+        <Link href="/" className="logo" aria-label="RabbitAI TV — home">
+          <Image
+            src="/images/logo.png"
+            alt="RabbitAI TV"
+            width={120}
+            height={30}
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </Link>
 
-                    {/* Central Brand Core */}
-                    <div className="nav-center">
-                        <Link href="/" className="cosmic-logo-orb">
-                            <div className="logo-pulse"></div>
-                            <Image
-                                src="/images/logo.png"
-                                alt="RabbitAI"
-                                width={110}
-                                height={28}
-                                style={{ objectFit: 'contain' }}
-                                priority
-                            />
-                        </Link>
-                    </div>
+        <nav className="links" aria-label="Primary">
+          {siteConfig.navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`link ${isActive(item.href) ? 'active' : ''}`}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
 
-                    {/* Right Intelligence Side */}
-                    <div className="nav-side right">
-                        <ul className="nav-link-group">
-                            {rightNav.map((item) => (
-                                <li key={item.name}>
-                                    <Link href={item.href} className={`nav-cosmic-link${pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? ' active' : ''}`}>
-                                        {item.name}
-                                        <span className="link-glitch-line"></span>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                        <Link 
-                            href="/pricing" 
-                            className="nav-cosmic-cta desktop-only"
-                            style={{ 
-                                background: '#FF0000', 
-                                color: '#FFFFFF', 
-                                padding: '10px 24px', 
-                                borderRadius: '14px',
-                                fontWeight: '800',
-                                fontSize: '0.85rem',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.05em',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                textDecoration: 'none',
-                                boxShadow: '0 4px 15px rgba(255, 0, 0, 0.4)'
-                            }}
-                        >
-                            Get Started
-                        </Link>
+        <div className="right">
+          <Link href="/free-trial" className="cta">Free trial</Link>
+          <button
+            className="burger"
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            onClick={() => setOpen(!open)}
+          >
+            <span /><span /><span />
+          </button>
+        </div>
+      </div>
 
-                        {/* Mobile List/Menu Icon */}
-                        <button
-                            className="mobile-cosmic-toggle"
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            aria-label="Toggle system"
-                        >
-                            <div className={`burger-icon-grid ${isMobileMenuOpen ? 'active' : ''}`}>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </button>
-                    </div>
-                </nav>
-            </div>
+      <div className={`panel ${open ? 'open' : ''}`} role="dialog" aria-modal="true">
+        <div className="panel-backdrop" onClick={() => setOpen(false)} />
+        <div className="panel-card">
+          <div className="panel-head">
+            <Image src="/images/logo.png" alt="RabbitAI TV" width={110} height={28} style={{ objectFit: 'contain' }} />
+            <button className="panel-close" aria-label="Close menu" onClick={() => setOpen(false)}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <nav className="panel-links" aria-label="Mobile">
+            {siteConfig.navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`panel-link ${isActive(item.href) ? 'active' : ''}`}
+                onClick={() => setOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+          <Link href="/free-trial" className="panel-cta" onClick={() => setOpen(false)}>
+            Start free trial
+          </Link>
+        </div>
+      </div>
 
-            {/* Futuristic Side Panel Meta (Mobile) */}
-            <div className={`cosmic-panel-overlay ${isMobileMenuOpen ? 'visible' : ''}`}>
-               <div className="panel-blur-node" onClick={() => setIsMobileMenuOpen(false)}></div>
-               <div className="cosmic-panel-content">
-                  <div className="panel-top">
-                     <Image src="/images/logo.png" alt="RabbitAI" width={100} height={25} style={{ objectFit: 'contain' }} />
-                     <button onClick={() => setIsMobileMenuOpen(false)} className="panel-close-node">
-                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
-                     </button>
-                  </div>
-                  <div className="panel-nodes">
-                     {siteConfig.navigation.map((item, index) => (
-                        <Link 
-                           key={item.name} 
-                           href={item.href} 
-                           className="node-link"
-                           style={{ '--index': index } as React.CSSProperties}
-                           onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                           <span className="node-id">0{index + 1}</span>
-                           <span className="node-text">{item.name}</span>
-                        </Link>
-                     ))}
-                  </div>
-                  <div className="panel-base">
-                     <Link href="/pricing" className="panel-node-cta" onClick={() => setIsMobileMenuOpen(false)}>
-                        Get Started
-                     </Link>
-                  </div>
-               </div>
-            </div>
+      <style jsx>{`
+        .nav {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
+          height: var(--nav-height);
+          display: flex;
+          align-items: center;
+          background: rgba(10, 10, 11, 0.82);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border-bottom: 1px solid var(--border);
+          transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .nav.scrolled {
+          background: rgba(10, 10, 11, 0.95);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+        .inner {
+          width: 100%;
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+        .logo { display: flex; align-items: center; }
+        .links { display: flex; align-items: center; gap: 1.75rem; }
+        .link {
+          font-size: 0.85rem;
+          font-weight: 500;
+          color: var(--text-muted);
+          position: relative;
+          padding: 0.25rem 0;
+          transition: color 0.2s ease;
+        }
+        .link:hover { color: #fff; }
+        .link.active { color: #fff; }
+        .link.active::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -4px;
+          height: 2px;
+          background: var(--primary);
+          border-radius: 2px;
+        }
+        .right { display: flex; align-items: center; gap: 0.85rem; }
+        .cta {
+          background: var(--primary);
+          color: #fff;
+          font-weight: 700;
+          font-size: 0.85rem;
+          padding: 0.6rem 1.15rem;
+          border-radius: 11px;
+          transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .cta:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .burger {
+          display: none;
+          flex-direction: column;
+          gap: 5px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 6px;
+        }
+        .burger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; }
 
-        </header>
-    );
+        .panel { position: fixed; inset: 0; z-index: 1100; visibility: hidden; pointer-events: none; }
+        .panel.open { visibility: visible; pointer-events: auto; }
+        .panel-backdrop {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(4px);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        .panel.open .panel-backdrop { opacity: 1; }
+        .panel-card {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: min(86%, 340px);
+          background: #0c0c0e;
+          border-left: 1px solid var(--border);
+          padding: 1.5rem;
+          transform: translateX(100%);
+          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          display: flex;
+          flex-direction: column;
+        }
+        .panel.open .panel-card { transform: translateX(0); }
+        .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+        .panel-close { background: none; border: none; color: var(--text-muted); cursor: pointer; }
+        .panel-links { display: flex; flex-direction: column; }
+        .panel-link {
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: var(--text-muted);
+          padding: 0.85rem 0;
+          border-bottom: 1px solid var(--border);
+          transition: color 0.2s ease;
+        }
+        .panel-link:hover { color: #fff; }
+        .panel-link.active { color: var(--primary); }
+        .panel-cta {
+          margin-top: auto;
+          background: var(--primary);
+          color: #fff;
+          text-align: center;
+          font-weight: 700;
+          padding: 1rem;
+          border-radius: 12px;
+        }
+
+        @media (max-width: 900px) {
+          .links { display: none; }
+          .burger { display: flex; }
+        }
+      `}</style>
+    </header>
+  );
 }

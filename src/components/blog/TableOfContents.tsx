@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 interface TOCItem {
     id: string;
@@ -13,10 +13,9 @@ interface TableOfContentsProps {
 }
 
 export default function TableOfContents({ content }: TableOfContentsProps) {
-    const [tocItems, setTocItems] = useState<TOCItem[]>([]);
     const [activeId, setActiveId] = useState<string>('');
 
-    useEffect(() => {
+    const tocItems = useMemo<TOCItem[]>(() => {
         // Extract headings from markdown content
         const headings: TOCItem[] = [];
         const lines = content.split('\n');
@@ -35,7 +34,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
             }
         });
 
-        setTocItems(headings);
+        return headings;
     }, [content]);
 
     useEffect(() => {
@@ -75,8 +74,27 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
 
     return (
         <div className="table-of-contents">
-            <h3 className="toc-title">📑 Table of Contents</h3>
-            <nav className="toc-nav">
+            <h3 className="toc-title">
+                <svg
+                    className="toc-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <line x1="8" y1="6" x2="20" y2="6" />
+                    <line x1="8" y1="12" x2="20" y2="12" />
+                    <line x1="8" y1="18" x2="20" y2="18" />
+                    <line x1="3.5" y1="6" x2="3.51" y2="6" />
+                    <line x1="3.5" y1="12" x2="3.51" y2="12" />
+                    <line x1="3.5" y1="18" x2="3.51" y2="18" />
+                </svg>
+                <span>On this page</span>
+            </h3>
+            <nav className="toc-nav" aria-label="Table of contents">
                 {tocItems.map((item) => (
                     <button
                         key={item.id}
@@ -90,37 +108,49 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
 
             <style jsx>{`
                 .table-of-contents {
-                    background: linear-gradient(135deg, rgba(242, 7, 50, 0.05) 0%, rgba(203, 149, 0, 0.05) 100%);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 16px;
+                    background: var(--surface);
+                    border: 1px solid var(--border);
+                    border-radius: var(--radius-lg);
                     padding: 1.5rem;
                     margin-bottom: 2rem;
                 }
 
                 .toc-title {
-                    font-size: 1.1rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.6rem;
+                    font-family: var(--font-heading);
+                    font-size: 1.05rem;
                     font-weight: 600;
-                    color: white;
+                    color: var(--text);
                     margin-bottom: 1rem;
                     padding-bottom: 0.75rem;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                    border-bottom: 1px solid var(--border);
+                }
+
+                .toc-icon {
+                    width: 20px;
+                    height: 20px;
+                    flex-shrink: 0;
+                    color: var(--primary);
                 }
 
                 .toc-nav {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.5rem;
+                    gap: 0.35rem;
                 }
 
                 .toc-item {
+                    position: relative;
                     background: none;
                     border: none;
-                    color: rgba(255, 255, 255, 0.7);
+                    color: var(--text-muted);
                     text-align: left;
                     padding: 0.5rem 0.75rem;
                     cursor: pointer;
-                    transition: all 0.2s ease;
-                    border-radius: 8px;
+                    transition: color 0.2s ease, background 0.2s ease, padding-left 0.2s ease;
+                    border-radius: var(--radius);
                     font-size: 0.9rem;
                     line-height: 1.4;
                     word-wrap: break-word;
@@ -130,17 +160,27 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
                 }
 
                 .toc-item:hover {
-                    background: rgba(255, 255, 255, 0.05);
-                    color: white;
+                    background: var(--card);
+                    color: var(--text);
                     padding-left: 1rem;
                 }
 
                 .toc-item.active {
-                    background: rgba(242, 7, 50, 0.1);
-                    color: #F20732;
+                    background: var(--primary-soft);
+                    color: var(--primary);
                     font-weight: 600;
-                    border-left: 3px solid #F20732;
                     padding-left: 1rem;
+                }
+
+                .toc-item.active::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 0.35rem;
+                    bottom: 0.35rem;
+                    width: 3px;
+                    border-radius: 0;
+                    background: var(--primary);
                 }
 
                 .toc-item.level-1 {

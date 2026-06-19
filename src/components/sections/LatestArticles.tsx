@@ -33,12 +33,14 @@ export default function LatestArticles() {
   return (
     <section className="latest-articles">
       <div className="container">
-        <h2 className="section-title">
-          Latest from the <span className="gradient-text">Blog</span>
-        </h2>
-        <p className="section-subtitle">
-          IPTV guides, reviews and tips to get the most out of your streaming
-        </p>
+        <header className="section-header">
+          <span className="eyebrow">Blog</span>
+          <h2 className="section-title">From the blog</h2>
+          <p className="section-subtitle">
+            Guides, comparisons and tips to get the most out of your
+            subscription.
+          </p>
+        </header>
 
         <div className="articles-grid">
           {latest.map((article) => (
@@ -55,24 +57,29 @@ export default function LatestArticles() {
                   height={225}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
-                <span className="article-category">{article.category}</span>
               </div>
               <div className="article-body">
-                <h3>{article.title}</h3>
-                <p>{article.excerpt}</p>
-                <div className="article-meta">
+                <div className="article-pill">
+                  <span>{article.category}</span>
+                  <span aria-hidden="true">·</span>
                   <span>{formatDate(article.publishedAt)}</span>
-                  <span>·</span>
-                  <span>{article.readTime}</span>
                 </div>
+                <h3>{article.title}</h3>
+                {article.excerpt && <p>{article.excerpt}</p>}
+                <span className="read-more">
+                  Read more
+                  <span className="arrow" aria-hidden="true">
+                    →
+                  </span>
+                </span>
               </div>
             </Link>
           ))}
         </div>
 
         <div className="see-all">
-          <Link href="/blog" className="btn-secondary">
-            See All Articles →
+          <Link href="/blog" className="btn-view-all">
+            View all articles
           </Link>
         </div>
       </div>
@@ -80,58 +87,68 @@ export default function LatestArticles() {
       <style jsx>{`
         .latest-articles {
           padding: 5rem 1.5rem;
-          background: #0d0d0d;
+          background: var(--background);
         }
 
         .container {
-          max-width: 1200px;
+          max-width: var(--container-max, 1200px);
           margin: 0 auto;
         }
 
-        .section-title {
-          font-size: clamp(2rem, 4vw, 2.75rem);
-          font-weight: 700;
-          color: white;
+        .section-header {
           text-align: center;
+          max-width: 640px;
+          margin: 0 auto 3rem;
+        }
+
+        .eyebrow {
+          display: inline-block;
+          color: var(--gold);
+          font-size: 0.8rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
           margin-bottom: 0.75rem;
         }
 
-        .gradient-text {
-          background: linear-gradient(135deg, #cb9500 0%, #f20732 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+        .section-title {
+          font-family: var(--font-heading);
+          font-size: clamp(2rem, 4vw, 2.75rem);
+          font-weight: 700;
+          color: var(--text);
+          margin-bottom: 0.75rem;
         }
 
         .section-subtitle {
-          color: rgba(255, 255, 255, 0.6);
-          text-align: center;
+          color: var(--text-muted);
           font-size: 1.05rem;
-          margin-bottom: 3rem;
+          line-height: 1.6;
+          margin: 0;
         }
 
         .articles-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 1.75rem;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 1.5rem;
           margin-bottom: 2.5rem;
         }
 
         .latest-articles :global(.article-card) {
-          background: #161616;
-          border: 1px solid rgba(255, 255, 255, 0.06);
-          border-radius: 18px;
+          background: var(--card);
+          border: 1px solid var(--border);
+          border-radius: 16px;
           overflow: hidden;
           text-decoration: none;
-          transition: all 0.3s ease;
+          transition:
+            transform 0.3s ease,
+            border-color 0.3s ease;
           display: flex;
           flex-direction: column;
         }
 
         .latest-articles :global(.article-card:hover) {
-          transform: translateY(-6px);
-          border-color: rgba(242, 7, 50, 0.4);
-          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+          transform: translateY(-4px);
+          border-color: var(--border-strong);
         }
 
         .article-image {
@@ -140,31 +157,32 @@ export default function LatestArticles() {
           overflow: hidden;
         }
 
-        .article-category {
-          position: absolute;
-          top: 0.85rem;
-          left: 0.85rem;
-          background: rgba(242, 7, 50, 0.9);
-          color: white;
-          font-size: 0.75rem;
-          font-weight: 600;
-          padding: 0.3rem 0.8rem;
-          border-radius: 50px;
-        }
-
         .article-body {
-          padding: 1.4rem;
+          padding: 1.25rem;
           display: flex;
           flex-direction: column;
-          gap: 0.7rem;
+          gap: 0.6rem;
           flex: 1;
         }
 
+        .article-pill {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          color: var(--text-dim);
+          font-size: 0.75rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+        }
+
         .article-body h3 {
-          color: white;
-          font-size: 1.15rem;
+          font-family: var(--font-heading);
+          color: var(--text);
+          font-size: 1.05rem;
           font-weight: 600;
           line-height: 1.4;
+          margin: 0;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
@@ -172,25 +190,56 @@ export default function LatestArticles() {
         }
 
         .article-body p {
-          color: rgba(255, 255, 255, 0.55);
-          font-size: 0.92rem;
+          color: var(--text-muted);
+          font-size: 0.9rem;
           line-height: 1.55;
+          margin: 0;
           display: -webkit-box;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
 
-        .article-meta {
+        .read-more {
           margin-top: auto;
-          display: flex;
-          gap: 0.5rem;
-          color: rgba(255, 255, 255, 0.4);
-          font-size: 0.82rem;
+          padding-top: 0.4rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          color: var(--primary);
+          font-size: 0.875rem;
+          font-weight: 600;
+        }
+
+        .arrow {
+          transition: transform 0.25s ease;
+        }
+
+        .latest-articles :global(.article-card:hover) .arrow {
+          transform: translateX(4px);
         }
 
         .see-all {
           text-align: center;
+        }
+
+        .latest-articles :global(.btn-view-all) {
+          display: inline-block;
+          padding: 0.8rem 1.75rem;
+          border: 1px solid var(--border-strong);
+          border-radius: 50px;
+          color: var(--text);
+          font-size: 0.95rem;
+          font-weight: 600;
+          text-decoration: none;
+          transition:
+            border-color 0.25s ease,
+            background 0.25s ease;
+        }
+
+        .latest-articles :global(.btn-view-all:hover) {
+          border-color: var(--primary);
+          background: var(--surface);
         }
       `}</style>
     </section>

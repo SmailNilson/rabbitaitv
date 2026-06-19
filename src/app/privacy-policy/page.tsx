@@ -4,8 +4,11 @@ export default function PrivacyPolicyPage() {
     return (
         <div className="legal-page">
             <div className="container">
-                <h1>Privacy Policy</h1>
-                <p className="last-updated">Last updated: January 2025</p>
+                <header className="legal-header">
+                    <span className="eyebrow">Legal</span>
+                    <h1>Privacy Policy</h1>
+                    <p className="last-updated">Last updated: January 2025</p>
+                </header>
 
                 <section>
                     <h2>1. Introduction</h2>
@@ -81,58 +84,69 @@ export default function PrivacyPolicyPage() {
                     <h2>8. Changes to This Policy</h2>
                     <p>
                         We may update this privacy policy from time to time. We will notify you of any changes by posting the new
-                        privacy policy on this page and updating the "Last updated" date.
+                        privacy policy on this page and updating the &quot;Last updated&quot; date.
                     </p>
                 </section>
             </div>
 
             <style jsx>{`
                 .legal-page {
-                    background: #0D0D0D;
-                    color: white;
+                    background: var(--background);
+                    color: var(--text);
                     min-height: 100vh;
-                    padding: 140px 0 80px;
+                    padding: 3rem 0 6rem;
                 }
 
                 .container {
-                    max-width: 800px;
+                    max-width: 780px;
                     margin: 0 auto;
                     padding: 0 1.5rem;
                 }
 
+                .legal-header {
+                    margin-bottom: 3.5rem;
+                    padding-bottom: 2rem;
+                    border-bottom: 1px solid var(--border);
+                }
+
+                .legal-header .eyebrow {
+                    display: block;
+                    margin-bottom: 0.75rem;
+                }
+
                 h1 {
-                    font-size: 2.5rem;
+                    font-family: var(--font-heading);
+                    font-size: clamp(2rem, 5vw, 2.75rem);
                     font-weight: 800;
-                    margin-bottom: 0.5rem;
-                    background: linear-gradient(135deg, #CB9500 0%, #F20732 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
+                    line-height: 1.15;
+                    margin: 0 0 0.75rem;
+                    color: var(--text);
                 }
 
                 .last-updated {
-                    color: rgba(255, 255, 255, 0.5);
+                    color: var(--text-dim);
                     font-size: 0.9rem;
-                    margin-bottom: 3rem;
+                    margin: 0;
                 }
 
                 section {
-                    margin-bottom: 2.5rem;
+                    margin-bottom: 2.75rem;
                 }
 
                 h2 {
-                    font-size: 1.35rem;
+                    font-family: var(--font-heading);
+                    font-size: 1.4rem;
                     font-weight: 700;
-                    color: white;
-                    margin-bottom: 1rem;
-                    padding-bottom: 0.5rem;
-                    border-bottom: 2px solid rgba(242, 7, 50, 0.3);
+                    line-height: 1.3;
+                    color: var(--text);
+                    margin: 0 0 1rem;
                 }
 
                 p {
-                    color: rgba(255, 255, 255, 0.8);
+                    color: var(--text-muted);
+                    font-size: 1rem;
                     line-height: 1.8;
-                    margin-bottom: 1rem;
+                    margin: 0 0 1rem;
                 }
 
                 ul {
@@ -142,40 +156,52 @@ export default function PrivacyPolicyPage() {
                 }
 
                 li {
-                    color: rgba(255, 255, 255, 0.8);
-                    padding: 0.5rem 0 0.5rem 1.5rem;
+                    color: var(--text-muted);
+                    font-size: 1rem;
+                    padding: 0.4rem 0 0.4rem 1.5rem;
                     position: relative;
-                    line-height: 1.6;
+                    line-height: 1.7;
                 }
 
-                li:before {
-                    content: "•";
-                    color: #F20732;
-                    font-weight: bold;
+                li::before {
+                    content: "";
                     position: absolute;
-                    left: 0;
+                    left: 0.1rem;
+                    top: 0.95rem;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: var(--primary);
                 }
 
                 li strong {
-                    color: #F20732;
+                    color: var(--text);
+                    font-weight: 600;
                 }
 
                 a {
-                    color: #F20732;
+                    color: var(--primary);
                     text-decoration: none;
-                    transition: opacity 0.3s ease;
+                    transition: opacity 0.2s ease;
                 }
 
                 a:hover {
                     opacity: 0.8;
+                    text-decoration: underline;
+                }
+
+                a:focus-visible {
+                    outline: 2px solid var(--primary);
+                    outline-offset: 2px;
+                    border-radius: 2px;
                 }
 
                 @media (max-width: 768px) {
                     .legal-page {
-                        padding: 120px 0 60px;
+                        padding: 2rem 0 4rem;
                     }
-                    h1 {
-                        font-size: 2rem;
+                    .legal-header {
+                        margin-bottom: 2.5rem;
                     }
                 }
             `}</style>

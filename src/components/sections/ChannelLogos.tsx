@@ -2,16 +2,13 @@
 
 import Image from 'next/image';
 
-const channelLogos = [
+const marqueeLogos = [
   { src: '/images/logos/ABC_c.avif', alt: 'ABC' },
   { src: '/images/logos/cbs_2020_c.avif', alt: 'CBS' },
   { src: '/images/logos/nbc_c.avif', alt: 'NBC' },
   { src: '/images/logos/fox_c.avif', alt: 'FOX' },
   { src: '/images/logos/fx_c.avif', alt: 'FX' },
   { src: '/images/logos/espn-logo-new_c.avif', alt: 'ESPN' },
-];
-
-const brandLogos = [
   { src: '/images/brand_item21-150x46-1.webp', alt: 'Videoland' },
   { src: '/images/brand_item05-150x46-1.webp', alt: 'NLZiet' },
   { src: '/images/brand_item06-150x46-1.webp', alt: 'Netflix' },
@@ -30,43 +27,21 @@ const brandLogos = [
 
 export function ChannelLogos() {
   return (
-    <section className="channel-logos-section">
-      {/* Promo Banner */}
-      <div className="promo-banner">
-        <h2>Enjoy 4K IPTV at Half the Price – 50% Off All Plans!</h2>
-        <p>Sign up today for a convenient and unmatched experience.</p>
-      </div>
+    <section className="logos-band">
+      <p className="logos-label">All your platforms, one subscription</p>
 
-      {/* Channel Logos Grid */}
-      <div className="channel-grid">
-        {channelLogos.map((logo, index) => (
-          <div key={index} className="channel-logo-item">
-            <Image
-              src={logo.src}
-              alt={logo.alt}
-              width={80}
-              height={80}
-              style={{ objectFit: 'contain' }}
-              unoptimized
-            />
-          </div>
-        ))}
-        <div className="channel-logo-item more">
-          <span>+MORE</span>
-        </div>
-      </div>
-
-      {/* Brand Logos Carousel */}
-      <div className="brand-carousel-container">
-        <div className="brand-carousel">
-          {[...brandLogos, ...brandLogos].map((logo, index) => (
-            <div key={index} className="brand-logo-item">
+      {/* Decorative marquee — logos are duplicated for the loop, so hide from a11y tree */}
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee-track">
+          {[...marqueeLogos, ...marqueeLogos].map((logo, index) => (
+            <div key={index} className="marquee-logo">
               <Image
                 src={logo.src}
                 alt={logo.alt}
                 width={120}
-                height={46}
-                style={{ objectFit: 'contain' }}
+                height={40}
+                style={{ objectFit: 'contain', width: 'auto', height: '100%' }}
+                unoptimized
               />
             </div>
           ))}
@@ -74,98 +49,87 @@ export function ChannelLogos() {
       </div>
 
       <style jsx>{`
-        .channel-logos-section {
-          padding: 3rem 1.5rem;
-          background: #0D0D0D;
-        }
-        
-        .promo-banner {
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-        
-        .promo-banner h2 {
-          font-size: clamp(1.25rem, 3vw, 1.75rem);
-          color: white;
-          margin-bottom: 0.5rem;
-        }
-        
-        .promo-banner p {
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 0.95rem;
-        }
-        
-        .channel-grid {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 1rem;
-          max-width: 600px;
-          margin: 0 auto 3rem;
-        }
-        
-        .channel-logo-item {
-          width: 90px;
-          height: 90px;
-          background: white;
-          border-radius: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 12px;
-          transition: transform 0.3s ease;
-        }
-        
-        .channel-logo-item:hover {
-          transform: scale(1.05);
-        }
-        
-        .channel-logo-item.more {
-          background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .channel-logo-item.more span {
-          color: white;
-          font-weight: 600;
-          font-size: 0.9rem;
-        }
-        
-        .brand-carousel-container {
+        .logos-band {
+          width: 100%;
+          background: var(--surface, #141417);
+          border-top: 1px solid var(--border, rgba(255, 255, 255, 0.09));
+          border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.09));
+          padding: 2.25rem 0;
+          font-family: var(--font-primary, inherit);
           overflow: hidden;
+        }
+
+        .logos-label {
+          text-align: center;
+          font-size: 0.8rem;
+          color: var(--text-dim, rgba(255, 255, 255, 0.42));
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          margin: 0 auto 1.75rem;
+          padding: 0 1.5rem;
+          max-width: var(--container-max, 1200px);
+        }
+
+        .marquee {
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 12%,
+            black 88%,
+            transparent
+          );
           mask-image: linear-gradient(
             to right,
             transparent,
-            black 10%,
-            black 90%,
+            black 12%,
+            black 88%,
             transparent
           );
         }
-        
-        .brand-carousel {
+
+        .marquee-track {
           display: flex;
-          gap: 3rem;
-          animation: scroll 30s linear infinite;
+          align-items: center;
+          gap: 3.5rem;
           width: max-content;
+          animation: marquee-scroll 30s linear infinite;
         }
-        
-        .brand-logo-item {
-          flex-shrink: 0;
-          opacity: 0.85;
-          transition: all 0.3s ease;
+
+        .marquee:hover .marquee-track {
+          animation-play-state: paused;
         }
-        
-        .brand-logo-item:hover {
+
+        .marquee-logo {
+          flex: 0 0 auto;
+          height: 34px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.7;
+          filter: grayscale(100%) brightness(1.1);
+          transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+
+        .marquee-logo:hover {
           opacity: 1;
-          transform: scale(1.1);
+          filter: grayscale(0%) brightness(1);
         }
-        
-        @keyframes scroll {
-          0% {
+
+        @keyframes marquee-scroll {
+          from {
             transform: translateX(0);
           }
-          100% {
+          to {
             transform: translateX(-50%);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .marquee-track {
+            animation: none;
           }
         }
       `}</style>

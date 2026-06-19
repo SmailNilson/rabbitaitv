@@ -204,7 +204,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#F20732" />
       </head>
-      <body style={{ backgroundColor: '#0D0D0D', color: 'white', margin: 0 }}>
+      <body style={{ backgroundColor: '#0A0A0B', color: 'white', margin: 0 }}>
         <ScrollToHash />
         <Navbar />
         <main style={{ minHeight: '100vh' }}>
