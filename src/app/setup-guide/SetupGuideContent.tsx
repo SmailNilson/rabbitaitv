@@ -24,12 +24,12 @@ const guides: Guide[] = [
         intro:
             "4Klive is the RabbitAI TV app — a premium native player for Fire TV Stick, Fire TV, Android TV, Google TV and Nvidia Shield. Install it with the free Downloader app using code 9234307. Your 7-day free trial starts automatically on first launch — no signup.",
         steps: [
-            { text: 'Install the free "Downloader" app from your TV store (Fire TV: search "Downloader"; Android / Google TV: Google Play Store), then open it.', image: "/images/t3.jpeg" },
-            { text: 'Fire TV only: go to Settings → My Fire TV → Developer options → "Install unknown apps", and turn ON Downloader. (On Android / Google TV, Downloader asks for this permission when needed.)', image: "/images/t7.jpeg" },
+            { text: 'Install the free "Downloader" app from your TV store (Fire TV: search "Downloader"; Android / Google TV: Google Play Store), then open it.' },
+            { text: 'Fire TV only: go to Settings → My Fire TV → Developer options → "Install unknown apps", and turn ON Downloader. (On Android / Google TV, Downloader asks for this permission when needed.)' },
             { text: "In Downloader, select the address box and type the code 9234307, then press Go.", image: "/images/4klive-code.png" },
-            { text: "4Klive starts downloading — wait for it to finish.", image: "/images/t9.jpeg" },
-            { text: 'When the download completes, click "Install".', image: "/images/t10.jpeg" },
-            { text: 'Click "Open" (or later, find 4Klive under "Your Apps & Channels") to launch it.', image: "/images/4klive-banner.png" },
+            { text: "4Klive starts downloading — wait for it to finish, then open the file." },
+            { text: 'When the installer asks "Do you want to install this application?", select Install.', image: "/images/4klive-install.png" },
+            { text: 'Select "Open" (or later, find 4Klive under "Your Apps & Channels") to launch it.', image: "/images/4klive-banner.png" },
             { text: "4Klive opens and your 7-day free trial starts automatically — every feature, no card needed. After it ends you keep the app with a one-time or yearly licence." },
             { text: "To watch, sign in with your RabbitAI TV details (Xtream Codes) or activate from the code the app shows on screen. Your channels come from your RabbitAI TV subscription, billed separately." },
         ],
