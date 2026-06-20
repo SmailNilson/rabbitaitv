@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 
@@ -20,10 +21,16 @@ const PRICING = {
 };
 
 const waPhone = siteConfig.contact.whatsapp.replace(/\D/g, '');
-const buyLink = (plan: string) =>
+// When the buyer scans the QR on their TV's lock screen, they land here with ?device=<key>.
+// We pass that Device Key through to the purchase so the licence is bound to the right TV.
+const buyLink = (plan: string, device?: string | null) =>
   `https://api.whatsapp.com/send?phone=${waPhone}&text=${encodeURIComponent(
-    `Hi! I'd like to buy the 4Klive ${plan} licence for my TV.`,
+    `Hi! I'd like to buy the 4Klive ${plan} licence for my TV.` +
+      (device ? `\nDevice Key: ${device}` : ''),
   )}`;
+
+// A lowercase UUIDv4 — the exact shape the TV apps generate as the Device Key.
+const DEVICE_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 /* Download / install. The APK is served from the site's public folder.
    ⚠️ DOWNLOADER CODE is a PLACEHOLDER — register the APK URL
@@ -153,6 +160,18 @@ const faqs = [
 ];
 
 export default function FourkliveContent() {
+  // Device Key arriving from the TV lock-screen QR (?device=<key>). Read AFTER mount from the
+  // browser URL — not via useSearchParams, which would force this whole marketing page behind a
+  // Suspense boundary and drop its server-rendered HTML for SEO. The one-shot setState is the
+  // canonical way to hydrate a browser-only value, and starting at null matches the server render
+  // (no hydration mismatch).
+  const [device, setDevice] = useState<string | null>(null);
+  useEffect(() => {
+    const raw = (new URLSearchParams(window.location.search).get('device') ?? '').trim().toLowerCase();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot hydrate of a browser-only value post-mount
+    if (DEVICE_RE.test(raw)) setDevice(raw);
+  }, []);
+
   return (
     <div className="fk">
       {/* ── HERO ───────────────────────────────────────────── */}
@@ -345,6 +364,16 @@ export default function FourkliveContent() {
             Start with a {TRIAL_DAYS}-day free trial. Keep the app with a one-time licence or a yearly plan.
           </p>
 
+          {device && (
+            <div className="device-detected" role="status">
+              <span className="dd-check" aria-hidden="true">✓</span>
+              <span className="dd-text">
+                <strong>This TV is detected</strong> — Device Key ending <code>…{device.slice(-6)}</code>.
+                Pick a plan below and we&apos;ll activate <strong>this device</strong>.
+              </span>
+            </div>
+          )}
+
           <div className="price-grid">
             <div className="price-card trial">
               <div className="price-tag">Free trial</div>
@@ -358,14 +387,14 @@ export default function FourkliveContent() {
               <div className="price-tag">Lifetime</div>
               <div className="price-amount">${PRICING.lifetime.price}<span className="price-unit">{PRICING.lifetime.period}</span></div>
               <p className="price-blurb">{PRICING.lifetime.blurb}</p>
-              <a href={buyLink('Lifetime')} target="_blank" rel="noopener noreferrer" className="btn-trial price-cta">Buy lifetime</a>
+              <a href={buyLink('Lifetime', device)} target="_blank" rel="noopener noreferrer" className="btn-trial price-cta">Buy lifetime</a>
             </div>
 
             <div className="price-card">
               <div className="price-tag">Yearly</div>
               <div className="price-amount">${PRICING.yearly.price}<span className="price-unit">{PRICING.yearly.period}</span></div>
               <p className="price-blurb">{PRICING.yearly.blurb}</p>
-              <a href={buyLink('Yearly')} target="_blank" rel="noopener noreferrer" className="btn-secondary price-cta">Choose yearly</a>
+              <a href={buyLink('Yearly', device)} target="_blank" rel="noopener noreferrer" className="btn-secondary price-cta">Choose yearly</a>
             </div>
           </div>
 
@@ -582,6 +611,25 @@ export default function FourkliveContent() {
           display: inline-flex; align-items: center; justify-content: center; margin-top: 1px;
         }
         .note-text { flex: 1; min-width: 0; }
+
+        /* DEVICE DETECTED (from the TV lock-screen QR ?device=) */
+        .device-detected {
+          display: flex; align-items: flex-start; gap: 0.7rem; max-width: 720px; margin: 0 auto 1.7rem;
+          padding: 0.9rem 1.2rem; border-radius: var(--radius);
+          background: var(--gold-soft); border: 1px solid rgba(232, 177, 76, 0.35);
+          color: var(--text-muted); font-size: 0.9rem; line-height: 1.55;
+        }
+        .device-detected strong { color: #fff; }
+        .device-detected code {
+          font-family: var(--font-mono, ui-monospace, monospace); color: var(--gold);
+          background: rgba(0, 0, 0, 0.28); padding: 1px 6px; border-radius: 5px; letter-spacing: 0.5px;
+        }
+        .dd-check {
+          flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; margin-top: 1px;
+          background: linear-gradient(135deg, var(--gold), var(--primary)); color: #fff;
+          font-size: 0.8rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .dd-text { flex: 1; min-width: 0; }
 
         /* FAQ */
         .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
