@@ -39,6 +39,12 @@ const nextConfig: NextConfig = {
         destination: '/blog',
         permanent: true,
       },
+      // Repurposed: the Club World Cup post became the FIFA World Cup 2026 guide
+      {
+        source: '/blog/where-to-watch-club-world-cup-2026',
+        destination: '/blog/where-to-watch-world-cup-2026',
+        permanent: true,
+      },
       {
         source: '/channels-list/:path*',
         destination: '/channels',
