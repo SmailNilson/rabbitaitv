@@ -9,13 +9,31 @@ type Step = { text: string; image?: string };
 type Guide = {
     id: string;
     label: string;
-    icon: "fire" | "android" | "apple" | "tv" | "box" | "desktop";
+    icon: "fire" | "android" | "apple" | "tv" | "box" | "desktop" | "play";
     title: string;
     intro: string;
     steps: Step[];
 };
 
 const guides: Guide[] = [
+    {
+        id: "4klive",
+        label: "4Klive · Fire & Android TV",
+        icon: "play",
+        title: "How to install 4Klive on Fire TV Stick & Android TV",
+        intro:
+            "4Klive is the RabbitAI TV app — a premium native player for Fire TV Stick, Fire TV, Android TV, Google TV and Nvidia Shield. Install it with the free Downloader app using code 9234307. Your 7-day free trial starts automatically on first launch — no signup.",
+        steps: [
+            { text: 'Install the free "Downloader" app from your TV store (Fire TV: search "Downloader"; Android / Google TV: Google Play Store), then open it.', image: "/images/t3.jpeg" },
+            { text: 'Fire TV only: go to Settings → My Fire TV → Developer options → "Install unknown apps", and turn ON Downloader. (On Android / Google TV, Downloader asks for this permission when needed.)', image: "/images/t7.jpeg" },
+            { text: "In Downloader, select the address box and type the code 9234307, then press Go.", image: "/images/4klive-code.png" },
+            { text: "4Klive starts downloading — wait for it to finish.", image: "/images/t9.jpeg" },
+            { text: 'When the download completes, click "Install".', image: "/images/t10.jpeg" },
+            { text: 'Click "Open" (or later, find 4Klive under "Your Apps & Channels") to launch it.', image: "/images/4klive-banner.png" },
+            { text: "4Klive opens and your 7-day free trial starts automatically — every feature, no card needed. After it ends you keep the app with a one-time or yearly licence." },
+            { text: "To watch, sign in with your RabbitAI TV details (Xtream Codes) or activate from the code the app shows on screen. Your channels come from your RabbitAI TV subscription, billed separately." },
+        ],
+    },
     {
         id: "firestick",
         label: "Fire TV Stick",
@@ -187,6 +205,14 @@ function DeviceIcon({ name }: { name: Guide["icon"] }) {
                 <svg {...common}>
                     <rect x="3" y="4" width="18" height="12" rx="2" />
                     <path d="M8 20h8M12 16v4" />
+                </svg>
+            );
+        case "play":
+            return (
+                <svg {...common}>
+                    <rect x="2.5" y="4.5" width="19" height="13" rx="2.5" />
+                    <path d="M8 20h8M12 17.5V20" />
+                    <path d="M10.5 9.2l4 2.8-4 2.8z" fill="currentColor" stroke="none" />
                 </svg>
             );
     }
