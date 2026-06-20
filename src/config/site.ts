@@ -106,6 +106,7 @@ export const siteConfig = {
     navigation: [
         { name: "Home", href: "/" },
         { name: "Pricing", href: "/pricing" },
+        { name: "TV App", href: "/4klive" },
         { name: "Free Trial", href: "/free-trial" },
         { name: "Setup Guide", href: "/setup-guide" },
         { name: "Channels List", href: "/channels" },
@@ -116,6 +117,7 @@ export const siteConfig = {
     footerNavigation: [
         { name: "Home", href: "/" },
         { name: "Pricing", href: "/pricing" },
+        { name: "TV App (4Klive)", href: "/4klive" },
         { name: "Free Trial", href: "/free-trial" },
         { name: "Setup Guide", href: "/setup-guide" },
         { name: "Channels List", href: "/channels" },
