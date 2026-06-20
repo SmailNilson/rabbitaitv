@@ -6,11 +6,10 @@ import { siteConfig } from '@/config/site';
 
 /* ──────────────────────────────────────────────────────────────────────────
    4Klive — product / landing page for the native TV player app.
-   The player is sold separately from the IPTV subscription: a 7-day free
-   trial, then a one-time Lifetime licence or a Yearly plan.
-
-   ⚠️ PLACEHOLDER PRICES — confirm the real 4Klive licence prices, then update
-   the PRICING constant below (single source of truth on this page).
+   The player is sold separately from the IPTV subscription: a 7-day free trial
+   BUILT INTO THE APP (auto-starts on first launch — no signup), then a one-time
+   Lifetime licence or a Yearly plan. PRICING below is the single source of truth
+   for this page (kept in sync with the Stripe defaults in the backend).
    ────────────────────────────────────────────────────────────────────────── */
 
 const TRIAL_DAYS = 7;
@@ -188,13 +187,13 @@ export default function FourkliveContent() {
             <p className="lead">
               A premium native player for <strong>Android TV, Fire TV, Samsung &amp; LG</strong>.
               Live TV, movies &amp; series, full EPG and catch-up — hardware-decoded, with
-              zero buffering. Try it free for {TRIAL_DAYS} days.
+              zero buffering. Free for {TRIAL_DAYS} days — the trial starts automatically when you install.
             </p>
             <div className="hero-actions">
-              <Link href="/free-trial" className="btn-trial">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-                Start {TRIAL_DAYS}-day free trial
-              </Link>
+              <a href="#download" className="btn-trial">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z" /></svg>
+                Download — {TRIAL_DAYS} days free
+              </a>
               <a href="#pricing" className="btn-ghost">See pricing</a>
             </div>
             <div className="hero-meta">
@@ -294,10 +293,10 @@ export default function FourkliveContent() {
                 </div>
               </div>
               <p className="dl-soon">
-                Coming to the Samsung &amp; LG stores. Start your free trial and our support helps
-                you install it on your TV in minutes.
+                Coming to the Samsung &amp; LG stores. Message us and our support installs it on your
+                TV in minutes — your {TRIAL_DAYS} free days start automatically.
               </p>
-              <Link href="/free-trial" className="btn-primary dl-apk">Start free trial</Link>
+              <a href={siteConfig.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-primary dl-apk">Ask us to install it</a>
             </div>
           </div>
 
@@ -379,8 +378,8 @@ export default function FourkliveContent() {
             <div className="price-card trial">
               <div className="price-tag">Free trial</div>
               <div className="price-amount">{TRIAL_DAYS} days<span className="price-unit">free</span></div>
-              <p className="price-blurb">Full app, every feature. No card required.</p>
-              <Link href="/free-trial" className="btn-primary price-cta">Start free trial</Link>
+              <p className="price-blurb">Built into the app — starts automatically when you install. Every feature, no card.</p>
+              <a href="#download" className="btn-primary price-cta">Download the app</a>
             </div>
 
             <div className="price-card featured">
@@ -433,9 +432,9 @@ export default function FourkliveContent() {
         <div className="container">
           <div className="cta-inner">
             <h2>Put RabbitAI TV on the big screen.</h2>
-            <p>Install 4Klive and start your {TRIAL_DAYS}-day free trial — on the TV you already own.</p>
+            <p>Install 4Klive — your {TRIAL_DAYS}-day free trial starts automatically, on the TV you already own.</p>
             <div className="cta-actions">
-              <Link href="/free-trial" className="btn-trial">Start free trial</Link>
+              <a href="#download" className="btn-trial">Download 4Klive</a>
               <a href={siteConfig.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-ghost">Ask us anything</a>
             </div>
           </div>
