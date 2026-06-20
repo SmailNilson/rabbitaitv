@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import Script from "next/script";
 import CTASection from "@/components/sections/CTASection";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import TableOfContents from "@/components/blog/TableOfContents";
@@ -214,24 +213,6 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                         className="article-content"
                         dangerouslySetInnerHTML={{ __html: renderContent(article.content) }}
                     />
-
-                    {/* Adsterra Native Ad - After Content */}
-                    <div className="adsterra-native-wrap">
-                        <Script
-                            id="adsterra-native-invoke"
-                            async
-                            data-cfasync="false"
-                            src="https://pl29033267.profitablecpmratenetwork.com/af6e551fce0ab2dae1c71670a0b0958b/invoke.js"
-                            strategy="afterInteractive"
-                        />
-                        <div id="container-af6e551fce0ab2dae1c71670a0b0958b"></div>
-                        <p>
-                            Click here to watch:
-                            <a href="https://www.profitablecpmratenetwork.com/ubdnrvrdi?key=9116e0db7d883b585de880b1d77822b4" target="_blank" rel="sponsored nofollow noopener">
-                                Start Streaming
-                            </a>
-                        </p>
-                    </div>
 
                     {/* Author Box */}
                     <div className="author-box">
@@ -603,20 +584,6 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                     color: var(--text-muted);
                 }
 
-                /* Adsterra wrap */
-                .adsterra-native-wrap {
-                    margin-top: 2.5rem;
-                }
-
-                .adsterra-native-wrap p {
-                    color: var(--text-muted);
-                    font-size: 0.95rem;
-                }
-
-                .adsterra-native-wrap a {
-                    color: var(--primary);
-                    margin-left: 0.35rem;
-                }
 
                 /* Author Box */
                 .author-box {
