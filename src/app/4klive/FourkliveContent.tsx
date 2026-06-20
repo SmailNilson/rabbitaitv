@@ -33,13 +33,14 @@ const buyLink = (plan: string, device?: string | null) =>
 const DEVICE_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 /* Download / install. The APK is served from the site's public folder.
-   ⚠️ DOWNLOADER CODE is a PLACEHOLDER — register the APK URL
-   (https://www.rabbitaitv.com/downloads/4klive.apk) at the Downloader code service
-   (e.g. aftv.news) to get a real numeric code, then put it here. */
+   downloaderCode is the aftv.news (AFTVnews URL Shortener) code for
+   https://www.rabbitaitv.com/downloads/4klive.apk — entered in the Downloader app on
+   Fire TV / Android TV. The code maps to the URL (not the file), so swapping in a signed
+   release APK at the SAME path keeps this code valid — no need to re-register. */
 const DOWNLOAD = {
   apkUrl: '/downloads/4klive.apk',
   version: '1.0.0',
-  downloaderCode: '000000',
+  downloaderCode: '9234307',
 };
 
 const platforms = [
