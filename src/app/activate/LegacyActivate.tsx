@@ -12,7 +12,9 @@ import {
 } from './provisioningCrypto';
 
 /* ──────────────────────────────────────────────────────────────────────────
-   4Klive web-activation portal (/activate).
+   LEGACY (v1) 4Klive web-activation portal — only for app versions before the
+   fixed TV code (Android ≤ 1.1, Samsung ≤ 1.3), whose QR opens /activate?key=….
+   Current apps use ActivateV2 (code + PIN, several playlists).
 
    The TV shows a Device Key + 6-digit PIN (and a QR that opens this page with
    ?key=<deviceKey> prefilled). Here the user adds their own playlist; we derive
@@ -54,7 +56,7 @@ function resolveApiBase(): string {
 type Mode = 'xtream' | 'm3u';
 type StatusKind = 'error' | 'pending' | 'success' | '';
 
-export default function ActivateContent() {
+export default function LegacyActivate() {
   const [deviceKey, setDeviceKey] = useState('');
   const [pin, setPin] = useState('');
   const [mode, setMode] = useState<Mode>('xtream');
