@@ -38,7 +38,7 @@ const DEVICE_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
    release APK at the SAME path keeps this code valid — no need to re-register. */
 const DOWNLOAD = {
   apkUrl: '/downloads/4klive.apk',
-  version: '1.0.0',
+  version: '1.2.0',
   downloaderCode: '9234307',
 };
 
@@ -126,13 +126,13 @@ const steps = [
   },
   {
     n: '2',
-    title: 'It shows a Device Key + PIN',
-    body: 'Open the app — it displays a short code on screen. Nothing long to type on the remote.',
+    title: 'It shows a TV code + PIN',
+    body: 'Open the app — it displays a short code, a PIN and a QR code. Nothing long to type on the remote.',
   },
   {
     n: '3',
     title: 'Activate with your subscription',
-    body: 'Enter the code on the activation page with your RabbitAI TV login. Your channels appear instantly.',
+    body: 'Scan the QR code (or open rabbitaitv.com/activate), enter the code and PIN, and add your RabbitAI TV playlist. Your TV connects on its own.',
   },
 ];
 
@@ -303,7 +303,7 @@ export default function FourkliveContent() {
           <p className="price-note">
             <span className="note-ico" aria-hidden="true">i</span>
             <span className="note-text">
-              After installing, open 4Klive — it shows a <strong>Device Key &amp; PIN</strong>. Activate it
+              After installing, open 4Klive — it shows a <strong>TV code &amp; PIN</strong>. Activate it
               with your <Link href="/pricing" className="ilink">RabbitAI TV subscription</Link> and start
               watching. The app is free for {TRIAL_DAYS} days, then a one-time or yearly licence (see pricing).
             </span>

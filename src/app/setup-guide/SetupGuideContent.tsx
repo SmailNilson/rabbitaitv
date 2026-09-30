@@ -30,8 +30,8 @@ const guides: Guide[] = [
             { text: "4Klive starts downloading — wait for it to finish, then open the file." },
             { text: 'When the installer asks "Do you want to install this application?", select Install.', image: "/images/4klive-install.png" },
             { text: 'Select "Open" (or later, find 4Klive under "Your Apps & Channels") to launch it.', image: "/images/4klive-banner.png" },
-            { text: "On first launch, 4Klive shows your Device Key & PIN — and your 7-day free trial has already started, no signup. After it ends you keep the app with a one-time or yearly licence.", image: "/images/4klive-activation.png" },
-            { text: 'To load your channels, enter that Device Key & PIN on rabbitaitv.com to add your playlist — or select "Enter playlist manually" and type your RabbitAI TV Xtream Codes (host, port, username, password). Your subscription is billed separately.', image: "/images/4klive-signin.png" },
+            { text: "On first launch, 4Klive shows your TV code & PIN — and your 7-day free trial has already started, no signup. After it ends you keep the app with a one-time or yearly licence. The app is in English; press \"Français\" to switch to French.", image: "/images/4klive-activation.png" },
+            { text: 'To load your channels, scan the QR code on the TV (or open rabbitaitv.com/activate), enter that TV code & PIN and add your playlist — the TV connects on its own. Or select "Manual entry" and type your RabbitAI TV Xtream Codes (host, port, username, password). Your subscription is billed separately.', image: "/images/4klive-signin.png" },
         ],
     },
     {
