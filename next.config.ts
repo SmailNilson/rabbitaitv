@@ -39,12 +39,42 @@ const nextConfig: NextConfig = {
         destination: '/blog',
         permanent: true,
       },
-      // Repurposed: the Club World Cup post became the FIFA World Cup 2026 guide
+      // Club World Cup post -> World Cup 2026 guide, itself retired once the
+      // tournament ended (points straight to the final target, no chain)
       {
         source: '/blog/where-to-watch-club-world-cup-2026',
-        destination: '/blog/where-to-watch-world-cup-2026',
+        destination: '/channels',
         permanent: true,
       },
+      // SEO cleanup (Oct 2026): six auto-published posts targeting the same
+      // "best AI IPTV 2026" query, merged into one article
+      ...[
+        'best-ai-powered-iptv-firestick-2026',
+        'best-ai-iptv-service-us-2026-rabbitai-tv',
+        'best-iptv-service-firestick-2026',
+        'best-ai-powered-iptv-service-usa-2026-rabbitai-tv',
+        'best-smart-iptv-firestick-2026-rabbitai',
+        'best-ai-iptv-usa-2026',
+      ].map((slug) => ({
+        source: `/blog/${slug}`,
+        destination: '/blog/best-ai-iptv-service-us-2026',
+        permanent: true,
+      })),
+      // SEO cleanup (Oct 2026): thin or dated posts Google crawled but refused
+      // to index, sent to the closest page that is still worth ranking
+      ...[
+        ['best-iptv-service-2025', '/blog/best-ai-iptv-service-us-2026'],
+        ['best-iptv-subscriptions-2026', '/blog/best-ai-iptv-service-us-2026'],
+        ['how-to-watch-live-tv-in-usa-without-cable-2026', '/blog/best-ai-iptv-service-us-2026'],
+        ['watch-sports-live-iptv', '/channels'],
+        ['where-to-watch-world-cup-2026', '/channels'],
+        ['video-channels-iptv-guide-2026', '/channels'],
+        ['rabbittv-free-channels-review', '/'],
+      ].map(([slug, destination]) => ({
+        source: `/blog/${slug}`,
+        destination,
+        permanent: true,
+      })),
       {
         source: '/channels-list/:path*',
         destination: '/channels',

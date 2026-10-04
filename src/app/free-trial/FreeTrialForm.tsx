@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { siteConfig } from '@/config/site';
+import { trackEvent } from '@/lib/analytics';
 
 const COUNTRIES = [
     'USA', 'Canada', 'United Kingdom', 'France', 'Germany', 'Spain', 'Italy',
@@ -80,6 +81,7 @@ export default function FreeTrialForm() {
             const data = await res.json();
             if (res.ok && (data.success === 'true' || data.success === true)) {
                 setStatus('success');
+                trackEvent('generate_lead', { form: 'free_trial', country });
             } else {
                 setStatus('error');
             }

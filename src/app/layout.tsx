@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import ScrollToHash from "@/components/ScrollToHash";
+import AnalyticsEvents from "@/components/AnalyticsEvents";
 import Script from "next/script";
 
 const inter = Inter({
@@ -28,12 +29,12 @@ export const metadata: Metadata = {
     default: `${siteConfig.name} - Best 4K IPTV Service | 20K+ Channels | Premium Streaming`,
     template: `%s | ${siteConfig.name}`,
   },
-  description: "RabbitAI TV - #1 Premium IPTV Service in 2025. Stream 20,000+ Live TV Channels, 120,000+ Movies & Series in 4K/HD. NFL, NBA, Premier League, Netflix, Disney+. 24/7 Support. From $8.99/month.",
+  description: "RabbitAI TV - #1 Premium IPTV Service. Stream 20,000+ Live TV Channels, 120,000+ Movies & Series in 4K/HD. NFL, NBA, Premier League, Netflix, Disney+. 24/7 Support. From $8.99/month.",
   keywords: [
     "IPTV",
     "IPTV service",
     "IPTV subscription",
-    "best IPTV 2025",
+    "best IPTV 2026",
     "premium IPTV",
     "4K IPTV",
     "IPTV USA",
@@ -197,6 +198,7 @@ export default function RootLayout({
       </head>
       <body style={{ backgroundColor: '#0A0A0B', color: 'white', margin: 0 }}>
         <ScrollToHash />
+        <AnalyticsEvents />
         <Navbar />
         <main style={{ minHeight: '100vh' }}>
           {children}
