@@ -16,8 +16,17 @@ const thumbs = ['#10243B', '#0E3330', '#3A1220', '#2B2410'];
 export function Hero() {
   // Defer the heavy hero video off the critical path: paint the optimized
   // poster immediately, then mount the autoplay video once the page is idle.
+  // Phones and data-saver users keep the poster: the 5 MB video is decorative.
   const [showVideo, setShowVideo] = useState(false);
   useEffect(() => {
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (
+      !window.matchMedia('(min-width: 768px)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      conn?.saveData
+    ) {
+      return;
+    }
     const ric = (window as typeof window & {
       requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
     }).requestIdleCallback;

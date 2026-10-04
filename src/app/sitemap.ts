@@ -49,6 +49,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Support/info pages
     const supportPages = [
         {
+            url: `${baseUrl}/4klive`,
+            changeFrequency: 'monthly' as const,
+            priority: 0.8,
+        },
+        {
             url: `${baseUrl}/setup-guide`,
             changeFrequency: 'monthly' as const,
             priority: 0.7,
