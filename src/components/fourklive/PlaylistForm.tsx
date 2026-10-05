@@ -115,6 +115,10 @@ export default function PlaylistForm({
         </>
       ) : (
         <>
+          <p className={s.hint}>
+            {f.m3uHint}{' '}
+            <a href="/blog/xtream-codes-vs-m3u-android-tv" target="_blank" rel="noopener noreferrer">{f.m3uHintLink}</a>
+          </p>
           <label className={s.field}>
             <span>{f.m3uUrl}</span>
             <input className={s.input} value={url} onChange={(e) => setUrl(e.target.value)} placeholder="http://provider.com/get.php?username=…&type=m3u_plus"
