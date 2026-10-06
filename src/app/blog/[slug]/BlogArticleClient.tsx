@@ -5,6 +5,7 @@ import Image from "next/image";
 import CTASection from "@/components/sections/CTASection";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import TableOfContents from "@/components/blog/TableOfContents";
+import { siteConfig } from "@/config/site";
 
 interface Article {
     id: number;
@@ -29,9 +30,20 @@ function formatDate(dateString: string): string {
     });
 }
 
+const WHATSAPP_TRIAL = `${siteConfig.contact.whatsappLink}&text=${encodeURIComponent("Hi, I'd like a free 24-hour trial.")}`;
+
+// Call-to-action boxes, placed in an article on a line of their own: [[cta:trial]] or
+// [[cta:4klive]]. Internal links open in the same tab; data-cta lets AnalyticsEvents
+// count clicks per box. Each box is one line so it stays a single block below.
+const CTA_BLOCKS: Record<string, string> = {
+    trial: '<aside class="content-cta"><p class="content-cta-title">No IPTV subscription yet?</p><p class="content-cta-text">A player app doesn’t include any channels: you add a subscription to it. Try RabbitAI TV free for 24 hours, no credit card needed.</p><div class="content-cta-actions"><a href="/free-trial" class="content-cta-btn" data-cta="trial">Start my free trial</a><a href="' + WHATSAPP_TRIAL + '" target="_blank" rel="noopener noreferrer" class="content-cta-btn secondary" data-cta="trial_whatsapp">Ask on WhatsApp</a></div></aside>',
+    '4klive': '<aside class="content-cta"><p class="content-cta-title">Prefer a simpler player?</p><p class="content-cta-text">4Klive is the IPTV player made by the RabbitAI TV team for Fire TV and Android TV. You add your playlist from your phone, with nothing to type on the remote. 7-day free trial, Downloader code 9234307.</p><div class="content-cta-actions"><a href="/4klive#download" class="content-cta-btn" data-cta="4klive">Get 4Klive</a><a href="/blog/how-to-install-iptv-firestick" class="content-cta-btn secondary" data-cta="4klive_guide">Installation guide</a></div></aside>',
+};
+
 // Convert markdown-like content to HTML with better formatting
 function renderContent(content: string): string {
-    let html = content;
+    let html = content.replace(/^\[\[cta:([\w-]+)\]\]$/gm, (_marker, name: string) =>
+        CTA_BLOCKS[name] ? `\n\n${CTA_BLOCKS[name]}\n\n` : '');
 
     // Handle tables (basic markdown table support)
     const tableRegex = /\|(.+)\|\n\|[-:\s|]+\|\n((?:\|.+\|\n?)+)/g;
@@ -114,7 +126,8 @@ function renderContent(content: string): string {
             trimmed.startsWith('<table') ||
             trimmed.startsWith('<img') ||
             trimmed.startsWith('<ul') ||
-            trimmed.startsWith('<ol')) {
+            trimmed.startsWith('<ol') ||
+            trimmed.startsWith('<aside')) {
             return trimmed;
         }
 
@@ -582,6 +595,59 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                 .article-content :global(em) {
                     font-style: italic;
                     color: var(--text-muted);
+                }
+
+                .article-content :global(.content-cta) {
+                    margin: 2.5rem 0;
+                    padding: 1.5rem 1.75rem;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-left: 3px solid var(--primary);
+                    border-radius: var(--radius);
+                }
+
+                .article-content :global(.content-cta-title) {
+                    margin: 0 0 0.4rem;
+                    font-size: 1.15rem;
+                    font-weight: 700;
+                    color: var(--text);
+                }
+
+                .article-content :global(.content-cta-text) {
+                    margin: 0 0 1.25rem;
+                    line-height: 1.6;
+                    color: var(--text-muted);
+                }
+
+                .article-content :global(.content-cta-actions) {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.75rem;
+                }
+
+                .article-content :global(.content-cta-btn) {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 44px;
+                    padding: 0.65rem 1.25rem;
+                    border-radius: 999px;
+                    background: var(--primary);
+                    border: 1px solid var(--primary);
+                    color: #fff;
+                    font-weight: 600;
+                    text-decoration: none;
+                    transition: opacity 0.2s ease;
+                }
+
+                .article-content :global(.content-cta-btn.secondary) {
+                    background: transparent;
+                    border-color: var(--border);
+                    color: var(--text);
+                }
+
+                .article-content :global(.content-cta-btn:hover) {
+                    opacity: 0.85;
                 }
 
 
