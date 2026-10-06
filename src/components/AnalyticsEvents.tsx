@@ -22,6 +22,9 @@ export default function AnalyticsEvents() {
             };
             if (WHATSAPP.test(href)) trackEvent('whatsapp_click', params);
             else if (APK.test(href)) trackEvent('apk_download', params);
+            // Blog call-to-action boxes ([[cta:…]]): which box gets clicked, on which article.
+            const cta = link.getAttribute('data-cta');
+            if (cta) trackEvent('cta_click', { ...params, cta });
         };
         document.addEventListener('click', onClick, { capture: true });
         return () => document.removeEventListener('click', onClick, { capture: true });
