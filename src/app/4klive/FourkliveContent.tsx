@@ -38,7 +38,7 @@ const DEVICE_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
    release APK at the SAME path keeps this code valid — no need to re-register. */
 const DOWNLOAD = {
   apkUrl: '/downloads/4klive.apk',
-  version: '1.2.0',
+  version: '1.3.0',
   downloaderCode: '9234307',
 };
 
