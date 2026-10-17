@@ -16,6 +16,9 @@ interface Article {
     publishedAt: string;
     category: string;
     video?: string;
+    /** Search-result title/snippet when the on-page title or excerpt is too long for Google. */
+    metaTitle?: string;
+    metaDescription?: string;
 }
 
 // Build FAQPage schema by extracting Q/A pairs from an article's HTML content
@@ -55,6 +58,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 
     const articleUrl = `${siteConfig.url}/blog/${article.slug}`;
+    // metaTitle is complete on its own (no " | RabbitAI TV" suffix) so it fits Google's ~60 characters.
+    const seoTitle = article.metaTitle ?? article.title;
+    const seoDescription = article.metaDescription ?? article.excerpt;
     const imageUrl = `${siteConfig.url}${article.image}`;
 
     // Extract keywords from title, category, and content
@@ -72,15 +78,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ];
 
     return {
-        title: article.title,
-        description: article.excerpt,
+        title: article.metaTitle ? { absolute: article.metaTitle } : article.title,
+        description: seoDescription,
         keywords: keywords,
         authors: [{ name: article.author }],
         openGraph: {
             type: "article",
             url: articleUrl,
-            title: article.title,
-            description: article.excerpt,
+            title: seoTitle,
+            description: seoDescription,
             images: [
                 {
                     url: imageUrl,
@@ -95,8 +101,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         },
         twitter: {
             card: "summary_large_image",
-            title: article.title,
-            description: article.excerpt,
+            title: seoTitle,
+            description: seoDescription,
             images: [imageUrl],
             creator: "@rabbitaitv",
         },
