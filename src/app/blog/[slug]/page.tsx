@@ -16,22 +16,34 @@ interface Article {
     publishedAt: string;
     category: string;
     video?: string;
+    /** Search-result title/snippet when the on-page title or excerpt is too long for Google. */
+    metaTitle?: string;
+    metaDescription?: string;
 }
 
-// Build FAQPage schema by extracting Q/A pairs from an article's HTML content
-function extractFaqFromContent(html: string): { q: string; a: string }[] {
+// Build FAQPage schema by extracting Q/A pairs from an article's FAQ section,
+// written either as HTML (<h3> + <p>) or as Markdown (### question, then the answer paragraph).
+function extractFaqFromContent(content: string): { q: string; a: string }[] {
     const faqs: { q: string; a: string }[] = [];
-    const lower = html.toLowerCase();
+    const lower = content.toLowerCase();
     let start = lower.indexOf("frequently asked questions");
     if (start === -1) start = lower.search(/<h2[^>]*>[^<]*\bfaq\b/);
     if (start === -1) return faqs;
-    const section = html.slice(start);
+    const section = content.slice(start);
     const re = /<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
     let m: RegExpExecArray | null;
     while ((m = re.exec(section)) !== null) {
         const q = m[1].replace(/<[^>]+>/g, "").trim();
         const a = m[2].replace(/<[^>]+>/g, "").trim();
         if (q && a) faqs.push({ q, a });
+    }
+    if (faqs.length > 0) return faqs;
+    const plain = (md: string) => md.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*_]{1,2}([^*_]+)[*_]{1,2}/g, "$1").trim();
+    const mdRe = /^###\s+(.+)\n+(?!#)(.+)$/gm;
+    while ((m = mdRe.exec(section)) !== null) {
+        const q = plain(m[1]);
+        const a = plain(m[2]);
+        if (q && a && !a.startsWith("[[")) faqs.push({ q, a });
     }
     return faqs;
 }
@@ -55,6 +67,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 
     const articleUrl = `${siteConfig.url}/blog/${article.slug}`;
+    // metaTitle is complete on its own (no " | RabbitAI TV" suffix) so it fits Google's ~60 characters.
+    const seoTitle = article.metaTitle ?? article.title;
+    const seoDescription = article.metaDescription ?? article.excerpt;
     const imageUrl = `${siteConfig.url}${article.image}`;
 
     // Extract keywords from title, category, and content
@@ -72,15 +87,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ];
 
     return {
-        title: article.title,
-        description: article.excerpt,
+        title: article.metaTitle ? { absolute: article.metaTitle } : article.title,
+        description: seoDescription,
         keywords: keywords,
         authors: [{ name: article.author }],
         openGraph: {
             type: "article",
             url: articleUrl,
-            title: article.title,
-            description: article.excerpt,
+            title: seoTitle,
+            description: seoDescription,
             images: [
                 {
                     url: imageUrl,
@@ -95,8 +110,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         },
         twitter: {
             card: "summary_large_image",
-            title: article.title,
-            description: article.excerpt,
+            title: seoTitle,
+            description: seoDescription,
             images: [imageUrl],
             creator: "@rabbitaitv",
         },
@@ -169,7 +184,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
 
     // FAQPage schema: generated dynamically from ANY article containing an FAQ section
     const parsedFaq = extractFaqFromContent(article.content);
-    let faqJsonLd: object | null = parsedFaq.length > 0 ? {
+    const faqJsonLd: object | null = parsedFaq.length > 0 ? {
         "@context": "https://schema.org",
         "@type": "FAQPage",
         mainEntity: parsedFaq.map((f) => ({
@@ -181,18 +196,6 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
             },
         })),
     } : null;
-    if (!faqJsonLd && article.slug === "install-tivimate-iptv-player-firestick-android-tv") {
-        faqJsonLd = {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-                { "@type": "Question", name: "Is TiviMate free?", acceptedAnswer: { "@type": "Answer", text: "TiviMate is a free IPTV player application, but you need an IPTV subscription from a provider like RabbitAI TV to access live channels and content." } },
-                { "@type": "Question", name: "Can I use TiviMate on Android TV?", acceptedAnswer: { "@type": "Answer", text: "Yes, TiviMate works perfectly on Android TV, Google TV, Fire TV Stick, and Chromecast with Google TV." } },
-                { "@type": "Question", name: "Do I need a VPN with TiviMate?", acceptedAnswer: { "@type": "Answer", text: "While not mandatory, using a VPN is recommended for privacy and security when streaming IPTV content." } },
-                { "@type": "Question", name: "How do I get IPTV credentials for TiviMate?", acceptedAnswer: { "@type": "Answer", text: "You can get IPTV credentials by subscribing to RabbitAI TV. We offer a free 24-hour trial so you can test the service before committing to a subscription." } }
-            ],
-        };
-    }
 
     return (
         <>
