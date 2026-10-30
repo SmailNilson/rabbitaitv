@@ -6,6 +6,7 @@ import CTASection from "@/components/sections/CTASection";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import TableOfContents from "@/components/blog/TableOfContents";
 import { siteConfig } from "@/config/site";
+import { articleImageHtml, blurPlaceholder } from "@/lib/articleImages";
 
 interface Article {
     id: number;
@@ -57,7 +58,8 @@ function renderContent(content: string): string {
     });
 
     // Images (must be before links)
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '\n\n<img src="$2" alt="$1" class="content-image" loading="lazy" />\n\n');
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt: string, src: string) =>
+        `\n\n${articleImageHtml(src, alt)}\n\n`);
 
     // Links
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="content-link">$1</a>');
@@ -210,6 +212,7 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                                 priority
                                 sizes="(max-width: 820px) 100vw, 760px"
                                 className="main-article-image"
+                                {...blurPlaceholder(article.image)}
                             />
                         </div>
                     )}

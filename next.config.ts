@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // Keep converted images cached for 31 days (default 4 hours). With little
+    // traffic the cache expired between visits, so visitors kept waiting for
+    // images to be converted again.
+    minimumCacheTTL: 2678400,
     remotePatterns: [
       {
         protocol: 'https',
