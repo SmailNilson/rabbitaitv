@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import articlesData from '@/data/articles.json';
+import { blurPlaceholder } from '@/lib/articleImages';
 
 interface Article {
   slug: string;
@@ -56,6 +57,7 @@ export default function LatestArticles() {
                   width={400}
                   height={225}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  {...blurPlaceholder(article.image)}
                 />
               </div>
               <div className="article-body">

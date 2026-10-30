@@ -1,0 +1,132 @@
+{
+  "/images/4klive-activation.png": {
+    "width": 1920,
+    "height": 1080,
+    "blur": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoQAAkAA4BaJZwAAudCnSWDgAD+9aIhYQwyYvNJK7WVtp528fAfraVeHpFaMAgA"
+  },
+  "/images/4klive-code.png": {
+    "width": 1600,
+    "height": 900,
+    "blur": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACwAQCdASoQAAkAA4BaJZwAAudc4/AAAP74UZMhG+BF5/gzecB9DF/imGWS2Ao9pYUQAA=="
+  },
+  "/images/RedZone24.webp": {
+    "width": 2560,
+    "height": 1440,
+    "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAQCdASoQAAkAA4BaJZgCdAYuQ9a7igAA/pttfj8RW9l/ddEgJqFGfPygsojIzU7LKWfyAq8iQJnUoC+nWaib6gbiYHduz1ltE/aN13KSQ89Wm0ebJ+B7J9LU2hMAAAA="
+  },
+  "/images/blog/4klive/4klive-activate-phone.jpg": {
+    "width": 1600,
+    "height": 900,
+    "blur": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAAAwAQCdASoQAAkAA4BaJZwAA3AA/vQhtBtvU4bxhqOq99DBGePIAZIABdAAAA=="
+  },
+  "/images/blog/4klive/4klive-home.jpg": {
+    "width": 1600,
+    "height": 900,
+    "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoQAAkAA4BaJQBOgCFsEc+GD4AA/vR0K5a4Hvp2D6q7QTyhjRz/A4QSwHxCgszzV1slrYC/4EVGnlmCgAA="
+  },
+  "/images/blog/4klive/4klive-live-overlay.jpg": {
+    "width": 1600,
+    "height": 900,
+    "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAkAA4BaJbAC7AC828nUTAAA/vLRpRWOkfVOlGE8u35ndxml2PBwmzVfAbQebvWxiAmCP0R1GLy5+AAAAA=="
+  },
+  "/images/blog/4klive/4klive-live-tv.jpg": {
+    "width": 1600,
+    "height": 900,
+    "blur": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACQAQCdASoQAAkAA4BaJZwAApZZ5AAA/vR5RK/jYsZjRjuPLtKuwohq6TCAAA=="
+  },
+  "/images/blog/4klive/4klive-manual-entry.jpg": {
+    "width": 1600,
+    "height": 900,
+    "blur": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAkAA4BaJZwAAqHzltC4QAD+94JtPofTBns7aQ+GyGsya6Rz5eAA"
+  },
+  "/images/blog/4klive/4klive-movie.jpg": {
+    "width": 1600,
+    "height": 900,
+    "blur": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAAAwAQCdASoQAAkAA4BaJZwAA3AA/vLAjmWwOQmZSQ6zzcoMk7lHMR6XnjgAAA=="
+  },
+  "/images/blog/4klive/4klive-tv-guide.jpg": {
+    "width": 1600,
+    "height": 900,
+    "blur": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAAAwAQCdASoQAAkAA4BaJaQAA3AA/vMBLNSD9AZ/uYISAgAA"
+  },
+  "/images/blog/4klive/m3u-to-xtream.jpg": {
+    "width": 1600,
+    "height": 760,
+    "blur": "data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAABQAQCdASoQAAgAA4BaJaQABDOAAP7z6IpbAbzTBAAAAA=="
+  },
+  "/images/blog/best-ai-iptv-service-us-2026.jpg": {
+    "width": 1024,
+    "height": 576,
+    "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoQAAkAA4BaJQBOgCHh2KI+gAD+5m7SzX5naEujDIFBv7bUWAaxliyZ1fosLOXJ2Zimw7lIWy9VPS2IAAA="
+  },
+  "/images/blog/best-iptv-2025.webp": {
+    "width": 2048,
+    "height": 946,
+    "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAcAA4BaJbACdACgrwwGAAD+wDXHuJeAnMhQTTrwZiGRTv0xqAeUX3Pfcgd9d7KfHA93GOOdFMAA"
+  },
+  "/images/blog/best-iptv-apps.webp": {
+    "width": 2027,
+    "height": 1137,
+    "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoQAAkAA4BaJbAC7AEUqf+hkQAA/vUg3PdE6w66Q0bz/d0wO0VHQmVqD9F9zT+dH8J1J1AA"
+  },
+  "/images/blog/best-iptv-sites-2026-guide/hero.webp": {
+    "width": 640,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAQAgCdASoQABAAA4BaJbACdH8AGBs5ToSYAP7y6I2H/i7r/sQHswTKEdoiStw83qPYi89UVPsYj76yel7SM9L3lzBkQwE0Mzk+z0bdFWpnWE1C2FyM7UfrWhiA3ERiSTkppgm9qPDdCRL4MgJQAA=="
+  },
+  "/images/blog/best-iptv-subscriptions-2026.webp": {
+    "width": 1200,
+    "height": 1200,
+    "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAABQAgCdASoQABAAA4BaJYwC7AywDaBBvA2zt4AA/oext/cUNIa3cf5+AgWfIH8HXYP3Pgu0bFYtXbVSyu2MrMe5jF6imNJOHHE7hXVt7PMtx9ds+j5HZoAA"
+  },
+  "/images/blog/firestick-security.png": {
+    "width": 1024,
+    "height": 1024,
+    "blur": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAACQAgCdASoQABAAA4BaJZgCdAYxPlIPsTrmV7VlKAD+7ysFdPg+htMm/kRwWPAYNh7kidst8+72JyQDYcVftZRYeJpMS908MLsArPOlsyEzqLn2gxpeoVMC2F2X7USGWaC1SarOxGGuwAAA"
+  },
+  "/images/blog/flixora-iptv.png": {
+    "width": 640,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAABQAgCdASoQABAAA4BaJbACdH8AGZqsxa/feQAA/vNUUpiEd2XG1b9GF56pLziiANx63GVZRWVUjFPFqY8lbFLl7N3D49c7LRQpEEomp96TAPbKzgpagDWVFgIAFErsOLTnylqSAGA4D/OoIMiUs1xP3WIS+hQSv7rAAA=="
+  },
+  "/images/blog/iptv-solution.webp": {
+    "width": 2048,
+    "height": 946,
+    "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAcAA4BaJbACdACgrwwGAAD+wDXHuJeAnMhQTTrwZiGRTv0xqAeUX3Pfcgd9d7KfHA93GOOdFMAA"
+  },
+  "/images/blog/iptv-trends-2026.webp": {
+    "width": 640,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoQABAAA4BaJZgCdAD6BFdvLZOgAP7219hOGbvDB5eomdlXXmGdPrCkudr/I5MjORqdTeB5IwI1tLptfMqKHzv4Z7415Xz9BNPwgaQn6qrSmgnYQAA="
+  },
+  "/images/blog/marinios-review.webp": {
+    "width": 1024,
+    "height": 571,
+    "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwAgCdASoQAAkAA4BaJZACdAYrTycnthxvgAD+7OhyC+KI2ZCn591HZd0BO1QccJNajo6Uo2i/09GF6bL/cIpkdDZTrLLrBSfyAAAA"
+  },
+  "/images/blog/tivimate-installation.webp": {
+    "width": 750,
+    "height": 422,
+    "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAQCdASoQAAkAA4BaJZgCdADdFM3QAAD+0mtay6GAejZXl57eC/XH+nSMRI1mazuoV7Fv+OOzSl5RvuWlJ7jwXn3JSHHthdgk0XnWhdR8/6nG6jzf2ligAAA="
+  },
+  "/images/blog/tivimate/step1-search-downloader.webp": {
+    "width": 750,
+    "height": 422,
+    "blur": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAABwAQCdASoQAAkAA4BaJaQAApWQIAD+6PJIR+LejDtZfLkWe4gAAA=="
+  },
+  "/images/blog/tivimate/step2-download-tivimate.webp": {
+    "width": 1024,
+    "height": 576,
+    "blur": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoQAAkAA4BaJQBOjXAAWbMzIAD+kZxwM+R1Xg9LJTe+vxxYLE+2BzZpIJtOJx3EkAA="
+  },
+  "/images/blog/tivimate/step3-add-playlist.webp": {
+    "width": 1024,
+    "height": 576,
+    "blur": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAABQAQCdASoQAAkAA4BaJZwABDOAAP7ysTPj9NYgAAA="
+  },
+  "/images/blog/tivimate/step4-login.webp": {
+    "width": 1024,
+    "height": 576,
+    "blur": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABQAQCdASoQAAkAA4BaJZwABYwAAP7xaONQ6WYeD0HqSAAA"
+  }
+}

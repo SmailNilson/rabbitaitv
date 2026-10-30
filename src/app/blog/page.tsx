@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import articlesData from "@/data/articles.json";
 import CTASection from "@/components/sections/CTASection";
+import { blurPlaceholder } from "@/lib/articleImages";
 
 interface Article {
     id: number;
@@ -104,6 +105,7 @@ export default function BlogPage() {
                                 className="cover-image"
                                 sizes="(max-width: 880px) 100vw, 60vw"
                                 priority
+                                {...blurPlaceholder(featured.image)}
                             />
                         </div>
                         <div className="featured-body">
@@ -138,6 +140,7 @@ export default function BlogPage() {
                                     height={225}
                                     className="cover-image"
                                     sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    {...blurPlaceholder(article.image)}
                                 />
                             </div>
                             <div className="card-body">

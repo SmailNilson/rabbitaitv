@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import articlesData from "@/data/articles.json";
+import { blurPlaceholder } from "@/lib/articleImages";
 
 interface Article {
     id: number;
@@ -115,6 +116,7 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
                                         width={400}
                                         height={225}
                                         className="article-image"
+                                        {...blurPlaceholder(article.image)}
                                     />
                                     <span className="category-badge">{article.category}</span>
                                 </div>
