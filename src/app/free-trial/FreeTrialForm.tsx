@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 import { trackEvent } from '@/lib/analytics';
 
@@ -33,10 +34,12 @@ const INCLUDED = [
     'Works on every device',
 ];
 
+// The trial is activated on WhatsApp, not by email: the customer installs 4Klive
+// and sends us the TV code it shows. Keep these steps in line with that.
 const STEPS = [
     'Fill in the quick form',
-    'Get your trial access by email',
-    'Start watching on any device',
+    'Install the free 4Klive player on your TV',
+    'Send us your TV code on WhatsApp, we activate it in minutes',
 ];
 
 export default function FreeTrialForm() {
@@ -46,6 +49,15 @@ export default function FreeTrialForm() {
     const [country, setCountry] = useState('');
     const [channels, setChannels] = useState<string[]>([]);
     const [note, setNote] = useState('');
+    const successRef = useRef<HTMLDivElement>(null);
+
+    // On phones the form sits below the intro, so the success card can open
+    // off-screen: bring the next steps into view.
+    useEffect(() => {
+        if (status === 'success') {
+            successRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [status]);
 
     const toggleChannel = (channel: string) => {
         setChannels((prev) =>
@@ -71,6 +83,8 @@ export default function FreeTrialForm() {
                     _subject: `Free Trial Request - ${name}`,
                     _template: 'table',
                     _captcha: 'false',
+                    // "Reply" in Gmail then goes to the customer, not back to our own address.
+                    _replyto: email,
                     Name: name,
                     Email: email,
                     Country: country,
@@ -149,40 +163,70 @@ export default function FreeTrialForm() {
                     {/* RIGHT — form / success / error */}
                     <div className="form-col">
                         {status === 'success' ? (
-                            <div className="success-card">
+                            <div className="success-card" ref={successRef}>
                                 <div className="success-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                                         <polyline points="22 4 12 14.01 9 11.01" />
                                     </svg>
                                 </div>
-                                <h2>Request Received!</h2>
+                                <h2>Request received, {name}!</h2>
                                 <p>
-                                    Thank you <strong>{name}</strong>! Our team will send your free
-                                    trial access to <strong>{email}</strong> shortly (usually within
-                                    a few hours).
+                                    Activate your free trial now in 2 quick steps. It takes about
+                                    5 minutes.
                                 </p>
-                                <p className="success-hint">
-                                    Need it faster? Contact us directly on WhatsApp:
-                                </p>
-                                <a
-                                    href={siteConfig.contact.whatsappLink}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="btn-whatsapp"
-                                >
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                                    </svg>
-                                    Chat on WhatsApp
-                                </a>
+
+                                <ol className="next-steps">
+                                    <li>
+                                        <span className="step-num" aria-hidden="true">1</span>
+                                        <div className="next-body">
+                                            <h3>Install the 4Klive player</h3>
+                                            <p>
+                                                On Fire TV or Android TV, install the free{' '}
+                                                <strong>Downloader</strong> app and enter the code{' '}
+                                                <strong>9234307</strong>.
+                                            </p>
+                                            <Link href="/4klive#download" className="next-btn">
+                                                Install 4Klive
+                                            </Link>
+                                            <p className="next-small">
+                                                Apple TV, Samsung, LG or a phone? Skip this step and
+                                                tell us your device on WhatsApp.
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span className="step-num" aria-hidden="true">2</span>
+                                        <div className="next-body">
+                                            <h3>Send us your TV code on WhatsApp</h3>
+                                            <p>
+                                                Open 4Klive and send us the TV code shown on the
+                                                screen (not the PIN). We activate your 24-hour trial
+                                                in minutes.
+                                            </p>
+                                            <a
+                                                href={`${siteConfig.contact.whatsappLink}&text=${encodeURIComponent(
+                                                    `Hi! I just requested a free trial on rabbitaitv.com.\nName: ${name}\nEmail: ${email}\nCountry: ${country}\nMy TV code: `
+                                                )}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="btn-whatsapp"
+                                            >
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                                                </svg>
+                                                Activate on WhatsApp
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ol>
                             </div>
                         ) : (
                             <form className="trial-form" onSubmit={handleSubmit}>
                                 <div className="card-head">
                                     <h2 className="card-title">Start your free trial</h2>
                                     <p className="card-sub">
-                                        Takes 30 seconds — we&apos;ll email your trial access.
+                                        Takes 30 seconds, then you activate it on WhatsApp.
                                     </p>
                                 </div>
 
@@ -649,6 +693,7 @@ export default function FreeTrialForm() {
                 }
 
                 .success-card {
+                    scroll-margin-top: 90px;
                     background: var(--card);
                     border: 1px solid rgba(37, 211, 102, 0.25);
                     border-radius: 18px;
@@ -693,8 +738,71 @@ export default function FreeTrialForm() {
                     color: var(--text);
                 }
 
-                .success-hint {
-                    margin-top: 1.5rem;
+                .next-steps {
+                    list-style: none;
+                    padding: 0;
+                    margin: 1.75rem 0 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    text-align: left;
+                }
+
+                .next-steps li {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 0.9rem;
+                    background: var(--surface);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    padding: 1.25rem;
+                }
+
+                .next-steps .step-num {
+                    margin-top: 0.1rem;
+                }
+
+                .next-body {
+                    min-width: 0;
+                }
+
+                .next-body h3 {
+                    color: var(--text);
+                    font-family: var(--font-heading);
+                    font-size: 1.05rem;
+                    font-weight: 700;
+                    margin: 0 0 0.4rem;
+                }
+
+                .success-card .next-body p {
+                    font-size: 0.93rem;
+                    margin: 0;
+                    max-width: none;
+                }
+
+                .success-card .next-body .next-small {
+                    font-size: 0.85rem;
+                    color: var(--text-dim);
+                    margin-top: 0.75rem;
+                }
+
+                /* next/link renders a component, so its class must be :global */
+                .success-card :global(.next-btn) {
+                    display: inline-flex;
+                    align-items: center;
+                    background: var(--primary);
+                    color: #fff;
+                    padding: 0.75rem 1.4rem;
+                    border-radius: 12px;
+                    font-weight: 600;
+                    text-decoration: none;
+                    margin-top: 0.9rem;
+                    transition: background 0.2s ease, transform 0.2s ease;
+                }
+
+                .success-card :global(.next-btn):hover {
+                    background: var(--primary-hover);
+                    transform: translateY(-2px);
                 }
 
                 .btn-whatsapp {
@@ -703,17 +811,18 @@ export default function FreeTrialForm() {
                     gap: 0.5rem;
                     background: #25d366;
                     color: white;
-                    padding: 0.9rem 1.8rem;
+                    padding: 0.75rem 1.4rem;
                     border-radius: 12px;
                     font-weight: 600;
                     text-decoration: none;
-                    margin-top: 1rem;
+                    margin-top: 0.9rem;
                     transition: all 0.3s ease;
                 }
 
                 .btn-whatsapp svg {
                     width: 18px;
                     height: 18px;
+                    flex-shrink: 0;
                 }
 
                 .btn-whatsapp:hover {
@@ -744,6 +853,25 @@ export default function FreeTrialForm() {
                     .form-grid {
                         grid-template-columns: 1fr;
                         gap: 1rem;
+                    }
+
+                    .success-card {
+                        padding: 2rem 0.9rem;
+                    }
+
+                    .next-steps li {
+                        flex-direction: column;
+                        padding: 1rem;
+                        gap: 0.6rem;
+                    }
+
+                    .btn-whatsapp,
+                    .success-card :global(.next-btn) {
+                        width: 100%;
+                        justify-content: center;
+                        padding-left: 0.75rem;
+                        padding-right: 0.75rem;
+                        font-size: 0.95rem;
                     }
                 }
             `}</style>
