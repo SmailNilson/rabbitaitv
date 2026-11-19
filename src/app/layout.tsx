@@ -8,6 +8,7 @@ import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import ScrollToHash from "@/components/ScrollToHash";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
+import StyledJsxRegistry from "@/components/StyledJsxRegistry";
 import Script from "next/script";
 
 const inter = Inter({
@@ -197,15 +198,17 @@ export default function RootLayout({
         <meta name="theme-color" content="#F20732" />
       </head>
       <body style={{ backgroundColor: '#0A0A0B', color: 'white', margin: 0 }}>
-        <ScrollToHash />
-        <AnalyticsEvents />
-        <Navbar />
-        <main style={{ minHeight: '100vh' }}>
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton />
-        <ScrollToTop />
+        <StyledJsxRegistry>
+          <ScrollToHash />
+          <AnalyticsEvents />
+          <Navbar />
+          <main style={{ minHeight: '100vh' }}>
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton />
+          <ScrollToTop />
+        </StyledJsxRegistry>
       </body>
     </html>
   );

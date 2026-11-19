@@ -147,7 +147,7 @@ const faqs = [
   },
   {
     q: 'Which devices are supported?',
-    a: 'Android TV & Fire TV today (Fire Stick, Fire TV Cube, Nvidia Shield, Google TV). Samsung (Tizen) and LG (webOS) versions are in development and not available yet.',
+    a: 'Android TV & Fire TV today (Fire Stick, Fire TV Cube, Nvidia Shield, Google TV). Fire TV sticks that run Vega OS can\'t install it: the new Fire TV Stick 4K (3rd gen, 2026), the Fire TV Stick 4K Select and the Fire TV Stick HD (2026). Samsung (Tizen) and LG (webOS) versions are in development and not available yet.',
   },
   {
     q: 'Is the licence tied to one device?',
@@ -281,6 +281,11 @@ export default function FourkliveContent() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" /></svg>
                 Or download the APK (v{DOWNLOAD.version})
               </a>
+              <p className="dl-note">
+                Not for Vega OS Fire TV sticks (the new Fire TV Stick 4K from 2026, the 4K Select, the
+                Fire TV Stick HD 2026).{' '}
+                <Link href="/blog/how-to-install-iptv-firestick" className="ilink">Step-by-step installation guide</Link>
+              </p>
             </div>
 
             <div className="dl-card">
@@ -546,6 +551,7 @@ export default function FourkliveContent() {
           color: var(--gold); text-align: center; background: #0e0e10; border: 1px dashed var(--border-strong);
           border-radius: var(--radius); padding: 0.7rem 1rem; margin: 0.7rem 0;
         }
+        .dl-note { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0.9rem 0 0; }
         .dl-soon { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; flex: 1; margin-bottom: 1.2rem; }
         .download .price-note { margin-top: 1.6rem; }
         @media (max-width: 760px) { .dl-grid { grid-template-columns: 1fr; } }

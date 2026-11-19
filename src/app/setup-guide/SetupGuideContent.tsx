@@ -22,7 +22,7 @@ const guides: Guide[] = [
         icon: "play",
         title: "How to install 4Klive on Fire TV Stick & Android TV",
         intro:
-            "4Klive is the RabbitAI TV app — a premium native player for Fire TV Stick, Fire TV, Android TV, Google TV and Nvidia Shield. Install it with the free Downloader app using code 9234307. Your 7-day free trial starts automatically on first launch — no signup.",
+            "4Klive is the RabbitAI TV app — a premium native player for Fire TV Stick, Fire TV, Android TV, Google TV and Nvidia Shield. Install it with the free Downloader app using code 9234307. Your 7-day free trial starts automatically on first launch — no signup. Not available on Fire TV sticks that run Vega OS (the new Fire TV Stick 4K from 2026, the 4K Select and the Fire TV Stick HD 2026): check Settings → My Fire TV → About, the version must start with \"Fire OS\".",
         steps: [
             { text: 'Install the free "Downloader" app from your TV store (Fire TV: search "Downloader"; Android / Google TV: Google Play Store), then open it.' },
             { text: 'Fire TV only: go to Settings → My Fire TV → Developer options → "Install unknown apps", and turn ON Downloader. (On Android / Google TV, Downloader asks for this permission when needed.)' },
