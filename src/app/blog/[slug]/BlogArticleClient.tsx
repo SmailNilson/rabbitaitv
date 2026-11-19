@@ -18,6 +18,8 @@ interface Article {
     author: string;
     readTime: string;
     publishedAt: string;
+    /** Set when an article is substantially revised; shown instead of the publication date. */
+    updatedAt?: string;
     category: string;
     video?: string;
 }
@@ -28,6 +30,9 @@ function formatDate(dateString: string): string {
         day: "numeric",
         month: "long",
         year: "numeric",
+        // Dates are stored as YYYY-MM-DD (UTC midnight): without this, visitors in the
+        // Americas would see the previous day, and the server and browser could disagree.
+        timeZone: "UTC",
     });
 }
 
@@ -61,8 +66,11 @@ function renderContent(content: string): string {
     html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt: string, src: string) =>
         `\n\n${articleImageHtml(src, alt)}\n\n`);
 
-    // Links
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="content-link">$1</a>');
+    // Links: links to other pages of the site open in the same tab, external ones in a new tab
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, text: string, href: string) =>
+        href.startsWith('/') && !href.startsWith('//')
+            ? `<a href="${href}" class="content-link">${text}</a>`
+            : `<a href="${href}" target="_blank" rel="noopener noreferrer" class="content-link">${text}</a>`);
 
     // Headers (process in reverse order)
     html = html.replace(/^### (.*$)/gim, '\n\n<h3>$1</h3>\n\n');
@@ -159,7 +167,11 @@ export default function BlogArticleClient({ article }: { article: Article }) {
                     <div className="meta-row">
                         <span className="category-badge">{article.category}</span>
                         <span className="meta-dot" aria-hidden="true" />
-                        <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+                        {article.updatedAt ? (
+                            <span>Updated <time dateTime={article.updatedAt}>{formatDate(article.updatedAt)}</time></span>
+                        ) : (
+                            <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+                        )}
                         <span className="meta-dot" aria-hidden="true" />
                         <span className="meta-read">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

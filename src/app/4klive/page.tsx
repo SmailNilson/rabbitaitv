@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import FourkliveContent from "./FourkliveContent";
 
 export const metadata: Metadata = {
-    title: "4Klive — Premium 4K IPTV Player for Fire TV & Android TV",
+    // Absolute: with the " | RabbitAI TV" suffix the title ran past Google's ~60 characters.
+    // "4K Live" and "APK" are how people search for the app.
+    title: { absolute: "4Klive: 4K Live IPTV Player APK for Fire TV & Android TV" },
     description:
         "4Klive is the RabbitAI TV app for the living room: a native 4K IPTV player for Fire TV, Android TV and Google TV (Samsung & LG coming soon). Live TV, movies & series, EPG, catch-up. 7-day free trial.",
     keywords: [

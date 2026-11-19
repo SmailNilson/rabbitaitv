@@ -14,6 +14,7 @@ interface Article {
     author: string;
     readTime: string;
     publishedAt: string;
+    updatedAt?: string;
     category: string;
     video?: string;
     /** Search-result title/snippet when the on-page title or excerpt is too long for Google. */
@@ -105,6 +106,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
                 },
             ],
             publishedTime: article.publishedAt,
+            modifiedTime: article.updatedAt ?? article.publishedAt,
             authors: [article.author],
             siteName: siteConfig.name,
         },
@@ -137,7 +139,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
         description: article.excerpt,
         image: `${siteConfig.url}${article.image}`,
         datePublished: article.publishedAt,
-        dateModified: article.publishedAt,
+        dateModified: article.updatedAt ?? article.publishedAt,
         author: {
             "@type": "Person",
             name: article.author,

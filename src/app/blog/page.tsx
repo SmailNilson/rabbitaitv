@@ -28,6 +28,7 @@ function formatDate(dateString: string): string {
         day: "numeric",
         month: "long",
         year: "numeric",
+        timeZone: "UTC", // dates are YYYY-MM-DD; avoids showing the previous day in the Americas
     });
 }
 

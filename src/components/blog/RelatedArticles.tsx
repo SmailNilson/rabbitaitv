@@ -16,6 +16,14 @@ interface Article {
     readTime: string;
 }
 
+const PLAYER_GUIDES = [
+    'how-to-install-iptv-firestick',
+    'install-tivimate-iptv-player-firestick-android-tv',
+    'best-tivimate-alternatives-2026',
+    'best-iptv-apps-2026',
+    'xtream-codes-vs-m3u-android-tv',
+];
+
 interface RelatedArticlesProps {
     currentSlug: string;
     currentCategory: string;
@@ -25,18 +33,14 @@ export default function RelatedArticles({ currentSlug, currentCategory }: Relate
     const [currentIndex, setCurrentIndex] = useState(0);
     const carouselRef = useRef<HTMLDivElement>(null);
 
-    // Get up to 8 articles for the carousel
-    const relatedArticles = articlesData
-        .filter((article) => article.slug !== currentSlug && article.category === currentCategory)
-        .slice(0, 8) as Article[];
-
-    // If not enough articles in the same category, add some from other categories
-    if (relatedArticles.length < 5) {
-        const moreArticles = articlesData
-            .filter((article) => article.slug !== currentSlug && article.category !== currentCategory)
-            .slice(0, 8 - relatedArticles.length) as Article[];
-        relatedArticles.push(...moreArticles);
-    }
+    // Up to 8 articles: the player guides first (our most useful and best-ranking pages,
+    // so every article links to them), then the same category, then the rest.
+    const others = articlesData.filter((article) => article.slug !== currentSlug) as Article[];
+    const guides = PLAYER_GUIDES
+        .map((slug) => others.find((article) => article.slug === slug))
+        .filter((article): article is Article => Boolean(article));
+    const sameCategory = others.filter((article) => article.category === currentCategory);
+    const relatedArticles = [...new Set([...guides, ...sameCategory, ...others])].slice(0, 8);
 
     if (relatedArticles.length === 0) {
         return null;

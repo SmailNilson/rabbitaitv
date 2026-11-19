@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Most recent article date = last meaningful content change for listing pages
     const latestArticleDate = articlesData
-        .map((a: { publishedAt: string }) => a.publishedAt)
+        .map((a: { publishedAt: string; updatedAt?: string }) => a.updatedAt ?? a.publishedAt)
         .sort()
         .reverse()[0];
 
@@ -38,10 +38,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
     ];
 
-    // Blog articles dynamically from JSON, with their real publication date
-    const blogArticles = articlesData.map((article: { slug: string; publishedAt: string }) => ({
+    // Blog articles dynamically from JSON, dated by their last real revision
+    const blogArticles = articlesData.map((article: { slug: string; publishedAt: string; updatedAt?: string }) => ({
         url: `${baseUrl}/blog/${article.slug}`,
-        lastModified: article.publishedAt,
+        lastModified: article.updatedAt ?? article.publishedAt,
         changeFrequency: 'monthly' as const,
         priority: 0.8,
     }));
